@@ -1,0 +1,60 @@
+# Pre-processing {#preprocessing}
+
+```{r include=FALSE}
+ddf <- readr::read_rds("data/ddf.rds")
+ddf_train <- readr::read_rds("data/ddf_train.rds")
+ddf_test <- readr::read_rds("data/ddf_test.rds")
+```
+
+Skewed data, outliers, and values covering multiple orders of magnitude can create difficulties for certain ML algorithms, e.g., or K-nearest neighbours, or neural networks. Other algorithms, like tree-based methods (e.g., Random Forest), are more robust against such issues. 
+
+
+## Dealing with missingness and bad data
+
+Several ML algorithms require missing values to be removed. That is, if any of the cells in one row has a missing value, the entire cell gets removed. Data may be missing for several reasons. Some yield random patterns of missing data, others not. In the latter case, we can speak of *informative missingness* (Kuhn & Johnson, 2003) and its information can be used for predictions. For categorical data, we may replace such data with `"none"` (instead of `NA`), while randomly missing data may be dropped altogether. Some ML algorithms (mainly tree-based methods, e.g., random forest) can handle missing values. However, when comparing the performance of alternative ML algorithms, they should be tested with the same data and removing missing data should be done beforehand.
+
+Visualising missing data is essential for making decisions about dropping rows with missing data versus removing predictors from the model (which would imply too much data removal). The cells with missing data in a data frame can be eaily visualised e.g. with `vis_miss()` from the *visdat* package.
+
+```{r}
+library(visdat)
+vis_miss(
+  ddf,
+  cluster = FALSE, 
+  warn_large_data = FALSE
+  )
+```
+
+The question about what is "bad data" and whether or when it should be removed is often critical. Such decisions are important to keep track of and should be reported as transparently as possible in publications. In reality, where the data generation process may start in the field with actual human beings writing notes in a lab book, and where the human collecting the data is often not the same as the human writing the paper, it's often more difficult to keep track of such decisions. As a general principle, it is advisable to design data records such that decisions made during its process remain transparent throughout all stages of the workflow and that sufficient information be collected to enable later revisions of particularly critical decisions.
+
+
+## Standardization
+
+Several algorithms explicitly require data to be standardized. That is, values of all predictors vary within a comparable range. The necessity of this step becomes obvious when considering neural networks, the activation functions of each node have to deal with standardized inputs. In other words, inputs have to vary over the same range, expecting a mean of zero and standard deviation of one.)
+
+To get a quick overview of the distribution of all variables (columns) in our data frame, we can use the *skimr* package.
+
+```{r}
+library(skimr)
+skim(ddf)
+```
+
+We see for example, that typical values of `LW_IN_F` are by a factor 100 larger than values of `VPD_F`. The data must be standardized before using it for a neural network model. Standardization is done, for example, by dividing each variable, that is all values in one column, by the standard deviation of that variable, and then subtracting its mean. This way, the resulting standardized values are centered around 0, and scaled such that a value of 1 means that the data point is one standard deviation above the mean of the respective variable (column). When applied to all predictors individually, the absolute values of their variations can be directly compared and only then it can be meaningfully used for determining the distance.
+
+Standardization can be done not only by centering and scaling (as described above), but also by *scaling to within range*, where values are scaled such that the minimum value within each variable (column) is 0 and the maximum is 1.
+
+In order to avoid *data leakage*, centering and scaling has to be done separately for each split into training and validation data (more on that later). In other words, don't center and scale the entire data frame with the mean and standard deviation derived from the entire data frame, but instead center and scale with mean and standard deviation derived from the training portion of the data, and apply that also to the validation portion, when evaluating.
+
+The *caret* package takes care of this. The R package [**caret**](https://topepo.github.io/caret/) provides a unified interface for using different ML algorithms implemented in separate packages. All you have to do is specify the required pre-processing steps as:
+
+```{r}
+library(caret)
+pp <- preProcess(ddf_train, method = c("center", "scale"))
+```
+
+As seen above for the feature engineering example, this does not return a standardized version of the data frame `ddf`. Rather, it returns the information that allows us to apply the same standardization also to other data sets. In other words, we use the distribution of values in the data set to which we applied the function (here `ddf`) to determine the standardization (here: mean and standard deviation). As you will learn below, this is essential and critical to avoid *data leakage* (where information from the testing data set leaks into the training data set).
+
+## More pre-processing 
+
+Depending on the algorithm and the data, additional pre-processing steps may be required. You can find more information about this in the great and freely available online tutorial [Hands-On Machine Learning in R](https://bradleyboehmke.github.io/HOML/engineering.html#target-engineering).
+
+One such additional pre-processing step is *imputation*, where missing values are imputed (gap-filled), for example by the mean of each variable respectively. Also imputation is prone to cause data leakage and must therefore be implemented as part of the resampling and training workflow. The **recipes** package offers a great way to deal with imputation (and also all other pre-processing steps). [Here](https://bradleyboehmke.github.io/HOML/engineering.html#impute) is a link to learn more about it.

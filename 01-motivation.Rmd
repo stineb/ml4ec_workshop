@@ -1,0 +1,219 @@
+# Motivation {#motivation}
+
+## Learning objectives
+
+After this learning unit, you will be able to ...
+
+-   Differentiate machine learning from classical programming
+-   Describe the different variants of machine learning
+-   Conceptualize model training as an optimization problem
+-   Describe overfitting and how it can be measured (training vs. validation error).
+-   Formulate a model in R.
+-   Discuss why, when, and how to pre-process data.
+-   Measure and minimize loss for regression and classification (video)
+-   Describe the fundamentals of gradient descent (video)
+
+## Important points
+
+Machine learning refers to a class of algorithms that automatically generate statistical models of data. There are two main types of machine learning:
+
+**Unsupervised machine learning**: A class of algorithms that automatically detect patterns in data without using labels or 'learning without a teacher'. Examples are: PCAs, k-means clustering, autoencoders, self-organizing maps, etc.
+
+**Supervised machine learning**: A class of algorithms that automatically learn an input-output relationships based on example input-output pairs. Examples include: support vector machines, random forests, decision trees, neural networks, etc. Supervised machine learning requires three ingredients: (1) Input data (2) Output data (3) A measure of model performance (a.k.a. "loss"). Supervised machine learning be used for regression (predict a continuous label) or classification (predict a categorical label).
+
+**Loss** is a concept central to many supervised machine learning algorithms. It measures how well our predicted model values fit the actual observed model values, a higher value indicates a higher loss, essentially meaning the model fits less well. Ideally, loss should be minimised. Loss can be used to update our model parameters in the next iteration of model training, this is called learning.
+
+
+## Overfitting {#overfitting}
+
+*This example is based on [this example from scikit-learn](https://scikit-learn.org/stable/auto_examples/model_selection/plot_underfitting_overfitting.html).*
+
+Machine learning (ML) may appear magical. The ability of ML algorithms to detect patterns and make predictions is fascinating. However, several challenges have to be met in the process of formulating, training, and evaluating the models. In this practical we will discuss some basics of supervised ML and how to achieve best predictive results.
+
+In general, the aim of supervised ML is to find a model $\hat{Y} = f(X)$ that is *trained* (calibrated) using observed relationships between a set of *features* (also known as *predictors*, or *labels*, or *independent variables*) $X$ and the *target* variable $Y$. Note, that $Y$ is observed. The hat on $\hat{Y}$ denotes an estimate. Some algorithms can even handle predictions of multiple target variables simultaneously (e.g., neural networks). ML algorithms consist of (more or less) flexible mathematical models with a certain structure and set of parameters. At the simple extreme end of the model spectrum is the univariate linear regression. You may not want to call this a ML algorithm because there is no iterative learning involved. Nevertheless, also univariate linear regression provides a prediction $\hat{Y} = f(X)$, just like other (proper) ML algorithms do. The functional form of a linear regression is not particularly flexible (just a straight line for the best fit between predictors and targets) and it has only two parameters (slope and intercept). At the other extreme end are, for example, deep neural networks. They are extremely flexible, can learn highly non-linear relationships and deal with interactions between a large number of predictors. They also contain very large numbers of parameters, typically on the order of thousands. You can imagine that this allows these types of algorithms to very effectively learn from the data, but also bears the risk of *overfitting*.
+
+What is overfitting? The following example illustrates it. Let's assume that there is some true underlying relationship between a predictor $x$ and the target variable $y$. We don't know this relationship (in the code below, this is `true_fun()`) and the observations contain a (normally distributed) error (`y = true_fun(x) + 0.1 * rnorm(n_samples)`). Based on our training data (`df_train`), we fit three polynomial models of degree 1, 4, and 15 to the observations. A polynomial of degree N is given by: $$
+y = \sum_{n=0}^N a_n x^n
+$$ $a_n$ are the coefficients, i.e., model parameters. The goal of the training is to get the coefficients $a_n$. From the above definition, the polynomial of degree 15 has 16 parameters, while the polynomial of degree 1 has two parameters (and corresponds to a simple linear regression). You can imagine that the polynomial of degree 15 is much more flexible and should thus yield the closest fit to the training data. This is indeed the case.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(modelr)
+library(forcats)
+library(yardstick)
+
+true_fun <- function(x){
+  cos(1.5 * pi * x)
+}
+
+set.seed(2)
+
+n_samples <- 30
+
+# create training data
+df_train <- tibble( x = runif(n_samples, min = 0, max = 1)) %>%
+  mutate(y = true_fun(x) + 0.1 * rnorm(n_samples)) %>%
+  arrange(x)
+
+polyfit_1 <- lm(y ~ poly(x, 1), data = df_train)
+polyfit_4 <- lm(y ~ poly(x, 4), data = df_train)
+polyfit_15 <- lm(y ~ poly(x, 15), data = df_train)
+
+# create a function that takes the data set (here training) and the models and returns the evaluation results (plot with annotated RMSE)
+eval_fits <- function(df, polyfit_1, polyfit_4, polyfit_15){
+
+  # training results
+  df <- df %>%
+    rename(y_true = y) %>%
+    add_predictions(polyfit_1, var = "poly1") %>%
+    add_predictions(polyfit_4, var = "poly4") %>%
+    add_predictions(polyfit_15, var = "poly15")
+
+  ## at equally spaced x
+  df_fit <- tibble(x = seq(from = min(df$x), to = max(df$x), length.out = 100)) %>%
+    add_predictions(polyfit_1, var = "poly1") %>%
+    add_predictions(polyfit_4, var = "poly4") %>%
+    add_predictions(polyfit_15, var = "poly15") %>%
+    pivot_longer(cols = starts_with("poly"), names_to = "fit", values_to = "y_pred") %>%
+    mutate(fit = fct_relevel(fit, "poly1", "poly4", "poly15"))
+
+  ## get a table (data frame) for the RMSE
+  df_metrics_train <- tibble(
+    fittype = "poly1",
+    rmse = metrics(df,
+                   truth = y_true,
+                   estimate = poly1
+                   ) %>%
+      filter(.metric == "rmse") %>%
+      pull(.estimate)) %>%
+    bind_rows(
+      .,
+      tibble(
+       fittype = "poly4",
+        rmse = metrics(df,
+                   truth = y_true,
+                   estimate = poly4
+                   ) %>%
+         filter(.metric == "rmse") %>%
+         pull(.estimate))
+    ) %>%
+    bind_rows(
+      .,
+      tibble(
+       fittype = "poly15",
+        rmse = metrics(df,
+                   truth = y_true,
+                   estimate = poly15
+                   ) %>%
+         filter(.metric == "rmse") %>%
+         pull(.estimate))
+    )
+
+  # plot training results
+  gg <- ggplot() +
+    geom_point(data = df, aes(x, y_true)) +
+    geom_line(data = df_fit, aes(x = x, y = y_pred, color = fit)) +
+    stat_function(fun = true_fun, linetype = "dotted") +
+    ylim(-1.5, 1) +
+    labs(
+      subtitle = paste("RMSE: poly1 =", format(df_metrics_train$rmse[1], digits = 2), ", poly4 =", format(df_metrics_train$rmse[2], digits = 2), ", poly15 =", format(df_metrics_train$rmse[3], digits = 2)),
+      y = "y")
+
+  return(gg)
+}
+
+gg <- eval_fits(df_train, polyfit_1, polyfit_4, polyfit_15)
+
+gg + labs(title = "Training")
+```
+
+
+<!-- ```{r, echo = FALSE, echo=FALSE, fig.cap="Comparing model fits on training data set."} -->
+<!-- knitr::include_graphics("./figures/training.png") -->
+<!-- ``` -->
+
+We can use the same fitted models on unseen data - the *validation data*. This is what's done below. Again, the same true underlying relationship is used, but we sample a new set of data points in x and add a new sample of errors on top of the true relationship.
+
+```{r  echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(1)
+
+# create testing data
+df_test <- tibble( x = runif(n_samples, min = 0, max = 1)) %>%
+  mutate(y = true_fun(x) + 0.1 * rnorm(n_samples)) %>%
+  arrange(x)
+
+gg <- eval_fits(df_test, polyfit_1, polyfit_4, polyfit_15)
+gg + labs(title = "Validation")
+```
+
+<!-- ```{r, echo = FALSE, echo=FALSE, fig.cap="Comparing model fits on validation data set."} -->
+<!-- knitr::include_graphics("./figures/validation.png") -->
+<!-- ``` -->
+
+You see that, using the validation set, we find that "poly4" actually performs the best - it has a much lower RMSE that "poly15". Apparently, "poly15" was overfitted. Apparently, it indeed used its flexibility to fit not only the shape of the true underlying relationship, but also the observation errors on top of it. This has obviously the implication that, when this model is used to make predictions for data that was not used for training (calibration), it will yield misguided predictions that are affected by the errors in the training set. In the above pictures we can also conclude that "poly1" was underfitted.
+
+It gets even worse when applying the fitted polynomial models to data that extends beyond the range in $x$ that was used for model training. Here, we're extending just 20% to the right.
+
+```{r  echo=FALSE, message=FALSE, warning=FALSE}
+set.seed(1)
+
+# create testing data
+df_test <- tibble( x = runif(n_samples, min = 0, max = 1.2)) %>%
+  mutate(y = true_fun(x) + 0.1 * rnorm(n_samples)) %>%
+  arrange(x)
+
+gg <- eval_fits(df_test, polyfit_1, polyfit_4, polyfit_15)
+gg + labs(title = "Validation (with extrapolation)")
+
+# ggsave("fig/overfitting_demo_polynomial.pdf", width = 6, height = 4)
+```
+
+
+<!-- ```{r, echo = FALSE, echo=FALSE, fig.cap="Comparing model fits when extrapolating."} -->
+<!-- knitr::include_graphics("./figures/validation_extrapolation.png") -->
+<!-- ``` -->
+
+You see that the RMSE for "poly15" literally explodes. The model is hopelessly overfitted and completely useless for prediction, although it looked like it fit the data best when we considered at the training results. This is a fundamental challenge in ML - finding the model with the best *generalisability*. That is, a model that not only fits the training data well, but also performs well on unseen data.
+
+The phenomenon of fitting/overfitting as a function of the model "flexibility" is also referred to as *bias vs. variance trade-off*. The bias describes how well a model matches the training set (average error). A model with low bias will match the data set closely and vice versa. The variance describes how much a model changes when you train it using different portions of your data set. "poly15" has a high variance, but much of its variance is the result of misled training on observation errors. On the other extreme, "poly1" has a high bias. It's not affected by the noise in observations, but its predictions are also far off the observations. In ML, we are challenged to balance this trade-off. In Figure \@ref(fig:tradeoff) you can see a schematic illustration of the bias--variance trade-off.
+
+<!-- ```{r tradeoff, echo=FALSE, fig.cap="Trade-off between bias and variance"} -->
+<!-- knitr::include_graphics("./figures/bias-variance.png") -->
+<!-- ``` -->
+
+This chapter introduces the methods to achieve the best model generalisability and find the sweet spot between high bias and high variance. The steps to get there include the preprocessing of data, splitting the data into training and testing sets, and model training that "steers" the model towards what is considered a good model fit in terms of its generalisation power.
+
+You have learned in video 6a about the basic setup of supervised ML, with input data containing the features (or predictors) $X$, predicted ($\hat{Y}$) and observed target values ($Y$, also known as *labels*). In video 6b (title 6c: loss and it's minimization), you learned about the loss function which quantifies the agreement between $Y$ and $\hat{Y}$ and defines the objective of the model training. Here, you'll learn how all of this can be implemented in R. Depending on your application or research question, it may also be of interest to evaluate the relationships embodied in $f(X)$ or to quantify the importance of different predictors in our model. This is referred to as *model interpretation* and is introduced in the respectively named subsection. Finally, we'll get into *feature selection* in the next Application session.
+
+The topic of supervised machine learning methods covers enough material to fill two sessions. Therefore, we split this part in two. Model training, implementing the an entire modelling workflow, model evaluation and interpretation will be covered in the next session's tutorial (Supervised Machine Learning Methods II).
+
+Of course, a plethora of algorithms exist that do the job of $Y = f(X)$. Each of them has its own strengths and limitations. It is beyond the scope of this course to introduce a larger number of ML algorithms. Subsequent sessions will focus primarily on Artificial Neural Networks (ANN) - a type of ML algorithm that has gained popularity for its capacity to efficiently learn patterns in large data sets. For illustration purposes in this and the next chapter, we will briefly introduce two simple alternative "ML" methods, linear regression and K-nearest-neighbors. They have quite different characteristics and are therefore great for illustration purposes in this chapter.
+
+## Our modelling task
+
+xxxx
+
+Building a ML model is an iterative process and it is typically not possible to know which ML algorithm will perform best when you start with the process. It is also essential that you understand your data in order to apply appropriate pre-processing steps, splitting your data wisely into training and testing sets, building a robust model, and achieving an informative model evaluation. This workshop introduces essential methods of the modelling process that allow you to walk a safe (and hopefully still spectacular) path. This workshop is inspired by the fantastic tutorial [*Hands On Machine Learning in R* by Boehmke & Gladwell](https://bradleyboehmke.github.io/HOML).
+
+
+<!-- You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
+
+<!-- Figures and tables with captions will be placed in `figure` and `table` environments, respectively. -->
+
+<!-- ```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'} -->
+<!-- par(mar = c(4, 4, .1, .1)) -->
+<!-- plot(pressure, type = 'b', pch = 19) -->
+<!-- ``` -->
+
+<!-- Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab). -->
+
+<!-- ```{r nice-tab, tidy=FALSE} -->
+<!-- knitr::kable( -->
+<!--   head(iris, 20), caption = 'Here is a nice table!', -->
+<!--   booktabs = TRUE -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015]. -->
