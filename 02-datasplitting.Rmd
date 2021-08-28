@@ -11,10 +11,10 @@ In contrast, *pre-processing* refers to the additional steps that are either req
 We are provided with a data file in the format of comma-separated-values (CSV), obtained through [FLUXNET2015](https://fluxnet.org/data/fluxnet2015-dataset/). It contains data from one site ([CH-Lae](https://gl.ethz.ch/infrastructure/sites/laegeren.html)) at a daily time step, and includes quality control information for each variable. Variables and how they are derived is explained in detail in [Pastorello et al. (2020)](https://www.nature.com/articles/s41597-020-0534-3).
 
 Let's read the data, select relevant variables, convert the time stamp column to a time object and interpret missing values (encoded -9999 in the file).
-```{r read_clean_ddf}
+```{r}
 library(tidyverse)
 
-ddf <- read_csv("./data/FLX_CH-Lae_FLUXNET2015_FULLSET_DD_2004-2014_1-3.csv") %>% 
+ddf <- read_csv("./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv") %>% 
   
   ## select only the variables we are interested in
   select(starts_with("TIMESTAMP"),
@@ -33,10 +33,6 @@ ddf <- read_csv("./data/FLX_CH-Lae_FLUXNET2015_FULLSET_DD_2004-2014_1-3.csv") %>
   select(-ends_with("_QC"), NEE_VUT_REF_QC)
 ```
 
-```{r include=FALSE}
-write_rds(ddf, file = "data/ddf.rds")
-```
-
 If the style of the code above looks unfamiliar - this is the **[tidyverse](https://www.tidyverse.org/)**. The aim of the tidyverse is to have a collection of R functions and packages that share a common syntax style and structure of arguments and function return values. This enables ease with typical data wrangling and visualization tasks (**[ggplot2](https://ggplot2.tidyverse.org/)** is part of it). This tutorial is generally written using tidyverse packages and code syntax.
 
 The column `NEE_VUT_REF_QC` provides information about the fraction of gap-filled half-hourly data used to calculate daily aggregates. Let's remove `GPP_NT_VUT_REF` data, where more than 80% of the half-hourly data was gap-filled. Make sure to not actually remove the respective rows, but rather replace values with NA.
@@ -51,6 +47,11 @@ ddf <- ddf %>%
   select(-NEE_VUT_REF_QC)
 ```
 
+
+```{r include=FALSE}
+# save to file for use in later chapters
+write_rds(ddf, file = "data/ddf.rds")
+```
 
 ## Splitting into testing and training sets
 

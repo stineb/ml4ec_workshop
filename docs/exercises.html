@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Exercises | ml4ec: Machine Learning for Eddy Covariance data</title>
+  <meta name="description" content="This is a hands-on tutorial." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Exercises | ml4ec: Machine Learning for Eddy Covariance data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a hands-on tutorial." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Exercises | ml4ec: Machine Learning for Eddy Covariance data" />
+  
+  <meta name="twitter:description" content="This is a hands-on tutorial." />
+  
+
+<meta name="author" content="Benjamin Stocker" />
+
+
+<meta name="date" content="2021-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="training.html"/>
+<link rel="next" href="solutions.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ml4ec</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Set up</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#apps"><i class="fa fa-check"></i><b>1.1</b> Apps</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.2</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="motivation.html"><a href="motivation.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="motivation.html"><a href="motivation.html#important-points"><i class="fa fa-check"></i><b>2.2</b> Important points</a></li>
+<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#overfitting"><i class="fa fa-check"></i><b>2.3</b> Overfitting</a></li>
+<li class="chapter" data-level="2.4" data-path="motivation.html"><a href="motivation.html#our-modelling-task"><i class="fa fa-check"></i><b>2.4</b> Our modelling task</a></li>
+<li class="chapter" data-level="2.5" data-path="motivation.html"><a href="motivation.html#motivation-1"><i class="fa fa-check"></i><b>2.5</b> Motivation</a></li>
+<li class="chapter" data-level="2.6" data-path="motivation.html"><a href="motivation.html#data"><i class="fa fa-check"></i><b>2.6</b> Data</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="motivation.html"><a href="motivation.html#available-variables"><i class="fa fa-check"></i><b>2.6.1</b> Available variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="motivation.html"><a href="motivation.html#the-modelling-challenge"><i class="fa fa-check"></i><b>2.7</b> The modelling challenge</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="motivation.html"><a href="motivation.html#some-peculiarities-of-the-data"><i class="fa fa-check"></i><b>2.7.1</b> Some peculiarities of the data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-splitting.html"><a href="data-splitting.html"><i class="fa fa-check"></i><b>3</b> Data splitting</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-splitting.html"><a href="data-splitting.html#reading-and-wrangling-data"><i class="fa fa-check"></i><b>3.1</b> Reading and wrangling data</a></li>
+<li class="chapter" data-level="3.2" data-path="data-splitting.html"><a href="data-splitting.html#splitting-into-testing-and-training-sets"><i class="fa fa-check"></i><b>3.2</b> Splitting into testing and training sets</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i><b>4</b> Pre-processing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="preprocessing.html"><a href="preprocessing.html#dealing-with-missingness-and-bad-data"><i class="fa fa-check"></i><b>4.1</b> Dealing with missingness and bad data</a></li>
+<li class="chapter" data-level="4.2" data-path="preprocessing.html"><a href="preprocessing.html#standardization"><i class="fa fa-check"></i><b>4.2</b> Standardization</a></li>
+<li class="chapter" data-level="4.3" data-path="preprocessing.html"><a href="preprocessing.html#more-pre-processing"><i class="fa fa-check"></i><b>4.3</b> More pre-processing</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="model-formulation.html"><a href="model-formulation.html"><i class="fa fa-check"></i><b>5</b> Model formulation</a></li>
+<li class="chapter" data-level="6" data-path="training.html"><a href="training.html"><i class="fa fa-check"></i><b>6</b> Model training</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="training.html"><a href="training.html#hyperparameter-tuning"><i class="fa fa-check"></i><b>6.1</b> Hyperparameter tuning</a></li>
+<li class="chapter" data-level="6.2" data-path="training.html"><a href="training.html#resampling"><i class="fa fa-check"></i><b>6.2</b> Resampling</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>7</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="exercises.html"><a href="exercises.html#reading-and-cleaning"><i class="fa fa-check"></i><b>7.1</b> Reading and cleaning</a></li>
+<li class="chapter" data-level="7.2" data-path="exercises.html"><a href="exercises.html#data-splitting-1"><i class="fa fa-check"></i><b>7.2</b> Data splitting</a></li>
+<li class="chapter" data-level="7.3" data-path="exercises.html"><a href="exercises.html#linear-model"><i class="fa fa-check"></i><b>7.3</b> Linear model</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="exercises.html"><a href="exercises.html#training-1"><i class="fa fa-check"></i><b>7.3.1</b> Training</a></li>
+<li class="chapter" data-level="7.3.2" data-path="exercises.html"><a href="exercises.html#prediction"><i class="fa fa-check"></i><b>7.3.2</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="exercises.html"><a href="exercises.html#knn"><i class="fa fa-check"></i><b>7.4</b> KNN</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="exercises.html"><a href="exercises.html#check-data"><i class="fa fa-check"></i><b>7.4.1</b> Check data</a></li>
+<li class="chapter" data-level="7.4.2" data-path="exercises.html"><a href="exercises.html#training-2"><i class="fa fa-check"></i><b>7.4.2</b> Training</a></li>
+<li class="chapter" data-level="7.4.3" data-path="exercises.html"><a href="exercises.html#prediction-1"><i class="fa fa-check"></i><b>7.4.3</b> Prediction</a></li>
+<li class="chapter" data-level="7.4.4" data-path="exercises.html"><a href="exercises.html#sample-hyperparameters"><i class="fa fa-check"></i><b>7.4.4</b> Sample hyperparameters</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="exercises.html"><a href="exercises.html#random-forest"><i class="fa fa-check"></i><b>7.5</b> Random forest</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="exercises.html"><a href="exercises.html#training-3"><i class="fa fa-check"></i><b>7.5.1</b> Training</a></li>
+<li class="chapter" data-level="7.5.2" data-path="exercises.html"><a href="exercises.html#prediction-2"><i class="fa fa-check"></i><b>7.5.2</b> Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="solutions.html"><a href="solutions.html"><i class="fa fa-check"></i><b>8</b> Solutions</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="solutions.html"><a href="solutions.html#reading-and-cleaning-1"><i class="fa fa-check"></i><b>8.1</b> Reading and cleaning</a></li>
+<li class="chapter" data-level="8.2" data-path="solutions.html"><a href="solutions.html#data-splitting-2"><i class="fa fa-check"></i><b>8.2</b> Data splitting</a></li>
+<li class="chapter" data-level="8.3" data-path="solutions.html"><a href="solutions.html#linear-model-1"><i class="fa fa-check"></i><b>8.3</b> Linear model</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="solutions.html"><a href="solutions.html#training-4"><i class="fa fa-check"></i><b>8.3.1</b> Training</a></li>
+<li class="chapter" data-level="8.3.2" data-path="solutions.html"><a href="solutions.html#prediction-3"><i class="fa fa-check"></i><b>8.3.2</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="solutions.html"><a href="solutions.html#knn-1"><i class="fa fa-check"></i><b>8.4</b> KNN</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="solutions.html"><a href="solutions.html#check-data-1"><i class="fa fa-check"></i><b>8.4.1</b> Check data</a></li>
+<li class="chapter" data-level="8.4.2" data-path="solutions.html"><a href="solutions.html#training-5"><i class="fa fa-check"></i><b>8.4.2</b> Training</a></li>
+<li class="chapter" data-level="8.4.3" data-path="solutions.html"><a href="solutions.html#prediction-4"><i class="fa fa-check"></i><b>8.4.3</b> Prediction</a></li>
+<li class="chapter" data-level="8.4.4" data-path="solutions.html"><a href="solutions.html#sample-hyperparameters-1"><i class="fa fa-check"></i><b>8.4.4</b> Sample hyperparameters</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="solutions.html"><a href="solutions.html#random-forest-1"><i class="fa fa-check"></i><b>8.5</b> Random forest</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="solutions.html"><a href="solutions.html#training-6"><i class="fa fa-check"></i><b>8.5.1</b> Training</a></li>
+<li class="chapter" data-level="8.5.2" data-path="solutions.html"><a href="solutions.html#prediction-5"><i class="fa fa-check"></i><b>8.5.2</b> Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ml4ec: Machine Learning for Eddy Covariance data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exercises" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Exercises</h1>
+<p>Now that you are familiar with the basic steps for supervised machine learning, you can get your hands on the data yourself and implement code for addressing the modelling task outlined in Chapter <a href="motivation.html#motivation">2</a>.</p>
+<div id="reading-and-cleaning" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Reading and cleaning</h2>
+<p>Read the CSV file <code>"./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv"</code>, select all variables with name ending with <code>"_F"</code>, the variables <code>"TIMESTAMP"</code>, <code>"GPP_NT_VUT_REF"</code>, and <code>"NEE_VUT_REF_QC"</code>, and drop all variables that contain <code>"JSB"</code> in their name. Then convert the variable <code>"TIMESTAMP"</code> to a date-time object with the function <code>ymd()</code> from the <em>lubridate</em> package, and interpret all values <code>-9999</code> as missing values. Then, set all values of <code>"GPP_NT_VUT_REF"</code> to missing if the corresponding quality control variable indicates that less than 90% are measured data points. Finally, drop the variable <code>"NEE_VUT_REF_QC"</code> - we won’t use it anymore.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="exercises.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-2"><a href="exercises.html#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="exercises.html#cb27-3" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="exercises.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-5"><a href="exercises.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="do">## select only the variables we are interested in</span></span>
+<span id="cb27-6"><a href="exercises.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;TIMESTAMP&quot;</span>),</span>
+<span id="cb27-7"><a href="exercises.html#cb27-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ends_with</span>(<span class="st">&quot;_F&quot;</span>),   <span class="co"># all meteorological variables</span></span>
+<span id="cb27-8"><a href="exercises.html#cb27-8" aria-hidden="true" tabindex="-1"></a>         GPP_NT_VUT_REF,</span>
+<span id="cb27-9"><a href="exercises.html#cb27-9" aria-hidden="true" tabindex="-1"></a>         NEE_VUT_REF_QC,</span>
+<span id="cb27-10"><a href="exercises.html#cb27-10" aria-hidden="true" tabindex="-1"></a>         <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;JSB&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-11"><a href="exercises.html#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="exercises.html#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="do">## convert to a nice date object</span></span>
+<span id="cb27-13"><a href="exercises.html#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TIMESTAMP =</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(TIMESTAMP)) <span class="sc">%&gt;%</span></span>
+<span id="cb27-14"><a href="exercises.html#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="exercises.html#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="do">## set all -9999 to NA</span></span>
+<span id="cb27-16"><a href="exercises.html#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na_if</span>(<span class="sc">-</span><span class="dv">9999</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-17"><a href="exercises.html#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="exercises.html#cb27-18" aria-hidden="true" tabindex="-1"></a>  <span class="do">## drop QC variables (no longer needed), except NEE_VUT_REF_QC</span></span>
+<span id="cb27-19"><a href="exercises.html#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&quot;_QC&quot;</span>), NEE_VUT_REF_QC) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-20"><a href="exercises.html#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="exercises.html#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GPP_NT_VUT_REF =</span> <span class="fu">ifelse</span>(NEE_VUT_REF_QC <span class="sc">&lt;</span> <span class="fl">0.9</span>, <span class="cn">NA</span>, GPP_NT_VUT_REF)) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-22"><a href="exercises.html#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NEE_VUT_REF_QC)</span></code></pre></div>
+<pre><code>## Rows: 6574 Columns: 334</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (334): TIMESTAMP, TA_F_MDS, TA_F_MDS_QC, TA_F_MDS_NIGHT, TA_F_MDS_NIGHT_...</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div id="data-splitting-1" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Data splitting</h2>
+<p>Split the data a training and testing set, that contain 70% and 30% of the total available data, respectively.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="exercises.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb31-2"><a href="exercises.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1982</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb31-3"><a href="exercises.html#cb31-3" aria-hidden="true" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ddf, <span class="at">prop =</span> <span class="fl">0.7</span>)</span>
+<span id="cb31-4"><a href="exercises.html#cb31-4" aria-hidden="true" tabindex="-1"></a>ddf_train <span class="ot">&lt;-</span> <span class="fu">training</span>(split)</span>
+<span id="cb31-5"><a href="exercises.html#cb31-5" aria-hidden="true" tabindex="-1"></a>ddf_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(split)</span></code></pre></div>
+</div>
+<div id="linear-model" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Linear model</h2>
+<div id="training-1" class="section level3" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Training</h3>
+<p>Fit a linear regression model using the base-R function <code>lm()</code> and the training set. The target variable is <code>"GPP_NT_VUT_REF"</code>, and predictor variables are all available meterological variables in the dataset. Answer the following questions:</p>
+<ul>
+<li>What is the <span class="math inline">\(R^2\)</span> of predicted vs. observed <code>"GPP_NT_VUT_REF"</code>?</li>
+<li>Is the linear regression slope significantly different from zero for all predictors?</li>
+<li>Is a linear regression model with “poor” predictors removed better supported by the data than a model including all predictors?</li>
+</ul>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="exercises.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## fit linear regression model</span></span>
+<span id="cb32-2"><a href="exercises.html#cb32-2" aria-hidden="true" tabindex="-1"></a>linmod_baser <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb32-3"><a href="exercises.html#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> ., </span>
+<span id="cb32-4"><a href="exercises.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb32-5"><a href="exercises.html#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-6"><a href="exercises.html#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>TIMESTAMP)</span>
+<span id="cb32-7"><a href="exercises.html#cb32-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-8"><a href="exercises.html#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="exercises.html#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="do">## show summary information of the model</span></span>
+<span id="cb32-10"><a href="exercises.html#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linmod_baser)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_NT_VUT_REF ~ ., data = ddf_train %&gt;% drop_na() %&gt;% 
+##     select(-TIMESTAMP))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.1941 -1.0393 -0.1299  0.8859  7.7205 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.9570704  3.4840107  -0.275 0.783558    
+## TA_F         0.1633211  0.0108181  15.097  &lt; 2e-16 ***
+## SW_IN_F      0.0137226  0.0003914  35.064  &lt; 2e-16 ***
+## LW_IN_F      0.0207311  0.0012040  17.219  &lt; 2e-16 ***
+## VPD_F       -0.1420886  0.0195509  -7.268 4.35e-13 ***
+## PA_F        -0.0402727  0.0404675  -0.995 0.319704    
+## P_F         -0.0214314  0.0046177  -4.641 3.57e-06 ***
+## WS_F        -0.1418356  0.0398616  -3.558 0.000378 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.549 on 4135 degrees of freedom
+## Multiple R-squared:  0.6904, Adjusted R-squared:  0.6899 
+## F-statistic:  1317 on 7 and 4135 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="exercises.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Models can be compared, for example by the Bayesian Information Criterion (BIC). </span></span>
+<span id="cb34-2"><a href="exercises.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="do">## It penalizes complex models and is optimal (lowest) where the trade-off between </span></span>
+<span id="cb34-3"><a href="exercises.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">## explanatory power on the training set vs. number of predictors is best. The BIC</span></span>
+<span id="cb34-4"><a href="exercises.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="do">## tends to be more conservative than the AIC.</span></span>
+<span id="cb34-5"><a href="exercises.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(linmod_baser)</span></code></pre></div>
+<pre><code>## [1] 15450.89</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="exercises.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit an lm model on the same data, but with PA_F removed.</span></span>
+<span id="cb36-2"><a href="exercises.html#cb36-2" aria-hidden="true" tabindex="-1"></a>linmod_baser_nopaf <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb36-3"><a href="exercises.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> ., </span>
+<span id="cb36-4"><a href="exercises.html#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb36-5"><a href="exercises.html#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb36-6"><a href="exercises.html#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>TIMESTAMP, <span class="sc">-</span>PA_F)</span>
+<span id="cb36-7"><a href="exercises.html#cb36-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-8"><a href="exercises.html#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="exercises.html#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="do">## The R-squared is slightly lower here (0.6903) than in the model with all predictors (0.6904)</span></span>
+<span id="cb36-10"><a href="exercises.html#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linmod_baser_nopaf)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = GPP_NT_VUT_REF ~ ., data = ddf_train %&gt;% drop_na() %&gt;% 
+##     select(-TIMESTAMP, -PA_F))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.1849 -1.0390 -0.1306  0.8867  7.7594 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -4.4102425  0.3135013 -14.068  &lt; 2e-16 ***
+## TA_F         0.1595814  0.0101445  15.731  &lt; 2e-16 ***
+## SW_IN_F      0.0136923  0.0003902  35.093  &lt; 2e-16 ***
+## LW_IN_F      0.0210424  0.0011626  18.099  &lt; 2e-16 ***
+## VPD_F       -0.1400240  0.0194405  -7.203 6.98e-13 ***
+## P_F         -0.0212661  0.0046147  -4.608 4.18e-06 ***
+## WS_F        -0.1343263  0.0391409  -3.432 0.000605 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.549 on 4136 degrees of freedom
+## Multiple R-squared:  0.6903, Adjusted R-squared:  0.6899 
+## F-statistic:  1537 on 6 and 4136 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="exercises.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ... but the BIC is clearly lower, indicating that the model with PA_F removed is better.</span></span>
+<span id="cb38-2"><a href="exercises.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(linmod_baser_nopaf)</span></code></pre></div>
+<pre><code>## [1] 15443.55</code></pre>
+<p>Use caret and the function <code>train()</code> for fitting the same linear regression model (with all predictors) on the same data. Does it yield identical results as using <code>lm()</code> directly? You will have to set the argument <code>trControl</code> accordingly to avoid resampling, and instead fit the model on the all data in <code>ddf_train</code>. You can use <code>summary()</code> also on the object returned by the function <code>train()</code>.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="exercises.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb40-2"><a href="exercises.html#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="exercises.html#cb40-3" aria-hidden="true" tabindex="-1"></a>linmod_caret <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb40-4"><a href="exercises.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> ., </span>
+<span id="cb40-5"><a href="exercises.html#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb40-6"><a href="exercises.html#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb40-7"><a href="exercises.html#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>TIMESTAMP), </span>
+<span id="cb40-8"><a href="exercises.html#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb40-9"><a href="exercises.html#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb40-10"><a href="exercises.html#cb40-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-11"><a href="exercises.html#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="exercises.html#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linmod_caret)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = .outcome ~ ., data = dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.1941 -1.0393 -0.1299  0.8859  7.7205 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.9570704  3.4840107  -0.275 0.783558    
+## TA_F         0.1633211  0.0108181  15.097  &lt; 2e-16 ***
+## SW_IN_F      0.0137226  0.0003914  35.064  &lt; 2e-16 ***
+## LW_IN_F      0.0207311  0.0012040  17.219  &lt; 2e-16 ***
+## VPD_F       -0.1420886  0.0195509  -7.268 4.35e-13 ***
+## PA_F        -0.0402727  0.0404675  -0.995 0.319704    
+## P_F         -0.0214314  0.0046177  -4.641 3.57e-06 ***
+## WS_F        -0.1418356  0.0398616  -3.558 0.000378 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.549 on 4135 degrees of freedom
+## Multiple R-squared:  0.6904, Adjusted R-squared:  0.6899 
+## F-statistic:  1317 on 7 and 4135 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="prediction" class="section level3" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Prediction</h3>
+<p>With the model containing all predictors and fitted on <code>ddf_train</code>, make predictions using first <code>ddf_train</code> and then <code>ddf_test</code>. Compute the <span class="math inline">\(R^2\)</span> and the root-mean-square error, and visualise modelled vs. observed values to evaluate both predictions.</p>
+<p>Do you expect the linear regression model trained on <code>ddf_train</code> to predict substantially better on <code>ddf_train</code> than on <code>ddf_test</code>? Why (not)?</p>
+<p>Hints:</p>
+<ul>
+<li>To calculate predictions, use the generic function <code>predict()</code> with the argument <code>newdata = ...</code>.</li>
+<li>The <span class="math inline">\(R^2\)</span> can be extracted from the model object as <code>summary(model_object)$r.squared</code>, or is (as the RMSE) given in the metrics data frame returned by <code>metrics()</code> from the <em>yardstick</em> library.</li>
+<li>For visualisation the model performance, consider a scatterplot, or (better) a plot that reveals the density of overlapping points. (We’re plotting information from over 4000 data points here!)</li>
+</ul>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="exercises.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb42-2"><a href="exercises.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yardstick)</span>
+<span id="cb42-3"><a href="exercises.html#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="exercises.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="do">## made into a function to reuse code below</span></span>
+<span id="cb42-5"><a href="exercises.html#cb42-5" aria-hidden="true" tabindex="-1"></a>eval_model <span class="ot">&lt;-</span> <span class="cf">function</span>(mod, df_train, df_test){</span>
+<span id="cb42-6"><a href="exercises.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-7"><a href="exercises.html#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="do">## add predictions to the data frames</span></span>
+<span id="cb42-8"><a href="exercises.html#cb42-8" aria-hidden="true" tabindex="-1"></a>  df_train <span class="ot">&lt;-</span> df_train <span class="sc">%&gt;%</span> </span>
+<span id="cb42-9"><a href="exercises.html#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb42-10"><a href="exercises.html#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">.fitted =</span> <span class="fu">predict</span>(mod, <span class="at">newdata =</span> .))</span>
+<span id="cb42-11"><a href="exercises.html#cb42-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-12"><a href="exercises.html#cb42-12" aria-hidden="true" tabindex="-1"></a>  df_test <span class="ot">&lt;-</span> df_test <span class="sc">%&gt;%</span> </span>
+<span id="cb42-13"><a href="exercises.html#cb42-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb42-14"><a href="exercises.html#cb42-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">.fitted =</span> <span class="fu">predict</span>(mod, <span class="at">newdata =</span> .))</span>
+<span id="cb42-15"><a href="exercises.html#cb42-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-16"><a href="exercises.html#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="do">## get metrics tables</span></span>
+<span id="cb42-17"><a href="exercises.html#cb42-17" aria-hidden="true" tabindex="-1"></a>  metrics_train <span class="ot">&lt;-</span> df_train <span class="sc">%&gt;%</span> </span>
+<span id="cb42-18"><a href="exercises.html#cb42-18" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">metrics</span>(GPP_NT_VUT_REF, .fitted)</span>
+<span id="cb42-19"><a href="exercises.html#cb42-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-20"><a href="exercises.html#cb42-20" aria-hidden="true" tabindex="-1"></a>  metrics_test <span class="ot">&lt;-</span> df_test <span class="sc">%&gt;%</span> </span>
+<span id="cb42-21"><a href="exercises.html#cb42-21" aria-hidden="true" tabindex="-1"></a>    yardstick<span class="sc">::</span><span class="fu">metrics</span>(GPP_NT_VUT_REF, .fitted)</span>
+<span id="cb42-22"><a href="exercises.html#cb42-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-23"><a href="exercises.html#cb42-23" aria-hidden="true" tabindex="-1"></a>  <span class="do">## extract values from metrics tables</span></span>
+<span id="cb42-24"><a href="exercises.html#cb42-24" aria-hidden="true" tabindex="-1"></a>  rmse_train <span class="ot">&lt;-</span> metrics_train <span class="sc">%&gt;%</span> </span>
+<span id="cb42-25"><a href="exercises.html#cb42-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">&quot;rmse&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-26"><a href="exercises.html#cb42-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(.estimate)</span>
+<span id="cb42-27"><a href="exercises.html#cb42-27" aria-hidden="true" tabindex="-1"></a>  rsq_train <span class="ot">&lt;-</span> metrics_train <span class="sc">%&gt;%</span> </span>
+<span id="cb42-28"><a href="exercises.html#cb42-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">&quot;rsq&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-29"><a href="exercises.html#cb42-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(.estimate)</span>
+<span id="cb42-30"><a href="exercises.html#cb42-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-31"><a href="exercises.html#cb42-31" aria-hidden="true" tabindex="-1"></a>  rmse_test <span class="ot">&lt;-</span> metrics_test <span class="sc">%&gt;%</span> </span>
+<span id="cb42-32"><a href="exercises.html#cb42-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">&quot;rmse&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-33"><a href="exercises.html#cb42-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(.estimate)</span>
+<span id="cb42-34"><a href="exercises.html#cb42-34" aria-hidden="true" tabindex="-1"></a>  rsq_test <span class="ot">&lt;-</span> metrics_test <span class="sc">%&gt;%</span> </span>
+<span id="cb42-35"><a href="exercises.html#cb42-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">&quot;rsq&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-36"><a href="exercises.html#cb42-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(.estimate)</span>
+<span id="cb42-37"><a href="exercises.html#cb42-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-38"><a href="exercises.html#cb42-38" aria-hidden="true" tabindex="-1"></a>  <span class="do">## visualise with a hexagon binning and a customised color scale,</span></span>
+<span id="cb42-39"><a href="exercises.html#cb42-39" aria-hidden="true" tabindex="-1"></a>  <span class="do">## adding information of metrics as sub-titles</span></span>
+<span id="cb42-40"><a href="exercises.html#cb42-40" aria-hidden="true" tabindex="-1"></a>  gg1 <span class="ot">&lt;-</span> df_train <span class="sc">%&gt;%</span> </span>
+<span id="cb42-41"><a href="exercises.html#cb42-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(GPP_NT_VUT_REF, .fitted)) <span class="sc">+</span></span>
+<span id="cb42-42"><a href="exercises.html#cb42-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
+<span id="cb42-43"><a href="exercises.html#cb42-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_gradientn</span>(</span>
+<span id="cb42-44"><a href="exercises.html#cb42-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">colours =</span> <span class="fu">colorRampPalette</span>( <span class="fu">c</span>(<span class="st">&quot;gray65&quot;</span>, <span class="st">&quot;navy&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>))(<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb42-45"><a href="exercises.html#cb42-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-46"><a href="exercises.html#cb42-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="fu">bquote</span>( <span class="fu">italic</span>(R)<span class="sc">^</span><span class="dv">2</span> <span class="sc">==</span> .(<span class="fu">format</span>(rsq_train, <span class="at">digits =</span> <span class="dv">2</span>)) <span class="sc">~</span><span class="er">~</span></span>
+<span id="cb42-47"><a href="exercises.html#cb42-47" aria-hidden="true" tabindex="-1"></a>                            RMSE <span class="sc">==</span> .(<span class="fu">format</span>(rmse_train, <span class="at">digits =</span> <span class="dv">3</span>))),</span>
+<span id="cb42-48"><a href="exercises.html#cb42-48" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">&quot;Training set&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-49"><a href="exercises.html#cb42-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb42-50"><a href="exercises.html#cb42-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-51"><a href="exercises.html#cb42-51" aria-hidden="true" tabindex="-1"></a>  gg2 <span class="ot">&lt;-</span> df_test <span class="sc">%&gt;%</span> </span>
+<span id="cb42-52"><a href="exercises.html#cb42-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(GPP_NT_VUT_REF, .fitted)) <span class="sc">+</span></span>
+<span id="cb42-53"><a href="exercises.html#cb42-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
+<span id="cb42-54"><a href="exercises.html#cb42-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_gradientn</span>(</span>
+<span id="cb42-55"><a href="exercises.html#cb42-55" aria-hidden="true" tabindex="-1"></a>      <span class="at">colours =</span> <span class="fu">colorRampPalette</span>( <span class="fu">c</span>(<span class="st">&quot;gray65&quot;</span>, <span class="st">&quot;navy&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>))(<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb42-56"><a href="exercises.html#cb42-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-57"><a href="exercises.html#cb42-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="fu">bquote</span>( <span class="fu">italic</span>(R)<span class="sc">^</span><span class="dv">2</span> <span class="sc">==</span> .(<span class="fu">format</span>(rsq_test, <span class="at">digits =</span> <span class="dv">2</span>)) <span class="sc">~</span><span class="er">~</span></span>
+<span id="cb42-58"><a href="exercises.html#cb42-58" aria-hidden="true" tabindex="-1"></a>                            RMSE <span class="sc">==</span> .(<span class="fu">format</span>(rmse_test, <span class="at">digits =</span> <span class="dv">3</span>))),</span>
+<span id="cb42-59"><a href="exercises.html#cb42-59" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">&quot;Test set&quot;</span>) <span class="sc">+</span></span>
+<span id="cb42-60"><a href="exercises.html#cb42-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb42-61"><a href="exercises.html#cb42-61" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-62"><a href="exercises.html#cb42-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(gg1 <span class="sc">+</span> gg2)</span>
+<span id="cb42-63"><a href="exercises.html#cb42-63" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-64"><a href="exercises.html#cb42-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-65"><a href="exercises.html#cb42-65" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_model</span>(<span class="at">mod =</span> linmod_baser, <span class="at">df_train =</span> ddf_train, <span class="at">df_test =</span> ddf_test)</span></code></pre></div>
+<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+</div>
+<div id="knn" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> KNN</h2>
+<div id="check-data" class="section level3" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> Check data</h3>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="exercises.html#cb43-1" aria-hidden="true" tabindex="-1"></a>ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="exercises.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">split =</span> <span class="st">&quot;train&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-3"><a href="exercises.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(ddf_test <span class="sc">%&gt;%</span> </span>
+<span id="cb43-4"><a href="exercises.html#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">split =</span> <span class="st">&quot;test&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-5"><a href="exercises.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-6"><a href="exercises.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> ..density.., <span class="at">color =</span> split)) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="exercises.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb43-8"><a href="exercises.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 681 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>The variable <code>PA_F</code> looks weird and was not significant in the linear model. Therefore, we won’t use it for the models below.</p>
+</div>
+<div id="training-2" class="section level3" number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> Training</h3>
+<p>Fit two KNN models on <code>ddf_train</code> (excluding <code>"PA_F"</code>), one with <span class="math inline">\(k = 2\)</span> and one with <span class="math inline">\(k = 30\)</span>, both without resampling. Use the RMSE as the loss function. Center and scale data as part of the pre-processing and model formulation specification using the function <code>recipe()</code>.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="exercises.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;recipes&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:stringr&#39;:
+## 
+##     fixed</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     step</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="exercises.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="do">## model formulation and preprocessing specification</span></span>
+<span id="cb49-2"><a href="exercises.html#cb49-2" aria-hidden="true" tabindex="-1"></a>myrecipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb49-3"><a href="exercises.html#cb49-3" aria-hidden="true" tabindex="-1"></a>  GPP_NT_VUT_REF <span class="sc">~</span> TA_F <span class="sc">+</span> SW_IN_F <span class="sc">+</span> LW_IN_F <span class="sc">+</span> VPD_F <span class="sc">+</span> P_F <span class="sc">+</span> WS_F, </span>
+<span id="cb49-4"><a href="exercises.html#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-5"><a href="exercises.html#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb49-6"><a href="exercises.html#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())</span>
+<span id="cb49-7"><a href="exercises.html#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="exercises.html#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="do">## fit model with k=2</span></span>
+<span id="cb49-9"><a href="exercises.html#cb49-9" aria-hidden="true" tabindex="-1"></a>mod_knn_k2 <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb49-10"><a href="exercises.html#cb49-10" aria-hidden="true" tabindex="-1"></a>  myrecipe, </span>
+<span id="cb49-11"><a href="exercises.html#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb49-12"><a href="exercises.html#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(), </span>
+<span id="cb49-13"><a href="exercises.html#cb49-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>,</span>
+<span id="cb49-14"><a href="exercises.html#cb49-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="st">&quot;none&quot;</span>),</span>
+<span id="cb49-15"><a href="exercises.html#cb49-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="fu">c</span>(<span class="dv">2</span>)),</span>
+<span id="cb49-16"><a href="exercises.html#cb49-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span></span>
+<span id="cb49-17"><a href="exercises.html#cb49-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb49-18"><a href="exercises.html#cb49-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-19"><a href="exercises.html#cb49-19" aria-hidden="true" tabindex="-1"></a><span class="do">## fit model with k=30</span></span>
+<span id="cb49-20"><a href="exercises.html#cb49-20" aria-hidden="true" tabindex="-1"></a>mod_knn_k30 <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb49-21"><a href="exercises.html#cb49-21" aria-hidden="true" tabindex="-1"></a>  myrecipe, </span>
+<span id="cb49-22"><a href="exercises.html#cb49-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb49-23"><a href="exercises.html#cb49-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(), </span>
+<span id="cb49-24"><a href="exercises.html#cb49-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>,</span>
+<span id="cb49-25"><a href="exercises.html#cb49-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="st">&quot;none&quot;</span>),</span>
+<span id="cb49-26"><a href="exercises.html#cb49-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="fu">c</span>(<span class="dv">30</span>)),</span>
+<span id="cb49-27"><a href="exercises.html#cb49-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span></span>
+<span id="cb49-28"><a href="exercises.html#cb49-28" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="prediction-1" class="section level3" number="7.4.3">
+<h3><span class="header-section-number">7.4.3</span> Prediction</h3>
+<p>With the two models fitted above, predict <code>"GPP_NT_VUT_REF"</code> for both and training and the testing sets, and evaluate them as above (metrics and visualisation).</p>
+<p>Which model do you expect to perform better on the training set and which to perform better on the testing set? Why? Do you find evidence for overfitting in any of the models?</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="exercises.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">## with k = 2</span></span>
+<span id="cb50-2"><a href="exercises.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_model</span>(</span>
+<span id="cb50-3"><a href="exercises.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  mod_knn_k2, </span>
+<span id="cb50-4"><a href="exercises.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_train =</span> ddf_train, </span>
+<span id="cb50-5"><a href="exercises.html#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_test =</span> ddf_test</span>
+<span id="cb50-6"><a href="exercises.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="exercises.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="do">## with k = 30</span></span>
+<span id="cb51-2"><a href="exercises.html#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_model</span>(</span>
+<span id="cb51-3"><a href="exercises.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  mod_knn_k30, </span>
+<span id="cb51-4"><a href="exercises.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_train =</span> ddf_train, </span>
+<span id="cb51-5"><a href="exercises.html#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_test =</span> ddf_test</span>
+<span id="cb51-6"><a href="exercises.html#cb51-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-31-2.png" width="672" /></p>
+</div>
+<div id="sample-hyperparameters" class="section level3" number="7.4.4">
+<h3><span class="header-section-number">7.4.4</span> Sample hyperparameters</h3>
+<p>Train a KNN model with hyperparameter (<span class="math inline">\(k\)</span>) tuned, and with five-fold cross validation, using the training set. As the loss function, use RMSE. Sample the following values for <span class="math inline">\(k\)</span>: 2, 5, 10, 15, 18, 20, 22, 24, 26, 30, 35, 40, 60, 100. Visualise the RMSE as a function of <span class="math inline">\(k\)</span>.</p>
+<p>Hint:</p>
+<ul>
+<li>The visualisation of cross-validation results can be visualised with the <code>plot(model_object)</code> of <code>ggplot(model_object)</code>.</li>
+</ul>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="exercises.html#cb52-1" aria-hidden="true" tabindex="-1"></a>mod_knn <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb52-2"><a href="exercises.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  myrecipe, </span>
+<span id="cb52-3"><a href="exercises.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb52-4"><a href="exercises.html#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(), </span>
+<span id="cb52-5"><a href="exercises.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>,</span>
+<span id="cb52-6"><a href="exercises.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>),</span>
+<span id="cb52-7"><a href="exercises.html#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">24</span>, <span class="dv">26</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">100</span>)),</span>
+<span id="cb52-8"><a href="exercises.html#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span></span>
+<span id="cb52-9"><a href="exercises.html#cb52-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-10"><a href="exercises.html#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod_knn)</span></code></pre></div>
+<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+</div>
+</div>
+<div id="random-forest" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Random forest</h2>
+<div id="training-3" class="section level3" number="7.5.1">
+<h3><span class="header-section-number">7.5.1</span> Training</h3>
+<p>Fit a random forest model with <code>ddf_train</code> and all predictors excluding <code>"PA_F"</code> and five-fold cross validation. Use RMSE as the loss function.</p>
+<p>Hints:</p>
+<ul>
+<li>Use the package <em>ranger</em> which implements the random forest algorithm.</li>
+<li>See <a href="https://topepo.github.io/caret/available-models.html">here</a> for information about hyperparameters available for tuning with caret.</li>
+<li>Set the argument <code>savePredictions = "final"</code> of function <code>trainControl()</code>.</li>
+</ul>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="exercises.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ranger)</span>
+<span id="cb53-2"><a href="exercises.html#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="exercises.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="do">## no pre-processing necessary</span></span>
+<span id="cb53-4"><a href="exercises.html#cb53-4" aria-hidden="true" tabindex="-1"></a>myrecipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb53-5"><a href="exercises.html#cb53-5" aria-hidden="true" tabindex="-1"></a>  GPP_NT_VUT_REF <span class="sc">~</span> TA_F <span class="sc">+</span> SW_IN_F <span class="sc">+</span> LW_IN_F <span class="sc">+</span> VPD_F <span class="sc">+</span> P_F <span class="sc">+</span> WS_F, </span>
+<span id="cb53-6"><a href="exercises.html#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb53-7"><a href="exercises.html#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>())</span>
+<span id="cb53-8"><a href="exercises.html#cb53-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-9"><a href="exercises.html#cb53-9" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">train</span>(</span>
+<span id="cb53-10"><a href="exercises.html#cb53-10" aria-hidden="true" tabindex="-1"></a>  myrecipe, </span>
+<span id="cb53-11"><a href="exercises.html#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb53-12"><a href="exercises.html#cb53-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(), </span>
+<span id="cb53-13"><a href="exercises.html#cb53-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>,</span>
+<span id="cb53-14"><a href="exercises.html#cb53-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>, <span class="at">savePredictions =</span> <span class="st">&quot;final&quot;</span>),</span>
+<span id="cb53-15"><a href="exercises.html#cb53-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>( <span class="at">.mtry =</span> <span class="fu">floor</span>(<span class="dv">6</span> <span class="sc">/</span> <span class="dv">3</span>),</span>
+<span id="cb53-16"><a href="exercises.html#cb53-16" aria-hidden="true" tabindex="-1"></a>                          <span class="at">.min.node.size =</span> <span class="dv">5</span>,</span>
+<span id="cb53-17"><a href="exercises.html#cb53-17" aria-hidden="true" tabindex="-1"></a>                          <span class="at">.splitrule =</span> <span class="st">&quot;variance&quot;</span>),</span>
+<span id="cb53-18"><a href="exercises.html#cb53-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span>,</span>
+<span id="cb53-19"><a href="exercises.html#cb53-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">replace =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb53-20"><a href="exercises.html#cb53-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample.fraction =</span> <span class="fl">0.5</span>,</span>
+<span id="cb53-21"><a href="exercises.html#cb53-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">num.trees =</span> <span class="dv">2000</span>,          <span class="co"># high number ok since no hperparam tuning</span></span>
+<span id="cb53-22"><a href="exercises.html#cb53-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1982</span>                <span class="co"># for reproducibility</span></span>
+<span id="cb53-23"><a href="exercises.html#cb53-23" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Loading required namespace: e1071</code></pre>
+<pre><code>## 
+## Attaching package: &#39;e1071&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:rsample&#39;:
+## 
+##     permutations</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="exercises.html#cb57-1" aria-hidden="true" tabindex="-1"></a>rf</span></code></pre></div>
+<pre><code>## Random Forest 
+## 
+## 4143 samples
+##    8 predictor
+## 
+## Recipe steps:  
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 3313, 3315, 3315, 3314, 3315 
+## Resampling results:
+## 
+##   RMSE      Rsquared  MAE     
+##   1.401107  0.746519  1.056488
+## 
+## Tuning parameter &#39;mtry&#39; was held constant at a value of 2
+## Tuning
+##  parameter &#39;splitrule&#39; was held constant at a value of variance
+## 
+## Tuning parameter &#39;min.node.size&#39; was held constant at a value of 5</code></pre>
+</div>
+<div id="prediction-2" class="section level3" number="7.5.2">
+<h3><span class="header-section-number">7.5.2</span> Prediction</h3>
+<p>Evaluate the trained model on the training and on the test set, giving metrics and a visualisation as above.</p>
+<p>How are differences in performance to be interpreted? Compare the performances of linear regression, KNN, and random forest, considering the evaluation on the test set.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="exercises.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_model</span>(rf, <span class="at">df_train =</span> ddf_train, <span class="at">df_test =</span> ddf_test)</span></code></pre></div>
+<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>Show the model performance (metrics and visualisation) on the validation sets all cross validation folds combined.</p>
+<p>Do you expect it to be more similar to the model performance on the training set or the testing set in the evaluation above? Why?</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="exercises.html#cb60-1" aria-hidden="true" tabindex="-1"></a>metrics_train <span class="ot">&lt;-</span> rf<span class="sc">$</span>pred <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="exercises.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  yardstick<span class="sc">::</span><span class="fu">metrics</span>(obs, pred)</span>
+<span id="cb60-3"><a href="exercises.html#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="exercises.html#cb60-4" aria-hidden="true" tabindex="-1"></a>rmse_train <span class="ot">&lt;-</span> metrics_train <span class="sc">%&gt;%</span> </span>
+<span id="cb60-5"><a href="exercises.html#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">&quot;rmse&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-6"><a href="exercises.html#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(.estimate)</span>
+<span id="cb60-7"><a href="exercises.html#cb60-7" aria-hidden="true" tabindex="-1"></a>rsq_train <span class="ot">&lt;-</span> metrics_train <span class="sc">%&gt;%</span> </span>
+<span id="cb60-8"><a href="exercises.html#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">&quot;rsq&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-9"><a href="exercises.html#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(.estimate)</span>
+<span id="cb60-10"><a href="exercises.html#cb60-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-11"><a href="exercises.html#cb60-11" aria-hidden="true" tabindex="-1"></a>rf<span class="sc">$</span>pred <span class="sc">%&gt;%</span> </span>
+<span id="cb60-12"><a href="exercises.html#cb60-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(obs, pred)) <span class="sc">+</span></span>
+<span id="cb60-13"><a href="exercises.html#cb60-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
+<span id="cb60-14"><a href="exercises.html#cb60-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(</span>
+<span id="cb60-15"><a href="exercises.html#cb60-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">colours =</span> <span class="fu">colorRampPalette</span>( <span class="fu">c</span>(<span class="st">&quot;gray65&quot;</span>, <span class="st">&quot;navy&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>))(<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb60-16"><a href="exercises.html#cb60-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb60-17"><a href="exercises.html#cb60-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="fu">bquote</span>( <span class="fu">italic</span>(R)<span class="sc">^</span><span class="dv">2</span> <span class="sc">==</span> .(<span class="fu">format</span>(rsq_train, <span class="at">digits =</span> <span class="dv">2</span>)) <span class="sc">~</span><span class="er">~</span></span>
+<span id="cb60-18"><a href="exercises.html#cb60-18" aria-hidden="true" tabindex="-1"></a>                          RMSE <span class="sc">==</span> .(<span class="fu">format</span>(rmse_train, <span class="at">digits =</span> <span class="dv">3</span>))),</span>
+<span id="cb60-19"><a href="exercises.html#cb60-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Validation folds in training set&quot;</span>) <span class="sc">+</span></span>
+<span id="cb60-20"><a href="exercises.html#cb60-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="training.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="solutions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["ml4ec_workshop.pdf", "ml4ec_workshop.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

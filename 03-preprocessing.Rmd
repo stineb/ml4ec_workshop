@@ -33,7 +33,7 @@ Several algorithms explicitly require data to be standardized. That is, values o
 
 To get a quick overview of the distribution of all variables (columns) in our data frame, we can use the *skimr* package.
 
-```{r}
+```{r eval=FALSE}
 library(skimr)
 skim(ddf)
 ```

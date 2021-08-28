@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Model formulation | ml4ec: Machine Learning for Eddy Covariance data</title>
+  <meta name="description" content="This is a hands-on tutorial." />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Model formulation | ml4ec: Machine Learning for Eddy Covariance data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a hands-on tutorial." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Model formulation | ml4ec: Machine Learning for Eddy Covariance data" />
+  
+  <meta name="twitter:description" content="This is a hands-on tutorial." />
+  
+
+<meta name="author" content="Benjamin Stocker" />
+
+
+<meta name="date" content="2021-08-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="preprocessing.html"/>
+<link rel="next" href="training.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">ml4ec</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Set up</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#apps"><i class="fa fa-check"></i><b>1.1</b> Apps</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.2</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="motivation.html"><a href="motivation.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="motivation.html"><a href="motivation.html#important-points"><i class="fa fa-check"></i><b>2.2</b> Important points</a></li>
+<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#overfitting"><i class="fa fa-check"></i><b>2.3</b> Overfitting</a></li>
+<li class="chapter" data-level="2.4" data-path="motivation.html"><a href="motivation.html#our-modelling-task"><i class="fa fa-check"></i><b>2.4</b> Our modelling task</a></li>
+<li class="chapter" data-level="2.5" data-path="motivation.html"><a href="motivation.html#motivation-1"><i class="fa fa-check"></i><b>2.5</b> Motivation</a></li>
+<li class="chapter" data-level="2.6" data-path="motivation.html"><a href="motivation.html#data"><i class="fa fa-check"></i><b>2.6</b> Data</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="motivation.html"><a href="motivation.html#available-variables"><i class="fa fa-check"></i><b>2.6.1</b> Available variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="motivation.html"><a href="motivation.html#the-modelling-challenge"><i class="fa fa-check"></i><b>2.7</b> The modelling challenge</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="motivation.html"><a href="motivation.html#some-peculiarities-of-the-data"><i class="fa fa-check"></i><b>2.7.1</b> Some peculiarities of the data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-splitting.html"><a href="data-splitting.html"><i class="fa fa-check"></i><b>3</b> Data splitting</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-splitting.html"><a href="data-splitting.html#reading-and-wrangling-data"><i class="fa fa-check"></i><b>3.1</b> Reading and wrangling data</a></li>
+<li class="chapter" data-level="3.2" data-path="data-splitting.html"><a href="data-splitting.html#splitting-into-testing-and-training-sets"><i class="fa fa-check"></i><b>3.2</b> Splitting into testing and training sets</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i><b>4</b> Pre-processing</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="preprocessing.html"><a href="preprocessing.html#dealing-with-missingness-and-bad-data"><i class="fa fa-check"></i><b>4.1</b> Dealing with missingness and bad data</a></li>
+<li class="chapter" data-level="4.2" data-path="preprocessing.html"><a href="preprocessing.html#standardization"><i class="fa fa-check"></i><b>4.2</b> Standardization</a></li>
+<li class="chapter" data-level="4.3" data-path="preprocessing.html"><a href="preprocessing.html#more-pre-processing"><i class="fa fa-check"></i><b>4.3</b> More pre-processing</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="model-formulation.html"><a href="model-formulation.html"><i class="fa fa-check"></i><b>5</b> Model formulation</a></li>
+<li class="chapter" data-level="6" data-path="training.html"><a href="training.html"><i class="fa fa-check"></i><b>6</b> Model training</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="training.html"><a href="training.html#hyperparameter-tuning"><i class="fa fa-check"></i><b>6.1</b> Hyperparameter tuning</a></li>
+<li class="chapter" data-level="6.2" data-path="training.html"><a href="training.html#resampling"><i class="fa fa-check"></i><b>6.2</b> Resampling</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>7</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="exercises.html"><a href="exercises.html#reading-and-cleaning"><i class="fa fa-check"></i><b>7.1</b> Reading and cleaning</a></li>
+<li class="chapter" data-level="7.2" data-path="exercises.html"><a href="exercises.html#data-splitting-1"><i class="fa fa-check"></i><b>7.2</b> Data splitting</a></li>
+<li class="chapter" data-level="7.3" data-path="exercises.html"><a href="exercises.html#linear-model"><i class="fa fa-check"></i><b>7.3</b> Linear model</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="exercises.html"><a href="exercises.html#training-1"><i class="fa fa-check"></i><b>7.3.1</b> Training</a></li>
+<li class="chapter" data-level="7.3.2" data-path="exercises.html"><a href="exercises.html#prediction"><i class="fa fa-check"></i><b>7.3.2</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="exercises.html"><a href="exercises.html#knn"><i class="fa fa-check"></i><b>7.4</b> KNN</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="exercises.html"><a href="exercises.html#check-data"><i class="fa fa-check"></i><b>7.4.1</b> Check data</a></li>
+<li class="chapter" data-level="7.4.2" data-path="exercises.html"><a href="exercises.html#training-2"><i class="fa fa-check"></i><b>7.4.2</b> Training</a></li>
+<li class="chapter" data-level="7.4.3" data-path="exercises.html"><a href="exercises.html#prediction-1"><i class="fa fa-check"></i><b>7.4.3</b> Prediction</a></li>
+<li class="chapter" data-level="7.4.4" data-path="exercises.html"><a href="exercises.html#sample-hyperparameters"><i class="fa fa-check"></i><b>7.4.4</b> Sample hyperparameters</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="exercises.html"><a href="exercises.html#random-forest"><i class="fa fa-check"></i><b>7.5</b> Random forest</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="exercises.html"><a href="exercises.html#training-3"><i class="fa fa-check"></i><b>7.5.1</b> Training</a></li>
+<li class="chapter" data-level="7.5.2" data-path="exercises.html"><a href="exercises.html#prediction-2"><i class="fa fa-check"></i><b>7.5.2</b> Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="solutions.html"><a href="solutions.html"><i class="fa fa-check"></i><b>8</b> Solutions</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="solutions.html"><a href="solutions.html#reading-and-cleaning-1"><i class="fa fa-check"></i><b>8.1</b> Reading and cleaning</a></li>
+<li class="chapter" data-level="8.2" data-path="solutions.html"><a href="solutions.html#data-splitting-2"><i class="fa fa-check"></i><b>8.2</b> Data splitting</a></li>
+<li class="chapter" data-level="8.3" data-path="solutions.html"><a href="solutions.html#linear-model-1"><i class="fa fa-check"></i><b>8.3</b> Linear model</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="solutions.html"><a href="solutions.html#training-4"><i class="fa fa-check"></i><b>8.3.1</b> Training</a></li>
+<li class="chapter" data-level="8.3.2" data-path="solutions.html"><a href="solutions.html#prediction-3"><i class="fa fa-check"></i><b>8.3.2</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="solutions.html"><a href="solutions.html#knn-1"><i class="fa fa-check"></i><b>8.4</b> KNN</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="solutions.html"><a href="solutions.html#check-data-1"><i class="fa fa-check"></i><b>8.4.1</b> Check data</a></li>
+<li class="chapter" data-level="8.4.2" data-path="solutions.html"><a href="solutions.html#training-5"><i class="fa fa-check"></i><b>8.4.2</b> Training</a></li>
+<li class="chapter" data-level="8.4.3" data-path="solutions.html"><a href="solutions.html#prediction-4"><i class="fa fa-check"></i><b>8.4.3</b> Prediction</a></li>
+<li class="chapter" data-level="8.4.4" data-path="solutions.html"><a href="solutions.html#sample-hyperparameters-1"><i class="fa fa-check"></i><b>8.4.4</b> Sample hyperparameters</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="solutions.html"><a href="solutions.html#random-forest-1"><i class="fa fa-check"></i><b>8.5</b> Random forest</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="solutions.html"><a href="solutions.html#training-6"><i class="fa fa-check"></i><b>8.5.1</b> Training</a></li>
+<li class="chapter" data-level="8.5.2" data-path="solutions.html"><a href="solutions.html#prediction-5"><i class="fa fa-check"></i><b>8.5.2</b> Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ml4ec: Machine Learning for Eddy Covariance data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="model-formulation" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Model formulation</h1>
+<p>Remember that the aim of supervised ML is to find a model <span class="math inline">\(\hat{Y} = f(X)\)</span> so that <span class="math inline">\(\hat{Y}\)</span> agrees well with observations <span class="math inline">\(Y\)</span>. We typically start with a research question where <span class="math inline">\(Y\)</span> is given - naturally - by the problem we are addressing and we have a data set at hand where one or multiple predictors (or features) <span class="math inline">\(X\)</span> are recorded along with <span class="math inline">\(Y\)</span>. From our data, we have information about how GPP (ecosystem-level photosynthesis) depends on set of abiotic factors, mostly meteorological measurements. In R, it is common to use the <em>formula</em> notation to specify the target and predictor variables. You have probably encountered formulas before, e.g., for a linear regression using the <code>lm()</code> function. To specify a linear regression model for <code>GPP_NT_VUT_REF</code> with three predictors <code>SW_F_IN</code>, <code>VPD_F</code>, and <code>TA_F</code>, we write:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="model-formulation.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, <span class="at">data =</span> ddf)</span></code></pre></div>
+<p>Actually, the way we formulate a model is independent of the algorithm, or <em>engine</em> that takes care of fitting <span class="math inline">\(f(X)\)</span>. As mentioned in Chapter <a href="preprocessing.html#preprocessing">4</a> the R package <a href="https://topepo.github.io/caret/"><strong>caret</strong></a> provides a unified interface for using different ML algorithms implemented in separate packages. In other words, it acts as a <em>wrapper</em> for multiple different model fitting, or ML algorithms. This has the advantage that it unifies the interface (the way arguments are provided). caret also provides implementations for a set of commonly used tools for data processing, model training, and evaluation. We’ll use caret for model training with the function <code>train()</code> (more on model training in Chapter <a href="training.html#training">6</a>). Note however, that using a specific algorithm, which is implemented in a specific package outside caret, also requires that the respective package be installed and loaded. Using caret for specifying the same linear regression model as above, using the base-R <code>lm()</code> function, can be done with caret in a generalized form as:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="model-formulation.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb24-2"><a href="model-formulation.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
+<span id="cb24-3"><a href="model-formulation.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
+<span id="cb24-4"><a href="model-formulation.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
+<span id="cb24-5"><a href="model-formulation.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;lm&quot;</span></span>
+<span id="cb24-6"><a href="model-formulation.html#cb24-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Of course, this is an overkill compared to just writing <code>lm(...)</code>. But the advantage of the unified interface is that we can simply replace the <code>method</code> argument to use a different ML algorithm. For example, to use a shallow neural network model using the <strong>nnet</strong> package, we can write:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="model-formulation.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
+<span id="cb25-2"><a href="model-formulation.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
+<span id="cb25-3"><a href="model-formulation.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
+<span id="cb25-4"><a href="model-formulation.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;nnet&quot;</span></span>
+<span id="cb25-5"><a href="model-formulation.html#cb25-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="preprocessing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="training.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["ml4ec_workshop.pdf", "ml4ec_workshop.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
