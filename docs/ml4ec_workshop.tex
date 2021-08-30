@@ -117,7 +117,7 @@
 
 \title{ml4ec - Machine Learning for Eddy Covariance data}
 \author{Benjamin Stocker}
-\date{2021-08-30}
+\date{2021-08-31}
 
 \begin{document}
 \maketitle
@@ -196,6 +196,8 @@ y = \sum_{n=0}^N a_n x^n
 \] \(a_n\) are the coefficients, i.e., model parameters. The goal of the training is to get the coefficients \(a_n\). From the above definition, the polynomial of degree 15 has 16 parameters, while the polynomial of degree 1 has two parameters (and corresponds to a simple linear regression). You can imagine that the polynomial of degree 15 is much more flexible and should thus yield the closest fit to the training data. This is indeed the case.
 
 \begin{center}\includegraphics{ml4ec_workshop_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+\begin{center}\includegraphics{ml4ec_workshop_files/figure-latex/unnamed-chunk-3-2} \end{center}
 
 We can use the same fitted models on unseen data - the \emph{validation data}. This is what's done below. Again, the same true underlying relationship is used, but we sample a new set of data points in x and add a new sample of errors on top of the true relationship.
 

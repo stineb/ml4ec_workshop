@@ -45,6 +45,7 @@ The goal of model training is to achieve the best possible model generalisabilit
 A common resampling method is *k-fold cross validation*, where the training data is split into *k* equally sized subsets (*folds*). Then, there will be *k* iterations, where each fold is used for validation once (while the remaining folds are used for training). An extreme case is *leave-one-out cross validation*, where *k* corresponds to the number of data points. 
 
 ```{r, echo = FALSE}
+## figure from https://bradleyboehmke.github.io/HOML/process.html
 knitr::include_graphics("fig/cv.png")
 ```
 

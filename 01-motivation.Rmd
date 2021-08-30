@@ -57,7 +57,7 @@ polyfit_4 <- lm(y ~ poly(x, 4), data = df_train)
 polyfit_15 <- lm(y ~ poly(x, 15), data = df_train)
 
 # create a function that takes the data set (here training) and the models and returns the evaluation results (plot with annotated RMSE)
-eval_fits <- function(df, polyfit_1, polyfit_4, polyfit_15){
+eval_fits <- function(df, polyfit_1, polyfit_4, polyfit_15, justdata = FALSE){
 
   # training results
   df <- df %>%
@@ -107,20 +107,31 @@ eval_fits <- function(df, polyfit_1, polyfit_4, polyfit_15){
     )
 
   # plot training results
-  gg <- ggplot() +
-    geom_point(data = df, aes(x, y_true)) +
-    geom_line(data = df_fit, aes(x = x, y = y_pred, color = fit)) +
-    stat_function(fun = true_fun, linetype = "dotted") +
-    ylim(-1.5, 1) +
-    labs(
-      subtitle = paste("RMSE: poly1 =", format(df_metrics_train$rmse[1], digits = 2), ", poly4 =", format(df_metrics_train$rmse[2], digits = 2), ", poly15 =", format(df_metrics_train$rmse[3], digits = 2)),
-      y = "y")
+  if (justdata){
+    gg <- ggplot() +
+      geom_point(data = df, aes(x, y_true)) +
+      ylim(-1.5, 1) +
+      labs(y = "y")
+    
+  } else {
+    gg <- ggplot() +
+      geom_point(data = df, aes(x, y_true)) +
+      geom_line(data = df_fit, aes(x = x, y = y_pred, color = fit)) +
+      stat_function(fun = true_fun, linetype = "dotted") +
+      ylim(-1.5, 1) +
+      labs(
+        subtitle = paste("RMSE: poly1 =", format(df_metrics_train$rmse[1], digits = 2), ", poly4 =", format(df_metrics_train$rmse[2], digits = 2), ", poly15 =", format(df_metrics_train$rmse[3], digits = 2)),
+        y = "y")
+    
+  }
 
   return(gg)
 }
 
-gg <- eval_fits(df_train, polyfit_1, polyfit_4, polyfit_15)
+gg <- eval_fits(df_train, polyfit_1, polyfit_4, polyfit_15, justdata = TRUE)
+gg + labs(title = "The data")
 
+gg <- eval_fits(df_train, polyfit_1, polyfit_4, polyfit_15)
 gg + labs(title = "Training")
 ```
 
