@@ -1,4 +1,4 @@
-# Motivation {#motivation}
+# Introduction {#introduction}
 
 ## Learning objectives
 
@@ -8,15 +8,15 @@ After this workshop unit, you will be able to ...
 - Implement a typical workflow using a machine learning model for a supervised regression problem.
 - Evaluate the power of the model 
 
-## Important points
+## Some primers
 
-Machine learning refers to a class of algorithms that generate statistical models of data. There are two main types of machine learning:
+Machine learning (ML) refers to a class of algorithms that generate statistical models of data. There are two main types of machine learning:
 
-**Unsupervised machine learning**: A class of algorithms that automatically detect patterns in data without using labels or 'learning without a teacher'. Examples are: PCAs, k-means clustering, auto-encoders, self-organizing maps, etc.
+**Unsupervised machine learning**: Detecting patterns without prior specification.
 
-**Supervised machine learning**: A class of algorithms that automatically learn an input-output relationships based on example input-output pairs. Examples include: support vector machines, random forests, decision trees, neural networks, etc. Supervised machine learning requires three ingredients: (1) Input data (2) Output data (3) A measure of model performance (a.k.a. "loss"). Supervised machine learning be used for regression (predict a continuous label) or classification (predict a categorical label).
+**Supervised machine learning**: Model fitting by optimising predictions for a given target.
 
-**Loss** is a concept central to many supervised machine learning algorithms. It measures how well our predicted model values fit the actual observed model values, a higher value indicates a higher loss, essentially meaning the model fits less well. Ideally, loss should be minimised. Loss can be used to update our model parameters in the next iteration of model training, this is called learning.
+**Loss** is a function predicted and observed values derived from the validation set. It is minimised during model training.
 
 
 ## Overfitting {#overfitting}
@@ -186,30 +186,23 @@ The topic of supervised machine learning methods covers enough material to fill 
 
 Of course, a plethora of algorithms exist that do the job of $Y = f(X)$. Each of them has its own strengths and limitations. It is beyond the scope of this course to introduce a larger number of ML algorithms. Subsequent sessions will focus primarily on Artificial Neural Networks (ANN) - a type of ML algorithm that has gained popularity for its capacity to efficiently learn patterns in large data sets. For illustration purposes in this and the next chapter, we will briefly introduce two simple alternative "ML" methods, linear regression and K-nearest-neighbors. They have quite different characteristics and are therefore great for illustration purposes in this chapter.
 
-## Our modelling task
+## Our modelling challenge
 
-xxxx
+The environment determines ecosystem-atmosphere exchange fluxes of water vapour and CO2. Temporally changing mass exchange fluxes can be continuously measured with the eddy covariance technique, while abiotic variables (meteorological variables, soil moisture) can be measured in parallel. This offers an opportunity for building models that predict mass exchange fluxes from the environment.
 
-Building a ML model is an iterative process and it is typically not possible to know which ML algorithm will perform best when you start with the process. It is also essential that you understand your data in order to apply appropriate pre-processing steps, splitting your data wisely into training and testing sets, building a robust model, and achieving an informative model evaluation. This workshop introduces essential methods of the modelling process that allow you to walk a safe (and hopefully still spectacular) path. This workshop is inspired by the fantastic tutorial [*Hands On Machine Learning in R* by Boehmke & Gladwell](https://bradleyboehmke.github.io/HOML).
+In this workshop, we formulate a model for predicting ecosystem gross primary production (photosynthesis) from environmental covariates.
 
-xxx
-
-## Motivation
-
-Ecosystem-atmosphere exchange fluxes of water vapour and CO2 are continuously measured at several hundred of sites, distributed across the globe. The oldest running sites have been recording data since over twenty years. Thanks to the international FLUXNET initiative, these time series data are made openly accessible from over hundred sites and provided in a standardized format and complemented with measurements of several meteorological variables, plus soil temperature and moisture, measured in parallel. These data provide an opportunity for understanding ecosystem fluxes and how they are affected by environmental covariates. The challenge is to build models that are sufficiently generalisable in space. That is, temporally resolved relationships learned from one subset of sites should be used effectively to predict time series, given environmental covariates, at new sites (spatial upscaling). This is a challenge as previous research has shown that relatively powerful site-specific models can be trained, but predictions to new sites have been found wanting. This may be due to site-specific characteristics (e.g. vegetation type) that have thus far not been satisfactorily encoded in models. In other words, factors that would typically be regarded as random factors in mixed effects modelling, continue to undermine effective learning in machine learning models.
+This is to say that `GPP_NT_VUT_REF` is the target variable, and other available variables available in the dataset can be used as predictors.
 
 ## Data
 
-Data is provided here at daily resolution from a selection of sites ($N=71$, 265,177 data points, see `prepare_data.Rmd`), and paired with satellite data of the fraction of absorbed photosynthetically active radiation (fAPAR, product MODIS FPAR). This provides crucial complimentary information about vegetation structure and seasonally varying green foliage cover, responsible for photosynthesis and transpiration. The target variable is ecosystem photosynthesis, referred to as gross primary production (variable `GPP_NT_VUT_REF`). Available covariates are briefly described below. For more information, see [FLUXNET 2015 website](http://fluxnet.fluxdata.org/data/fluxnet2015-dataset/), and [Pastorello et al., 2020](https://www.nature.com/articles/s41597-020-0534-3), and the document `variable_codes_FULLSET_20160711.pdf` provided in this repository.
+Data is provided here at daily resolution for a site ('CH-Dav') located in the Swiss alps (Davos). This is one of the longest-running eddy covariance sites globally and measures fluxes in a evergreen coniferous forest with cold winters and temperate and relatively moist summers.
 
-The data is provided through this repository (`data/ddf_combined_mlflx.csv`).
+For more information of the variables in the dataset, see [FLUXNET 2015 website](http://fluxnet.fluxdata.org/data/fluxnet2015-dataset/), and [Pastorello et al., 2020](https://www.nature.com/articles/s41597-020-0534-3) for a comprehensive documentation of variable definitions and methods.
 
 ### Available variables
 
-- `sitename`: FLUXNET standard site name
-- `date`
-- `fpar_loess`: fraction of absorbed photosynthetically active radiation, interpolated to daily values using LOESS.
-- `fpar_linear`: fraction of absorbed photosynthetically active radiation, linearly interpolated to daily values
+- `TIMESTAMP`: Day of measurement.
 - `TA_F`: Air temperature. The meaning of suffix `_F` is described in [Pastorello et al., 2020](https://www.nature.com/articles/s41597-020-0534-3).
 - `SW_IN_F`: Shortwave incoming radiation
 - `LW_IN_F`: Longwave incoming radiation
@@ -217,47 +210,41 @@ The data is provided through this repository (`data/ddf_combined_mlflx.csv`).
 - `PA_F`: Atmospheric pressure
 - `P_F`: Precipitation
 - `WS_F`: Wind speed
-- `USTAR`: A measure for atmospheric stability
-- `CO2_F_MDS`: CO2 concentration
 - `GPP_NT_VUT_REF`: Gross primary production - **the target variable**
 - `NEE_VUT_REF_QC`: Quality control information for `GPP_NT_VUT_REF`. Specifies the fraction of high-quality underlying high-frequency data from which the daily data is derived. 0.8 = 80% underlying high-quality data, remaining 20% of the high-frequency data is gap-filled.
-- `SWC_F_MDS_*`: Soil water content. The number provides information about the soil layer, counting from the top
-- `wscal` : Water scalar. 0 = dry, at 100% water holding capacity of the soil; 1 = wet, at 100% water holding capacity of the soil
 
-The following variables are provided in the dataset as well and are site-specific meta data, taken from [Falge et al.](https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1530)
+## More primers
 
-- `lon`, `lat`: Longitude and latitude (decimal degrees)
-- `elv` : Elevation (m above sea level)
-- `classid` : Vegetation type. Has the following codes:
-    - `ENF` : Evergreen needle-leaved forest
-    - `WSA` : Woody savannah
-    - `GRA` : Grassland
-    - `SAV` : Savannah
-    - `WET`: Wetland
-    - `EBF`: Evergreen broadleaved forest
-    - `MF`: Mixed forest (consisting of deciduous and evergreen broadleaved and needle-leaved trees)
-    - `CRO` : Cropland
-    - `DBF` : Deciduous broadleaved forest
-    - `CSH`: Closed shrubland
-- `c4` : Whether vegetation is present that follows the C4 photosynthetic pathway (as opposed to the C3 pathway). This should have effects of the functional relationships.
-- `whc` : Total rooting zone water storage capacity. IGNORE THIS.
-- `koeppen_code` : Classification of the climate at the site, following Koeppen-Geiger (see e.g. [here](https://en.wikipedia.org/wiki/K%C3%B6ppen_climate_classification) for an explanation, and [Beck et al., 2018](https://www.nature.com/articles/sdata2018214) for a global map)
-- `plant_functional_type`: is missing. IGNORE THIS.
+### K-nearest neighbours
 
-## The modelling challenge
+As the name suggests, the K-nearest neighbour (KNN) uses the $k$ observations that are "nearest" to the new record for which we want to make a prediction. It then calculates their average (in regression) or most frequent value (in classification) as the prediction. "Nearest" is determined by some distance metric evaluated based on the values of the predictors. In our example (`GPP_NT_VUT_REF ~ .`), KNN would determine the $k$ days where conditions, given by our set of predictors, were most similar (nearest) to the day for which we seek a prediction. Then, it calculates the prediction as the average (mean) GPP value of these days. Determining "nearest" neighbors is commonly based on either the Euclidean or Manhattan distances between two data points $x_a$ and $x_b$, considering all $p$ predictors $j$. 
 
-In this workshop, we formulate a model for predicting ecosystem gross primary production (photosynthesis) from environmental covariates. `GPP_NT_VUT_REF ~`, selecting predictors as suitable. Conceive the model training such that validation and test sets are split along sites (data from a given site must not be both in the test and training sets). Demonstrate the spatial generalisability of the trained model.
+Euclidean distance:
+$$
+\sqrt{ \sum_{j=1}^p (x_{a,j} - x_{b,j})^2  } \\
+$$
+Manhattan distance:
+$$
+\sum_{j=1}^p | x_{a,j} - x_{b,j} |
+$$
 
-This is to say that `GPP_NT_VUT_REF` is the target variable, and other available variables can be used as predictors.
+In two-dimensional space, the Euclidean distance measures the length of a straight line between two points (remember Pythagoras!). The Manhattan distance is called this way because it measures the distance you would have to walk to get from point $a$ to point $b$ in Manhattan, New York, where you cannot cut corners but have to follow a rectangular grid of streets. $|x|$ is the positive value of $x$ ( $|-x| = x$).
 
-This challenge is on the one hand to model and predict time series across space with the aim of "**spatial upscaling**". On the other hand, we're interested in the functional relationships of GPP to the different environmental covariates separately (**partial dependence**).
+KNN is a simple algorithm that uses knowledge of the "local" data structure for prediction. A drawback is that the model training has to be done for each prediction step and the computation time of the training increases with $x \times p$. KNNs are used, for example, to impute values (fill missing values) and have the advantage that predicted values are always within the range of observed values of the target variable.
 
-### Some peculiarities of the data
+### Random Forest
 
-- Hierarchical structure: site → date (multiple dates for each site). Th
-- Commonalities between sites exist and may be useful for modeling. Site meta data is available in a separate data frame (`data/df_sites.csv`).
-- The data points may not be *iid.* That is: there may be an explicit temporal component to the data. The underlying reason is that the photosynthetic machinery "acclimates" to changes in the environment over the course of a year (high radiation in summer, low temperatures in winter). The effect is that the functional relationships between GPP and the different environmental covariates may not be stationary, i.e., the sensitivity may change over the course of a year.
+Random forest models are based on *decision trees*, where binary decisions for predicting the target's values are based on thresholds of the predictors' values. The *depth* of a decision tree refers to the number of such decisions. The deeper a tree, the more likely the model will overfit. Here are some links for more information on decision trees:
 
+- [Hands On Machine-Learning in R](https://bradleyboehmke.github.io/HOML/DT.html)
+
+Just as forests are made up by trees, *random Forest* models make use of random subsets of the original data and of available predictions and respective decision trees. Predictions are then made by averaging predictions of individual *base learners* (the decision trees). The number of predictors considered at each decision step is a tunable parameter (a *hyperparameter*, typically called $m_{try}$). Introducing this randomness is effective because decision trees tend to overfit and because of the *wisdom of the crowd* - i.e., the power of aggregating individual predictions with their random error (and without systematic bias) for generating accurate and relatively precise predictions. 
+
+Random forest models have gained particular popularity and are widely applied in environmental sciences not only for their power, but also for their ease of use. No preprocessing (centering, scaling) is necessary, they can deal with skewed data, and can effectively learn interactions between predictors. 
+
+Here are some links for more information on random forest:
+
+- [Hands On Machine-Learning in R](https://bradleyboehmke.github.io/HOML/random-forest.html) 
 
 <!-- You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods). -->
 

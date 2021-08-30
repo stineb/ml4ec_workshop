@@ -4,34 +4,34 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data splitting | ml4ec: Machine Learning for Eddy Covariance data</title>
-  <meta name="description" content="This is a hands-on tutorial." />
+  <title>Chapter 3 Data splitting | ml4ec - Machine Learning for Eddy Covariance data</title>
+  <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data splitting | ml4ec: Machine Learning for Eddy Covariance data" />
+  <meta property="og:title" content="Chapter 3 Data splitting | ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a hands-on tutorial." />
+  <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data splitting | ml4ec: Machine Learning for Eddy Covariance data" />
+  <meta name="twitter:title" content="Chapter 3 Data splitting | ml4ec - Machine Learning for Eddy Covariance data" />
   
-  <meta name="twitter:description" content="This is a hands-on tutorial." />
+  <meta name="twitter:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
 
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-08-28" />
+<meta name="date" content="2021-08-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="motivation.html"/>
+<link rel="prev" href="introduction.html"/>
 <link rel="next" href="preprocessing.html"/>
 <script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -142,20 +142,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#apps"><i class="fa fa-check"></i><b>1.1</b> Apps</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.2</b> Libraries</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="motivation.html"><a href="motivation.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="2.2" data-path="motivation.html"><a href="motivation.html#important-points"><i class="fa fa-check"></i><b>2.2</b> Important points</a></li>
-<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#overfitting"><i class="fa fa-check"></i><b>2.3</b> Overfitting</a></li>
-<li class="chapter" data-level="2.4" data-path="motivation.html"><a href="motivation.html#our-modelling-task"><i class="fa fa-check"></i><b>2.4</b> Our modelling task</a></li>
-<li class="chapter" data-level="2.5" data-path="motivation.html"><a href="motivation.html#motivation-1"><i class="fa fa-check"></i><b>2.5</b> Motivation</a></li>
-<li class="chapter" data-level="2.6" data-path="motivation.html"><a href="motivation.html#data"><i class="fa fa-check"></i><b>2.6</b> Data</a>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#some-primers"><i class="fa fa-check"></i><b>2.2</b> Some primers</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#overfitting"><i class="fa fa-check"></i><b>2.3</b> Overfitting</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#our-modelling-challenge"><i class="fa fa-check"></i><b>2.4</b> Our modelling challenge</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#data"><i class="fa fa-check"></i><b>2.5</b> Data</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="motivation.html"><a href="motivation.html#available-variables"><i class="fa fa-check"></i><b>2.6.1</b> Available variables</a></li>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#available-variables"><i class="fa fa-check"></i><b>2.5.1</b> Available variables</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="motivation.html"><a href="motivation.html#the-modelling-challenge"><i class="fa fa-check"></i><b>2.7</b> The modelling challenge</a>
+<li class="chapter" data-level="2.6" data-path="introduction.html"><a href="introduction.html#more-primers"><i class="fa fa-check"></i><b>2.6</b> More primers</a>
 <ul>
-<li class="chapter" data-level="2.7.1" data-path="motivation.html"><a href="motivation.html#some-peculiarities-of-the-data"><i class="fa fa-check"></i><b>2.7.1</b> Some peculiarities of the data</a></li>
+<li class="chapter" data-level="2.6.1" data-path="introduction.html"><a href="introduction.html#k-nearest-neighbours"><i class="fa fa-check"></i><b>2.6.1</b> K-nearest neighbours</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction.html"><a href="introduction.html#random-forest"><i class="fa fa-check"></i><b>2.6.2</b> Random Forest</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-splitting.html"><a href="data-splitting.html"><i class="fa fa-check"></i><b>3</b> Data splitting</a>
@@ -169,7 +169,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="preprocessing.html"><a href="preprocessing.html#standardization"><i class="fa fa-check"></i><b>4.2</b> Standardization</a></li>
 <li class="chapter" data-level="4.3" data-path="preprocessing.html"><a href="preprocessing.html#more-pre-processing"><i class="fa fa-check"></i><b>4.3</b> More pre-processing</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="model-formulation.html"><a href="model-formulation.html"><i class="fa fa-check"></i><b>5</b> Model formulation</a></li>
+<li class="chapter" data-level="5" data-path="model-formulation.html"><a href="model-formulation.html"><i class="fa fa-check"></i><b>5</b> Model formulation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="model-formulation.html"><a href="model-formulation.html#formula-notation"><i class="fa fa-check"></i><b>5.1</b> Formula notation</a></li>
+<li class="chapter" data-level="5.2" data-path="model-formulation.html"><a href="model-formulation.html#the-generic-train"><i class="fa fa-check"></i><b>5.2</b> The generic <code>train()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="model-formulation.html"><a href="model-formulation.html#recipes"><i class="fa fa-check"></i><b>5.3</b> Recipes</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="training.html"><a href="training.html"><i class="fa fa-check"></i><b>6</b> Model training</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="training.html"><a href="training.html#hyperparameter-tuning"><i class="fa fa-check"></i><b>6.1</b> Hyperparameter tuning</a></li>
@@ -191,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.3" data-path="exercises.html"><a href="exercises.html#prediction-1"><i class="fa fa-check"></i><b>7.4.3</b> Prediction</a></li>
 <li class="chapter" data-level="7.4.4" data-path="exercises.html"><a href="exercises.html#sample-hyperparameters"><i class="fa fa-check"></i><b>7.4.4</b> Sample hyperparameters</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="exercises.html"><a href="exercises.html#random-forest"><i class="fa fa-check"></i><b>7.5</b> Random forest</a>
+<li class="chapter" data-level="7.5" data-path="exercises.html"><a href="exercises.html#random-forest-1"><i class="fa fa-check"></i><b>7.5</b> Random forest</a>
 <ul>
 <li class="chapter" data-level="7.5.1" data-path="exercises.html"><a href="exercises.html#training-3"><i class="fa fa-check"></i><b>7.5.1</b> Training</a></li>
 <li class="chapter" data-level="7.5.2" data-path="exercises.html"><a href="exercises.html#prediction-2"><i class="fa fa-check"></i><b>7.5.2</b> Prediction</a></li>
@@ -213,7 +218,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.3" data-path="solutions.html"><a href="solutions.html#prediction-4"><i class="fa fa-check"></i><b>8.4.3</b> Prediction</a></li>
 <li class="chapter" data-level="8.4.4" data-path="solutions.html"><a href="solutions.html#sample-hyperparameters-1"><i class="fa fa-check"></i><b>8.4.4</b> Sample hyperparameters</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="solutions.html"><a href="solutions.html#random-forest-1"><i class="fa fa-check"></i><b>8.5</b> Random forest</a>
+<li class="chapter" data-level="8.5" data-path="solutions.html"><a href="solutions.html#random-forest-2"><i class="fa fa-check"></i><b>8.5</b> Random forest</a>
 <ul>
 <li class="chapter" data-level="8.5.1" data-path="solutions.html"><a href="solutions.html#training-6"><i class="fa fa-check"></i><b>8.5.1</b> Training</a></li>
 <li class="chapter" data-level="8.5.2" data-path="solutions.html"><a href="solutions.html#prediction-5"><i class="fa fa-check"></i><b>8.5.2</b> Prediction</a></li>
@@ -232,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ml4ec: Machine Learning for Eddy Covariance data</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ml4ec - Machine Learning for Eddy Covariance data</a>
           </h1>
         </div>
 
@@ -246,55 +251,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> Reading and wrangling data</h2>
 <p>Let’s start by reading our data and apply few processing steps (<em>wrangling</em>).</p>
 <p>There is a difference between data wrangling and pre-processing as part of the modelling workflow, which we will learn about in Chapter <a href="preprocessing.html#preprocessing">4</a>. Data wrangling can be considered to encompass the steps to prepare the data set prior to modelling, including, combining variables from different sources, removal of bad or missing data, and aggregating to the desired resolution or granularity (e.g., averaging over all time steps in a day, or over all replicates in a sample). See the <a href="https://github.com/Quartz/bad-data-guide">Quartz Guide to Bad Data</a> for an overview of how to deal with different types of bad data.</p>
-<p>In contrast, <em>pre-processing</em> refers to the additional steps that are either required by the ML algorithm (examples will be given below) or the transformation of variables guided by the resulting improvement of the predictive power of the ML model. In other words, pre-processing is part of the modelling workflow and includes all steps that apply transformations that use parameters from the data.</p>
-<p>We are provided with a data file in the format of comma-separated-values (CSV), obtained through <a href="https://fluxnet.org/data/fluxnet2015-dataset/">FLUXNET2015</a>. It contains data from one site (<a href="https://gl.ethz.ch/infrastructure/sites/laegeren.html">CH-Lae</a>) at a daily time step, and includes quality control information for each variable. Variables and how they are derived is explained in detail in <a href="https://www.nature.com/articles/s41597-020-0534-3">Pastorello et al. (2020)</a>.</p>
-<p>Let’s read the data, select relevant variables, convert the time stamp column to a time object and interpret missing values (encoded -9999 in the file).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data-splitting.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✓ tibble  3.1.2     ✓ purrr   0.3.4
-## ✓ readr   2.0.0     ✓ stringr 1.4.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter()   masks stats::filter()
-## x dplyr::lag()      masks stats::lag()
-## x yardstick::mae()  masks modelr::mae()
-## x yardstick::mape() masks modelr::mape()
-## x yardstick::rmse() masks modelr::rmse()
-## x readr::spec()     masks yardstick::spec()</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-splitting.html#cb6-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="data-splitting.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-3"><a href="data-splitting.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="do">## select only the variables we are interested in</span></span>
-<span id="cb6-4"><a href="data-splitting.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;TIMESTAMP&quot;</span>),</span>
-<span id="cb6-5"><a href="data-splitting.html#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ends_with</span>(<span class="st">&quot;_F&quot;</span>),   <span class="co"># all meteorological variables</span></span>
-<span id="cb6-6"><a href="data-splitting.html#cb6-6" aria-hidden="true" tabindex="-1"></a>         GPP_NT_VUT_REF,</span>
-<span id="cb6-7"><a href="data-splitting.html#cb6-7" aria-hidden="true" tabindex="-1"></a>         NEE_VUT_REF_QC,</span>
-<span id="cb6-8"><a href="data-splitting.html#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;JSB&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-9"><a href="data-splitting.html#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="data-splitting.html#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="do">## convert to a nice date object</span></span>
-<span id="cb6-11"><a href="data-splitting.html#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TIMESTAMP =</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(TIMESTAMP)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-12"><a href="data-splitting.html#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="data-splitting.html#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="do">## set all -9999 to NA</span></span>
-<span id="cb6-14"><a href="data-splitting.html#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na_if</span>(<span class="sc">-</span><span class="dv">9999</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-15"><a href="data-splitting.html#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="data-splitting.html#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="do">## drop QC variables (no longer needed), except NEE_VUT_REF_QC</span></span>
-<span id="cb6-17"><a href="data-splitting.html#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&quot;_QC&quot;</span>), NEE_VUT_REF_QC)</span></code></pre></div>
-<pre><code>## Rows: 6574 Columns: 334</code></pre>
-<pre><code>## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (334): TIMESTAMP, TA_F_MDS, TA_F_MDS_QC, TA_F_MDS_NIGHT, TA_F_MDS_NIGHT_...</code></pre>
-<pre><code>## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p>If the style of the code above looks unfamiliar - this is the <strong><a href="https://www.tidyverse.org/">tidyverse</a></strong>. The aim of the tidyverse is to have a collection of R functions and packages that share a common syntax style and structure of arguments and function return values. This enables ease with typical data wrangling and visualization tasks (<strong><a href="https://ggplot2.tidyverse.org/">ggplot2</a></strong> is part of it). This tutorial is generally written using tidyverse packages and code syntax.</p>
+<p>In contrast, <em>pre-processing</em> refers to the additional steps that are either required by the ML algorithm (e.g. centering and scaling for KNN or neural networks) or the transformation of variables guided by the resulting improvement of the predictive power of the ML model. In other words, pre-processing is part of the modelling workflow and includes all steps that apply transformations that use parameters derived from the data.</p>
+<p>We are provided with a data file in the format of comma-separated-values (CSV), obtained through <a href="https://fluxnet.org/data/fluxnet2015-dataset/">FLUXNET2015</a>. It contains data from one site (<a href="https://gl.ethz.ch/infrastructure/sites/davos.html">CH-Dav</a>) at a daily time step, and includes quality control information for each variable.</p>
+<p>Let’s read the data, select relevant variables, convert the time stamp column to a time object and interpret missing values (encoded <code>-9999</code> in the file).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data-splitting.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="data-splitting.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="data-splitting.html#cb2-3" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="data-splitting.html#cb2-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="data-splitting.html#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="do">## select only the variables we are interested in</span></span>
+<span id="cb2-6"><a href="data-splitting.html#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(TIMESTAMP,</span>
+<span id="cb2-7"><a href="data-splitting.html#cb2-7" aria-hidden="true" tabindex="-1"></a>         GPP_NT_VUT_REF,    <span class="co"># the target</span></span>
+<span id="cb2-8"><a href="data-splitting.html#cb2-8" aria-hidden="true" tabindex="-1"></a>         NEE_VUT_REF_QC,    <span class="co"># quality control info</span></span>
+<span id="cb2-9"><a href="data-splitting.html#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ends_with</span>(<span class="st">&quot;_F&quot;</span>),   <span class="co"># includes all all meteorological variables</span></span>
+<span id="cb2-10"><a href="data-splitting.html#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&quot;JSB&quot;</span>)   <span class="co"># weird useless variable</span></span>
+<span id="cb2-11"><a href="data-splitting.html#cb2-11" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="data-splitting.html#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="data-splitting.html#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="do">## convert to a nice date object</span></span>
+<span id="cb2-14"><a href="data-splitting.html#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TIMESTAMP =</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(TIMESTAMP)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="data-splitting.html#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="data-splitting.html#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="do">## set all -9999 to NA</span></span>
+<span id="cb2-17"><a href="data-splitting.html#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na_if</span>(<span class="sc">-</span><span class="dv">9999</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="data-splitting.html#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="data-splitting.html#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="do">## drop QC variables (no longer needed), except NEE_VUT_REF_QC</span></span>
+<span id="cb2-20"><a href="data-splitting.html#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&quot;_QC&quot;</span>), NEE_VUT_REF_QC)</span></code></pre></div>
+<p>If the style of the code above looks unfamiliar - this is the <strong><a href="https://www.tidyverse.org/">tidyverse</a></strong>. The tidyverse is a R syntax “dialect” and a collection of R functions and packages. They share the structure of arguments and function return values than can be combined to a chain by the <code>%&gt;%</code> (“pipe”) operator. For this, the output of each function is a data frame which is “piped” to the next function, and each function takes a data frame as input. What is piped into a function takes the place of the first argument, normally provided in brackets. This enables ease with typical data wrangling and visualization tasks (<strong><a href="https://ggplot2.tidyverse.org/">ggplot2</a></strong> is part of it). This tutorial is generally written using tidyverse packages and code syntax.</p>
 <p>The column <code>NEE_VUT_REF_QC</code> provides information about the fraction of gap-filled half-hourly data used to calculate daily aggregates. Let’s remove <code>GPP_NT_VUT_REF</code> data, where more than 80% of the half-hourly data was gap-filled. Make sure to not actually remove the respective rows, but rather replace values with NA.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-splitting.html#cb10-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> ddf <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="data-splitting.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GPP_NT_VUT_REF =</span> <span class="fu">ifelse</span>(NEE_VUT_REF_QC <span class="sc">&lt;</span> <span class="fl">0.8</span>, <span class="cn">NA</span>, GPP_NT_VUT_REF))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-splitting.html#cb3-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> ddf <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="data-splitting.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GPP_NT_VUT_REF =</span> <span class="fu">ifelse</span>(NEE_VUT_REF_QC <span class="sc">&lt;</span> <span class="fl">0.8</span>, <span class="cn">NA</span>, GPP_NT_VUT_REF))</span></code></pre></div>
 <p>At this stage, we won’t use <code>NEE_VUT_REF_QC</code> any longer. So we can drop it.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-splitting.html#cb11-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> ddf <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="data-splitting.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NEE_VUT_REF_QC)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-splitting.html#cb4-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> ddf <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="data-splitting.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NEE_VUT_REF_QC)</span></code></pre></div>
 </div>
 <div id="splitting-into-testing-and-training-sets" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Splitting into testing and training sets</h2>
-<p>The introductory example impressively demonstrated the importance of validating the fitted model with data that was not used for training. Thus, we can test the model’s generalisability. The essential step that enables us to assess the model’s <em>generalization error</em> is to hold out part of the data from training, and set it aside (leaving it absolutely untouched) for <em>testing</em>.</p>
+<p>The introductory example impressively demonstrated the importance of validating the fitted model with data that was <em>not</em> used for training. Thus, we can test the model’s <em>generalisability.</em> The essential step that enables us to assess the model’s <em>generalization error</em> is to hold out part of the data from training, and set it aside (leaving it absolutely untouched) for <em>testing</em>.</p>
 <p>There is no fixed rule for how much data are to be used for training and testing, respectively. We have to balance the trade-off between:</p>
 <ul>
 <li>Spending too much data for training will leave us with too little data for testing and the test results may not be robust. In this case, the sample size for getting robust validation statistics is not sufficiently large and we don’t know for sure whether we are safe from an over-fit model.</li>
@@ -302,24 +292,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Typical splits are between 60-80% for training. However, in cases where the number of data points is very large, the gains from having more training data are marginal, but come at the cost of adding to the already high computational burden of model training.</p>
 <p>In environmental sciences, the number of predictors is often smaller than the sample size (<span class="math inline">\(p &lt; n\)</span>), because its typically easier to collect repeated observations of a particular variable than to expand the set of variables being observed. Nevertheless, in cases where the number <span class="math inline">\(p\)</span> gets large, it is important, and for some algorithms mandatory, to maintain <span class="math inline">\(p &lt; n\)</span> for model training.</p>
-<p>An important aspect to consider when splitting our data is to make sure that all “states” of the system for which we have data are approximately equally represented in training and testing sets. This is to make sure that the algorithm learns relationships <span class="math inline">\(f(X)\)</span> also under rare conditions <span class="math inline">\(X\)</span>, for example meteorological extreme events.</p>
-<p>Several alternative functions for the data splitting step are available from different packages in R. We will use the the <strong>rsample</strong> package as it allows to additionally make sure that data from the full range of a given variable’s values are well covered in both training and testing sets.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-splitting.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
-<span id="cb12-2"><a href="data-splitting.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span></span>
-<span id="cb12-3"><a href="data-splitting.html#cb12-3" aria-hidden="true" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ddf, <span class="at">prop =</span> <span class="fl">0.7</span>, <span class="at">strata =</span> <span class="st">&quot;VPD_F&quot;</span>)</span>
-<span id="cb12-4"><a href="data-splitting.html#cb12-4" aria-hidden="true" tabindex="-1"></a>ddf_train <span class="ot">&lt;-</span> <span class="fu">training</span>(split)</span>
-<span id="cb12-5"><a href="data-splitting.html#cb12-5" aria-hidden="true" tabindex="-1"></a>ddf_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(split)</span></code></pre></div>
+<p>An important aspect to consider when splitting the data is to make sure that all “states” of the system for which we have data are approximately equally represented in training and testing sets. This is to make sure that the algorithm learns relationships <span class="math inline">\(f(X)\)</span> also under rare conditions <span class="math inline">\(X\)</span>, for example meteorological extreme events.</p>
+<p>Several alternative functions for the data splitting step are available from different packages in R. We will use the the <strong>rsample</strong> package as it allows to additionally make sure that data from the full range of a given variable’s values (<code>VPD_F</code> in the example below) are well covered in both training and testing sets.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-splitting.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb5-2"><a href="data-splitting.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb5-3"><a href="data-splitting.html#cb5-3" aria-hidden="true" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(ddf, <span class="at">prop =</span> <span class="fl">0.7</span>, <span class="at">strata =</span> <span class="st">&quot;VPD_F&quot;</span>)</span>
+<span id="cb5-4"><a href="data-splitting.html#cb5-4" aria-hidden="true" tabindex="-1"></a>ddf_train <span class="ot">&lt;-</span> <span class="fu">training</span>(split)</span>
+<span id="cb5-5"><a href="data-splitting.html#cb5-5" aria-hidden="true" tabindex="-1"></a>ddf_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(split)</span></code></pre></div>
 <p>Plot the distribution of values in the training and testing sets.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="data-splitting.html#cb13-1" aria-hidden="true" tabindex="-1"></a>ddf_train <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="data-splitting.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">split =</span> <span class="st">&quot;train&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="data-splitting.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(ddf_test <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="data-splitting.html#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">split =</span> <span class="st">&quot;test&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="data-splitting.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-6"><a href="data-splitting.html#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> ..density.., <span class="at">color =</span> split)) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="data-splitting.html#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb13-8"><a href="data-splitting.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 395 rows containing non-finite values (stat_density).</code></pre>
-<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-splitting.html#cb6-1" aria-hidden="true" tabindex="-1"></a>ddf_train <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="data-splitting.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">split =</span> <span class="st">&quot;train&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="data-splitting.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(ddf_test <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="data-splitting.html#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">split =</span> <span class="st">&quot;test&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="data-splitting.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-6"><a href="data-splitting.html#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">y =</span> ..density.., <span class="at">color =</span> split)) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="data-splitting.html#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a href="data-splitting.html#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-12-1.png" width="696" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
@@ -328,7 +317,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="motivation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="preprocessing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

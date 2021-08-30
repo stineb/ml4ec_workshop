@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Model formulation | ml4ec: Machine Learning for Eddy Covariance data</title>
-  <meta name="description" content="This is a hands-on tutorial." />
+  <title>Chapter 5 Model formulation | ml4ec - Machine Learning for Eddy Covariance data</title>
+  <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Model formulation | ml4ec: Machine Learning for Eddy Covariance data" />
+  <meta property="og:title" content="Chapter 5 Model formulation | ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a hands-on tutorial." />
+  <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Model formulation | ml4ec: Machine Learning for Eddy Covariance data" />
+  <meta name="twitter:title" content="Chapter 5 Model formulation | ml4ec - Machine Learning for Eddy Covariance data" />
   
-  <meta name="twitter:description" content="This is a hands-on tutorial." />
+  <meta name="twitter:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
 
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-08-28" />
+<meta name="date" content="2021-08-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -142,20 +142,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#apps"><i class="fa fa-check"></i><b>1.1</b> Apps</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.2</b> Libraries</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="motivation.html"><a href="motivation.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="2.2" data-path="motivation.html"><a href="motivation.html#important-points"><i class="fa fa-check"></i><b>2.2</b> Important points</a></li>
-<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#overfitting"><i class="fa fa-check"></i><b>2.3</b> Overfitting</a></li>
-<li class="chapter" data-level="2.4" data-path="motivation.html"><a href="motivation.html#our-modelling-task"><i class="fa fa-check"></i><b>2.4</b> Our modelling task</a></li>
-<li class="chapter" data-level="2.5" data-path="motivation.html"><a href="motivation.html#motivation-1"><i class="fa fa-check"></i><b>2.5</b> Motivation</a></li>
-<li class="chapter" data-level="2.6" data-path="motivation.html"><a href="motivation.html#data"><i class="fa fa-check"></i><b>2.6</b> Data</a>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#some-primers"><i class="fa fa-check"></i><b>2.2</b> Some primers</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#overfitting"><i class="fa fa-check"></i><b>2.3</b> Overfitting</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#our-modelling-challenge"><i class="fa fa-check"></i><b>2.4</b> Our modelling challenge</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#data"><i class="fa fa-check"></i><b>2.5</b> Data</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="motivation.html"><a href="motivation.html#available-variables"><i class="fa fa-check"></i><b>2.6.1</b> Available variables</a></li>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#available-variables"><i class="fa fa-check"></i><b>2.5.1</b> Available variables</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="motivation.html"><a href="motivation.html#the-modelling-challenge"><i class="fa fa-check"></i><b>2.7</b> The modelling challenge</a>
+<li class="chapter" data-level="2.6" data-path="introduction.html"><a href="introduction.html#more-primers"><i class="fa fa-check"></i><b>2.6</b> More primers</a>
 <ul>
-<li class="chapter" data-level="2.7.1" data-path="motivation.html"><a href="motivation.html#some-peculiarities-of-the-data"><i class="fa fa-check"></i><b>2.7.1</b> Some peculiarities of the data</a></li>
+<li class="chapter" data-level="2.6.1" data-path="introduction.html"><a href="introduction.html#k-nearest-neighbours"><i class="fa fa-check"></i><b>2.6.1</b> K-nearest neighbours</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction.html"><a href="introduction.html#random-forest"><i class="fa fa-check"></i><b>2.6.2</b> Random Forest</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-splitting.html"><a href="data-splitting.html"><i class="fa fa-check"></i><b>3</b> Data splitting</a>
@@ -169,7 +169,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="preprocessing.html"><a href="preprocessing.html#standardization"><i class="fa fa-check"></i><b>4.2</b> Standardization</a></li>
 <li class="chapter" data-level="4.3" data-path="preprocessing.html"><a href="preprocessing.html#more-pre-processing"><i class="fa fa-check"></i><b>4.3</b> More pre-processing</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="model-formulation.html"><a href="model-formulation.html"><i class="fa fa-check"></i><b>5</b> Model formulation</a></li>
+<li class="chapter" data-level="5" data-path="model-formulation.html"><a href="model-formulation.html"><i class="fa fa-check"></i><b>5</b> Model formulation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="model-formulation.html"><a href="model-formulation.html#formula-notation"><i class="fa fa-check"></i><b>5.1</b> Formula notation</a></li>
+<li class="chapter" data-level="5.2" data-path="model-formulation.html"><a href="model-formulation.html#the-generic-train"><i class="fa fa-check"></i><b>5.2</b> The generic <code>train()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="model-formulation.html"><a href="model-formulation.html#recipes"><i class="fa fa-check"></i><b>5.3</b> Recipes</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="training.html"><a href="training.html"><i class="fa fa-check"></i><b>6</b> Model training</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="training.html"><a href="training.html#hyperparameter-tuning"><i class="fa fa-check"></i><b>6.1</b> Hyperparameter tuning</a></li>
@@ -191,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.3" data-path="exercises.html"><a href="exercises.html#prediction-1"><i class="fa fa-check"></i><b>7.4.3</b> Prediction</a></li>
 <li class="chapter" data-level="7.4.4" data-path="exercises.html"><a href="exercises.html#sample-hyperparameters"><i class="fa fa-check"></i><b>7.4.4</b> Sample hyperparameters</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="exercises.html"><a href="exercises.html#random-forest"><i class="fa fa-check"></i><b>7.5</b> Random forest</a>
+<li class="chapter" data-level="7.5" data-path="exercises.html"><a href="exercises.html#random-forest-1"><i class="fa fa-check"></i><b>7.5</b> Random forest</a>
 <ul>
 <li class="chapter" data-level="7.5.1" data-path="exercises.html"><a href="exercises.html#training-3"><i class="fa fa-check"></i><b>7.5.1</b> Training</a></li>
 <li class="chapter" data-level="7.5.2" data-path="exercises.html"><a href="exercises.html#prediction-2"><i class="fa fa-check"></i><b>7.5.2</b> Prediction</a></li>
@@ -213,7 +218,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.3" data-path="solutions.html"><a href="solutions.html#prediction-4"><i class="fa fa-check"></i><b>8.4.3</b> Prediction</a></li>
 <li class="chapter" data-level="8.4.4" data-path="solutions.html"><a href="solutions.html#sample-hyperparameters-1"><i class="fa fa-check"></i><b>8.4.4</b> Sample hyperparameters</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="solutions.html"><a href="solutions.html#random-forest-1"><i class="fa fa-check"></i><b>8.5</b> Random forest</a>
+<li class="chapter" data-level="8.5" data-path="solutions.html"><a href="solutions.html#random-forest-2"><i class="fa fa-check"></i><b>8.5</b> Random forest</a>
 <ul>
 <li class="chapter" data-level="8.5.1" data-path="solutions.html"><a href="solutions.html#training-6"><i class="fa fa-check"></i><b>8.5.1</b> Training</a></li>
 <li class="chapter" data-level="8.5.2" data-path="solutions.html"><a href="solutions.html#prediction-5"><i class="fa fa-check"></i><b>8.5.2</b> Prediction</a></li>
@@ -232,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ml4ec: Machine Learning for Eddy Covariance data</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ml4ec - Machine Learning for Eddy Covariance data</a>
           </h1>
         </div>
 
@@ -242,22 +247,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="model-formulation" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Model formulation</h1>
-<p>Remember that the aim of supervised ML is to find a model <span class="math inline">\(\hat{Y} = f(X)\)</span> so that <span class="math inline">\(\hat{Y}\)</span> agrees well with observations <span class="math inline">\(Y\)</span>. We typically start with a research question where <span class="math inline">\(Y\)</span> is given - naturally - by the problem we are addressing and we have a data set at hand where one or multiple predictors (or features) <span class="math inline">\(X\)</span> are recorded along with <span class="math inline">\(Y\)</span>. From our data, we have information about how GPP (ecosystem-level photosynthesis) depends on set of abiotic factors, mostly meteorological measurements. In R, it is common to use the <em>formula</em> notation to specify the target and predictor variables. You have probably encountered formulas before, e.g., for a linear regression using the <code>lm()</code> function. To specify a linear regression model for <code>GPP_NT_VUT_REF</code> with three predictors <code>SW_F_IN</code>, <code>VPD_F</code>, and <code>TA_F</code>, we write:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="model-formulation.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, <span class="at">data =</span> ddf)</span></code></pre></div>
-<p>Actually, the way we formulate a model is independent of the algorithm, or <em>engine</em> that takes care of fitting <span class="math inline">\(f(X)\)</span>. As mentioned in Chapter <a href="preprocessing.html#preprocessing">4</a> the R package <a href="https://topepo.github.io/caret/"><strong>caret</strong></a> provides a unified interface for using different ML algorithms implemented in separate packages. In other words, it acts as a <em>wrapper</em> for multiple different model fitting, or ML algorithms. This has the advantage that it unifies the interface (the way arguments are provided). caret also provides implementations for a set of commonly used tools for data processing, model training, and evaluation. We’ll use caret for model training with the function <code>train()</code> (more on model training in Chapter <a href="training.html#training">6</a>). Note however, that using a specific algorithm, which is implemented in a specific package outside caret, also requires that the respective package be installed and loaded. Using caret for specifying the same linear regression model as above, using the base-R <code>lm()</code> function, can be done with caret in a generalized form as:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="model-formulation.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb24-2"><a href="model-formulation.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
-<span id="cb24-3"><a href="model-formulation.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
-<span id="cb24-4"><a href="model-formulation.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
-<span id="cb24-5"><a href="model-formulation.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;lm&quot;</span></span>
-<span id="cb24-6"><a href="model-formulation.html#cb24-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>Of course, this is an overkill compared to just writing <code>lm(...)</code>. But the advantage of the unified interface is that we can simply replace the <code>method</code> argument to use a different ML algorithm. For example, to use a shallow neural network model using the <strong>nnet</strong> package, we can write:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="model-formulation.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
-<span id="cb25-2"><a href="model-formulation.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
-<span id="cb25-3"><a href="model-formulation.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
-<span id="cb25-4"><a href="model-formulation.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;nnet&quot;</span></span>
-<span id="cb25-5"><a href="model-formulation.html#cb25-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>The aim of supervised ML is to find a model <span class="math inline">\(\hat{Y} = f(X)\)</span> so that <span class="math inline">\(\hat{Y}\)</span> agrees well with observations <span class="math inline">\(Y\)</span>. We typically start with a research question where <span class="math inline">\(Y\)</span> is given - naturally - by the problem we are addressing and we have a data set at hand where one or multiple predictors (or features) <span class="math inline">\(X\)</span> are recorded along with <span class="math inline">\(Y\)</span>. From our data, we have information about how GPP (ecosystem-level photosynthesis) depends on set of abiotic factors, mostly meteorological measurements.</p>
+<div id="formula-notation" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Formula notation</h2>
+<p>In R, it is common to use the <em>formula</em> notation to specify the target and predictor variables. You have probably encountered formulas before, e.g., for a linear regression using the <code>lm()</code> function. To specify a linear regression model for <code>GPP_NT_VUT_REF</code> with three predictors <code>SW_F_IN</code>, <code>VPD_F</code>, and <code>TA_F</code>, we write:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="model-formulation.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, <span class="at">data =</span> ddf)</span></code></pre></div>
+</div>
+<div id="the-generic-train" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> The generic <code>train()</code></h2>
+<p>Actually, the way we formulate a model is independent of the algorithm, or <em>engine</em> that takes care of fitting <span class="math inline">\(f(X)\)</span>. As mentioned in Chapter <a href="preprocessing.html#preprocessing">4</a> the R package <a href="https://topepo.github.io/caret/"><strong>caret</strong></a> provides a unified interface for using different ML algorithms implemented in separate packages. In other words, it acts as a <em>wrapper</em> for multiple different model fitting, or ML algorithms. This has the advantage that it unifies the interface (the way arguments are provided). caret also provides implementations for a set of commonly used tools for data processing, model training, and evaluation. We’ll use caret for model training with the function <code>train()</code> (more on model training in Chapter <a href="training.html#training">6</a>). Note however, that using a specific algorithm, which is implemented in a specific package outside caret, also requires that the respective package be installed and loaded. Using caret for specifying the same linear regression model as above, the base-R <code>lm()</code> function, can be done with caret in a generalized form as:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="model-formulation.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb11-2"><a href="model-formulation.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
+<span id="cb11-3"><a href="model-formulation.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
+<span id="cb11-4"><a href="model-formulation.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
+<span id="cb11-5"><a href="model-formulation.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;lm&quot;</span></span>
+<span id="cb11-6"><a href="model-formulation.html#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Of course, this is an overkill compared to just writing <code>lm(...)</code>. But the advantage of the unified interface is that we can simply replace the <code>method</code> argument to use a different ML algorithm. For example, to use a random forest model implemented by the <strong>ranger</strong> package, we can write:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="model-formulation.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
+<span id="cb12-2"><a href="model-formulation.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
+<span id="cb12-3"><a href="model-formulation.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
+<span id="cb12-4"><a href="model-formulation.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>,</span>
+<span id="cb12-5"><a href="model-formulation.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb12-6"><a href="model-formulation.html#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>The <code>...</code> hints at the fact that there are a few more arguments to be specified for training a random forest model with ranger. More on that in Chapter <a href="training.html#training">6</a>.</p>
+</div>
+<div id="recipes" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Recipes</h2>
+<p>The <a href="https://recipes.tidymodels.org/"><strong>recipes</strong></a> package provides another way to specify the <em>formula</em> and pre-processing steps in one go and is compatible with caret’s <code>train()</code> function. For the same formula as above, and an example where the data <code>ddf_train</code> is to be centered and scaled, we can specify the “recipe” using the <em>tidyverse</em>-style pipe operator as:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="model-formulation.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
+<span id="cb13-2"><a href="model-formulation.html#cb13-2" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">recipe</span>(GPP_NT_VUT_REF <span class="sc">~</span> SW_IN_F <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, <span class="at">data =</span> ddf_train) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="model-formulation.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="model-formulation.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())</span></code></pre></div>
+<p>The first line assigns <em>roles</em> to the different variables. <code>GPP_NT_VUT_REF</code> is an <em>outcome</em> (in “recipes speak”). Then, we used selectors to apply the recipe step to several variables at once. The first selector, <code>all_numeric()</code>, selects all variables that are either integers or real values. The second selector, <code>-all_outcomes()</code> removes any outcome (target) variables from this recipe step.</p>
+<p>The object <code>pp</code> can then be supplied to <code>train()</code> as its first argument:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="model-formulation.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
+<span id="cb14-2"><a href="model-formulation.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  pp, </span>
+<span id="cb14-3"><a href="model-formulation.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train, </span>
+<span id="cb14-4"><a href="model-formulation.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>,</span>
+<span id="cb14-5"><a href="model-formulation.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb14-6"><a href="model-formulation.html#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>As seen above for the pre-processing example, this does not return a standardized version of the data frame <code>ddf_train</code>, but rather the information that allows us to apply the same standardization also to other data sets.</p>
 
+</div>
 </div>
             </section>
 

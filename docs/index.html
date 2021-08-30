@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>ml4ec: Machine Learning for Eddy Covariance data</title>
-  <meta name="description" content="This is a hands-on tutorial." />
+  <title>ml4ec - Machine Learning for Eddy Covariance data</title>
+  <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="ml4ec: Machine Learning for Eddy Covariance data" />
+  <meta property="og:title" content="ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a hands-on tutorial." />
+  <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="ml4ec: Machine Learning for Eddy Covariance data" />
+  <meta name="twitter:title" content="ml4ec - Machine Learning for Eddy Covariance data" />
   
-  <meta name="twitter:description" content="This is a hands-on tutorial." />
+  <meta name="twitter:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
 
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-08-28" />
+<meta name="date" content="2021-08-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 
-<link rel="next" href="motivation.html"/>
+<link rel="next" href="introduction.html"/>
 <script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -142,20 +142,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#apps"><i class="fa fa-check"></i><b>1.1</b> Apps</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#libraries"><i class="fa fa-check"></i><b>1.2</b> Libraries</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="motivation.html"><a href="motivation.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
-<li class="chapter" data-level="2.2" data-path="motivation.html"><a href="motivation.html#important-points"><i class="fa fa-check"></i><b>2.2</b> Important points</a></li>
-<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#overfitting"><i class="fa fa-check"></i><b>2.3</b> Overfitting</a></li>
-<li class="chapter" data-level="2.4" data-path="motivation.html"><a href="motivation.html#our-modelling-task"><i class="fa fa-check"></i><b>2.4</b> Our modelling task</a></li>
-<li class="chapter" data-level="2.5" data-path="motivation.html"><a href="motivation.html#motivation-1"><i class="fa fa-check"></i><b>2.5</b> Motivation</a></li>
-<li class="chapter" data-level="2.6" data-path="motivation.html"><a href="motivation.html#data"><i class="fa fa-check"></i><b>2.6</b> Data</a>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#some-primers"><i class="fa fa-check"></i><b>2.2</b> Some primers</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#overfitting"><i class="fa fa-check"></i><b>2.3</b> Overfitting</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#our-modelling-challenge"><i class="fa fa-check"></i><b>2.4</b> Our modelling challenge</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#data"><i class="fa fa-check"></i><b>2.5</b> Data</a>
 <ul>
-<li class="chapter" data-level="2.6.1" data-path="motivation.html"><a href="motivation.html#available-variables"><i class="fa fa-check"></i><b>2.6.1</b> Available variables</a></li>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#available-variables"><i class="fa fa-check"></i><b>2.5.1</b> Available variables</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="motivation.html"><a href="motivation.html#the-modelling-challenge"><i class="fa fa-check"></i><b>2.7</b> The modelling challenge</a>
+<li class="chapter" data-level="2.6" data-path="introduction.html"><a href="introduction.html#more-primers"><i class="fa fa-check"></i><b>2.6</b> More primers</a>
 <ul>
-<li class="chapter" data-level="2.7.1" data-path="motivation.html"><a href="motivation.html#some-peculiarities-of-the-data"><i class="fa fa-check"></i><b>2.7.1</b> Some peculiarities of the data</a></li>
+<li class="chapter" data-level="2.6.1" data-path="introduction.html"><a href="introduction.html#k-nearest-neighbours"><i class="fa fa-check"></i><b>2.6.1</b> K-nearest neighbours</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction.html"><a href="introduction.html#random-forest"><i class="fa fa-check"></i><b>2.6.2</b> Random Forest</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-splitting.html"><a href="data-splitting.html"><i class="fa fa-check"></i><b>3</b> Data splitting</a>
@@ -169,7 +169,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="preprocessing.html"><a href="preprocessing.html#standardization"><i class="fa fa-check"></i><b>4.2</b> Standardization</a></li>
 <li class="chapter" data-level="4.3" data-path="preprocessing.html"><a href="preprocessing.html#more-pre-processing"><i class="fa fa-check"></i><b>4.3</b> More pre-processing</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="model-formulation.html"><a href="model-formulation.html"><i class="fa fa-check"></i><b>5</b> Model formulation</a></li>
+<li class="chapter" data-level="5" data-path="model-formulation.html"><a href="model-formulation.html"><i class="fa fa-check"></i><b>5</b> Model formulation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="model-formulation.html"><a href="model-formulation.html#formula-notation"><i class="fa fa-check"></i><b>5.1</b> Formula notation</a></li>
+<li class="chapter" data-level="5.2" data-path="model-formulation.html"><a href="model-formulation.html#the-generic-train"><i class="fa fa-check"></i><b>5.2</b> The generic <code>train()</code></a></li>
+<li class="chapter" data-level="5.3" data-path="model-formulation.html"><a href="model-formulation.html#recipes"><i class="fa fa-check"></i><b>5.3</b> Recipes</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="training.html"><a href="training.html"><i class="fa fa-check"></i><b>6</b> Model training</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="training.html"><a href="training.html#hyperparameter-tuning"><i class="fa fa-check"></i><b>6.1</b> Hyperparameter tuning</a></li>
@@ -191,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.3" data-path="exercises.html"><a href="exercises.html#prediction-1"><i class="fa fa-check"></i><b>7.4.3</b> Prediction</a></li>
 <li class="chapter" data-level="7.4.4" data-path="exercises.html"><a href="exercises.html#sample-hyperparameters"><i class="fa fa-check"></i><b>7.4.4</b> Sample hyperparameters</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="exercises.html"><a href="exercises.html#random-forest"><i class="fa fa-check"></i><b>7.5</b> Random forest</a>
+<li class="chapter" data-level="7.5" data-path="exercises.html"><a href="exercises.html#random-forest-1"><i class="fa fa-check"></i><b>7.5</b> Random forest</a>
 <ul>
 <li class="chapter" data-level="7.5.1" data-path="exercises.html"><a href="exercises.html#training-3"><i class="fa fa-check"></i><b>7.5.1</b> Training</a></li>
 <li class="chapter" data-level="7.5.2" data-path="exercises.html"><a href="exercises.html#prediction-2"><i class="fa fa-check"></i><b>7.5.2</b> Prediction</a></li>
@@ -213,7 +218,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.3" data-path="solutions.html"><a href="solutions.html#prediction-4"><i class="fa fa-check"></i><b>8.4.3</b> Prediction</a></li>
 <li class="chapter" data-level="8.4.4" data-path="solutions.html"><a href="solutions.html#sample-hyperparameters-1"><i class="fa fa-check"></i><b>8.4.4</b> Sample hyperparameters</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="solutions.html"><a href="solutions.html#random-forest-1"><i class="fa fa-check"></i><b>8.5</b> Random forest</a>
+<li class="chapter" data-level="8.5" data-path="solutions.html"><a href="solutions.html#random-forest-2"><i class="fa fa-check"></i><b>8.5</b> Random forest</a>
 <ul>
 <li class="chapter" data-level="8.5.1" data-path="solutions.html"><a href="solutions.html#training-6"><i class="fa fa-check"></i><b>8.5.1</b> Training</a></li>
 <li class="chapter" data-level="8.5.2" data-path="solutions.html"><a href="solutions.html#prediction-5"><i class="fa fa-check"></i><b>8.5.2</b> Prediction</a></li>
@@ -232,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ml4ec: Machine Learning for Eddy Covariance data</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">ml4ec - Machine Learning for Eddy Covariance data</a>
           </h1>
         </div>
 
@@ -241,9 +246,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">ml4ec: Machine Learning for Eddy Covariance data</h1>
+<h1 class="title">ml4ec - Machine Learning for Eddy Covariance data</h1>
 <p class="author"><em>Benjamin Stocker</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-08-28</em></p>
+<p class="date" style="margin-top: 1.5em;"><em>2021-08-30</em></p>
 </div>
 <div id="set-up" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Set up</h1>
@@ -254,9 +259,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="libraries" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Libraries</h2>
 <p>Install missing packages for this tutorial.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>list_pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;caret&quot;</span>, <span class="st">&quot;recipes&quot;</span>, <span class="st">&quot;rsample&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;conflicted&quot;</span>, <span class="st">&quot;modelr&quot;</span>, <span class="st">&quot;forcats&quot;</span>, <span class="st">&quot;yardstick&quot;</span>, <span class="st">&quot;visdat&quot;</span>, <span class="st">&quot;skimr&quot;</span>, <span class="st">&quot;ranger&quot;</span>)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>list_pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;caret&quot;</span>, <span class="st">&quot;recipes&quot;</span>, <span class="st">&quot;rsample&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;conflicted&quot;</span>, <span class="st">&quot;modelr&quot;</span>, <span class="st">&quot;forcats&quot;</span>, <span class="st">&quot;yardstick&quot;</span>, <span class="st">&quot;visdat&quot;</span>, <span class="st">&quot;skimr&quot;</span>, <span class="st">&quot;ranger&quot;</span>, <span class="st">&quot;knitr&quot;</span>)</span>
 <span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> list_pkgs[<span class="sc">!</span>(list_pkgs <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
 <span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(new_pkgs) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="fu">install.packages</span>(new_pkgs)</span></code></pre></div>
+<p>This book was compiled with the <em>bookdown</em> library and source files (RMarkdown), available on <a href="https://github.com/stineb/ml4ec_workshop">Github</a>. Navigate there also for working on the exercises (Chapter <a href="exercises.html#exercises">7</a>) and using the solutions (Chapter <a href="solutions.html#solutions">8</a>).</p>
+<p>This book is published under a GNU-GPL v3 license. Please cite this as:</p>
+<p><em>xxxx</em></p>
 
 </div>
 </div>
@@ -266,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 
-<a href="motivation.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

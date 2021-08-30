@@ -6,7 +6,7 @@ Now that you are familiar with the basic steps for supervised machine learning, 
 
 Read the CSV file `"./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv"`, select all variables with name ending with `"_F"`, the variables `"TIMESTAMP"`, `"GPP_NT_VUT_REF"`, and `"NEE_VUT_REF_QC"`, and drop all variables that contain `"JSB"` in their name. Then convert the variable `"TIMESTAMP"` to a date-time object with the function `ymd()` from the *lubridate* package, and interpret all values `-9999` as missing values. Then, set all values of `"GPP_NT_VUT_REF"` to missing if the corresponding quality control variable indicates that less than 90% are measured data points. Finally, drop the variable `"NEE_VUT_REF_QC"` - we won't use it anymore.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(tidyverse)
 
 ddf <- read_csv("./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv") %>% 
@@ -35,7 +35,7 @@ ddf <- read_csv("./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv") %>
 
 Split the data a training and testing set, that contain 70% and 30% of the total available data, respectively.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(rsample)
 set.seed(1982)  # for reproducibility
 split <- initial_split(ddf, prop = 0.7)
@@ -54,7 +54,7 @@ Fit a linear regression model using the base-R function `lm()` and the training 
 - Is the linear regression slope significantly different from zero for all predictors?
 - Is a linear regression model with "poor" predictors removed better supported by the data than a model including all predictors?
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 ## fit linear regression model
 linmod_baser <- lm(
   form = GPP_NT_VUT_REF ~ ., 
@@ -73,7 +73,7 @@ summary(linmod_baser)
 BIC(linmod_baser)
 ```
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 ## Fit an lm model on the same data, but with PA_F removed.
 linmod_baser_nopaf <- lm(
   form = GPP_NT_VUT_REF ~ ., 
@@ -90,7 +90,7 @@ BIC(linmod_baser_nopaf)
 ```
 
 Use caret and the function `train()` for fitting the same linear regression model (with all predictors) on the same data. Does it yield identical results as using `lm()` directly? You will have to set the argument `trControl` accordingly to avoid resampling, and instead fit the model on the all data in `ddf_train`. You can use `summary()` also on the object returned by the function `train()`.
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(caret)
 
 linmod_caret <- train(
@@ -118,7 +118,7 @@ Hints:
 - The $R^2$ can be extracted from the model object as `summary(model_object)$r.squared`, or is (as the RMSE) given in the metrics data frame returned by `metrics()` from the *yardstick* library. 
 - For visualisation the model performance, consider a scatterplot, or (better) a plot that reveals the density of overlapping points. (We're plotting information from over 4000 data points here!)
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(patchwork)
 library(yardstick)
 
@@ -190,7 +190,7 @@ eval_model(mod = linmod_baser, df_train = ddf_train, df_test = ddf_test)
 
 ### Check data
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 ddf_train %>% 
   mutate(split = "train") %>% 
   bind_rows(ddf_test %>% 
@@ -207,7 +207,7 @@ The variable `PA_F` looks weird and was not significant in the linear model. The
 
 Fit two KNN models on `ddf_train` (excluding `"PA_F"`), one with $k = 2$ and one with $k = 30$, both without resampling. Use the RMSE as the loss function. Center and scale data as part of the pre-processing and model formulation specification using the function `recipe()`.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(recipes)
 
 ## model formulation and preprocessing specification
@@ -246,7 +246,7 @@ With the two models fitted above, predict `"GPP_NT_VUT_REF"` for both and traini
 
 Which model do you expect to perform better better on the training set and which to perform better on the testing set? Why?
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 ## with k = 2
 eval_model(
   mod_knn_k2, 
@@ -270,7 +270,7 @@ Hint:
 
 - The visualisation of cross-validation results can be visualised with the `plot(model_object)` of `ggplot(model_object)`.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 mod_knn <- train(
   myrecipe, 
   data = ddf_train %>% 
@@ -296,7 +296,7 @@ Hints:
 - See [here](https://topepo.github.io/caret/available-models.html) for information about hyperparameters available for tuning with caret.
 - Set the argument `savePredictions = "final"` of function `trainControl()`.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(ranger)
 
 ## no pre-processing necessary
@@ -329,7 +329,7 @@ Evaluate the trained model on the training and on the test set, giving metrics a
 
 How are differences in performance to be interpreted? Compare the performances of linear regression, KNN, and random forest, considering the evaluation on the test set.
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 eval_model(rf, df_train = ddf_train, df_test = ddf_test)
 ```
 
@@ -337,7 +337,7 @@ Show the model performance (metrics and visualisation) on the validation sets al
 
 Do you expect it to be more similar to the model performance on the training set or the testing set in the evaluation above? Why?
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 metrics_train <- rf$pred %>% 
   yardstick::metrics(obs, pred)
 
