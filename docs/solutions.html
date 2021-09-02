@@ -334,6 +334,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb34-4"><a href="solutions.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="do">## tends to be more conservative than the AIC.</span></span>
 <span id="cb34-5"><a href="solutions.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(linmod_baser)</span></code></pre></div>
 <pre><code>## [1] 15450.89</code></pre>
+<p>The variable <code>PA_F</code> was not significant in the linear model. Therefore, we won’t use it for the models below.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="solutions.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit an lm model on the same data, but with PA_F removed.</span></span>
 <span id="cb36-2"><a href="solutions.html#cb36-2" aria-hidden="true" tabindex="-1"></a>linmod_baser_nopaf <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
 <span id="cb36-3"><a href="solutions.html#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> ., </span>
@@ -485,6 +486,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb42-64"><a href="solutions.html#cb42-64" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-65"><a href="solutions.html#cb42-65" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_model</span>(<span class="at">mod =</span> linmod_baser, <span class="at">df_train =</span> ddf_train, <span class="at">df_test =</span> ddf_test)</span></code></pre></div>
 <p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-43-1.png" width="696" style="display: block; margin: auto;" /></p>
+<p>Here, the function <code>eval_model()</code> returned an object that is made up of two plots (<code>return(gg1 + gg2)</code> in the function definition). This combination of plots by <code>+</code> is enabled by the <a href="https://patchwork.data-imaginist.com/"><strong>patchwork</strong></a> library. The individual plot objects (<code>gg1</code> and <code>gg2</code>) are returned by the <code>ggplot()</code> functions. The visualisation here is density plot of hexagonal bins. It shows the number of points inside each bin, encoded by the color (see legend “count”). We want the highest density of points along the 1:1 line (the dotted line). Predictions match observations perfectly for points lying on the 1:1 line. Alternatively, we could also use a scatterplot to visualise the model evaluation. However, a large number of points would overlie each other. As typical machine learning applications make use of large number of data, such evaluation plots would typically face the problem of overlying points and density plots are a solution.</p>
+<p>Metrics are given in the subtitle of the plots. Note that the <span class="math inline">\(R^2\)</span> and the RMSE measure different aspects of model-data agreement. Here, the measure the correlation (fraction of variation explained), and the average error. We should generally consider multiple metrics measuring multiple aspects of the prediction-observation fit to evaluate models.</p>
 </div>
 </div>
 <div id="knn-1" class="section level2" number="8.4">
@@ -500,7 +503,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb43-7"><a href="solutions.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
 <span id="cb43-8"><a href="solutions.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 <p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-44-1.png" width="696" style="display: block; margin: auto;" /></p>
-<p>The variable <code>PA_F</code> looks weird and was not significant in the linear model. Therefore, we won’t use it for the models below.</p>
 </div>
 <div id="training-5" class="section level3" number="8.4.2">
 <h3><span class="header-section-number">8.4.2</span> Training</h3>

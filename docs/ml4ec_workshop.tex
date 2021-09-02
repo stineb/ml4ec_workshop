@@ -141,7 +141,7 @@ Install missing packages for this tutorial.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{list\_pkgs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"caret"}\NormalTok{, }\StringTok{"recipes"}\NormalTok{, }\StringTok{"rsample"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"conflicted"}\NormalTok{, }\StringTok{"modelr"}\NormalTok{, }\StringTok{"forcats"}\NormalTok{, }\StringTok{"yardstick"}\NormalTok{, }\StringTok{"visdat"}\NormalTok{, }\StringTok{"skimr"}\NormalTok{, }\StringTok{"ranger"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{)}
+\NormalTok{list\_pkgs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"caret"}\NormalTok{, }\StringTok{"recipes"}\NormalTok{, }\StringTok{"rsample"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"conflicted"}\NormalTok{, }\StringTok{"modelr"}\NormalTok{, }\StringTok{"forcats"}\NormalTok{, }\StringTok{"yardstick"}\NormalTok{, }\StringTok{"visdat"}\NormalTok{, }\StringTok{"skimr"}\NormalTok{, }\StringTok{"ranger"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"patchwork"}\NormalTok{)}
 \NormalTok{new\_pkgs }\OtherTok{\textless{}{-}}\NormalTok{ list\_pkgs[}\SpecialCharTok{!}\NormalTok{(list\_pkgs }\SpecialCharTok{\%in\%} \FunctionTok{installed.packages}\NormalTok{()[, }\StringTok{"Package"}\NormalTok{])]}
 \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(new\_pkgs) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }\FunctionTok{install.packages}\NormalTok{(new\_pkgs)}
 \end{Highlighting}
@@ -347,7 +347,7 @@ Let's read the data, select relevant variables, convert the time stamp column to
 \end{Highlighting}
 \end{Shaded}
 
-If the style of the code above looks unfamiliar - this is the \textbf{\href{https://www.tidyverse.org/}{tidyverse}}. The tidyverse is a R syntax ``dialect'' and a collection of R functions and packages. They share the structure of arguments and function return values than can be combined to a chain by the \texttt{\%\textgreater{}\%} (``pipe'') operator. For this, the output of each function is a data frame which is ``piped'' to the next function, and each function takes a data frame as input. What is piped into a function takes the place of the first argument, normally provided in brackets. This enables ease with typical data wrangling and visualization tasks (\textbf{\href{https://ggplot2.tidyverse.org/}{ggplot2}} is part of it). This tutorial is generally written using tidyverse packages and code syntax.
+If the style of the code above looks unfamiliar - this is the \textbf{\href{https://www.tidyverse.org/}{tidyverse}}. The tidyverse is a R syntax ``dialect'' and a collection of R functions and packages. They share the structure of arguments and function return values than can be combined to a chain by the \texttt{\%\textgreater{}\%} (``pipe'') operator. For this, the output of each function is a data frame which is ``piped'' to the next function, and each function takes a data frame as input. What is piped into a function takes the place of the first argument, normally provided inside the brackets. This enables ease with typical data wrangling and visualization tasks (\textbf{\href{https://ggplot2.tidyverse.org/}{ggplot2}} is part of the tidyverse). This tutorial is generally written using tidyverse packages and code syntax.
 
 The column \texttt{NEE\_VUT\_REF\_QC} provides information about the fraction of gap-filled half-hourly data used to calculate daily aggregates. Let's use only \texttt{GPP\_NT\_VUT\_REF} data, where at least 80\% of the underlying half-hourly data was good quality measured data, and not gap-filled. Make sure to not actually remove the respective rows, but rather replace values with NA.
 
@@ -1007,6 +1007,8 @@ Fit a linear regression model using the base-R function \texttt{lm()} and the tr
 ## [1] 15450.89
 \end{verbatim}
 
+The variable \texttt{PA\_F} was not significant in the linear model. Therefore, we won't use it for the models below.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \DocumentationTok{\#\# Fit an lm model on the same data, but with PA\_F removed.}
@@ -1197,6 +1199,10 @@ Hints:
 
 \begin{center}\includegraphics{ml4ec_workshop_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
+Here, the function \texttt{eval\_model()} returned an object that is made up of two plots (\texttt{return(gg1\ +\ gg2)} in the function definition). This combination of plots by \texttt{+} is enabled by the \href{https://patchwork.data-imaginist.com/}{\textbf{patchwork}} library. The individual plot objects (\texttt{gg1} and \texttt{gg2}) are returned by the \texttt{ggplot()} functions. The visualisation here is density plot of hexagonal bins. It shows the number of points inside each bin, encoded by the color (see legend ``count''). We want the highest density of points along the 1:1 line (the dotted line). Predictions match observations perfectly for points lying on the 1:1 line. Alternatively, we could also use a scatterplot to visualise the model evaluation. However, a large number of points would overlie each other. As typical machine learning applications make use of large number of data, such evaluation plots would typically face the problem of overlying points and density plots are a solution.
+
+Metrics are given in the subtitle of the plots. Note that the \(R^2\) and the RMSE measure different aspects of model-data agreement. Here, the measure the correlation (fraction of variation explained), and the average error. We should generally consider multiple metrics measuring multiple aspects of the prediction-observation fit to evaluate models.
+
 \hypertarget{knn-1}{%
 \section{KNN}\label{knn-1}}
 
@@ -1217,8 +1223,6 @@ Hints:
 \end{Shaded}
 
 \begin{center}\includegraphics{ml4ec_workshop_files/figure-latex/unnamed-chunk-44-1} \end{center}
-
-The variable \texttt{PA\_F} looks weird and was not significant in the linear model. Therefore, we won't use it for the models below.
 
 \hypertarget{training-5}{%
 \subsection{Training}\label{training-5}}

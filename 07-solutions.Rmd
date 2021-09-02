@@ -73,6 +73,8 @@ summary(linmod_baser)
 BIC(linmod_baser)
 ```
 
+The variable `PA_F` was not significant in the linear model. Therefore, we won't use it for the models below.
+
 ```{r warning=FALSE, message=FALSE}
 ## Fit an lm model on the same data, but with PA_F removed.
 linmod_baser_nopaf <- lm(
@@ -186,6 +188,10 @@ eval_model <- function(mod, df_train, df_test){
 eval_model(mod = linmod_baser, df_train = ddf_train, df_test = ddf_test)
 ```
 
+Here, the function `eval_model()` returned an object that is made up of two plots (`return(gg1 + gg2)` in the function definition). This combination of plots by `+` is enabled by the [**patchwork**](https://patchwork.data-imaginist.com/) library. The individual plot objects (`gg1` and `gg2`) are returned by the `ggplot()` functions. The visualisation here is density plot of hexagonal bins. It shows the number of points inside each bin, encoded by the color (see legend "count"). We want the highest density of points along the 1:1 line (the dotted line). Predictions match observations perfectly for points lying on the 1:1 line. Alternatively, we could also use a scatterplot to visualise the model evaluation. However, a large number of points would overlie each other. As typical machine learning applications make use of large number of data, such evaluation plots would typically face the problem of overlying points and density plots are a solution. 
+
+Metrics are given in the subtitle of the plots. Note that the $R^2$ and the RMSE measure different aspects of model-data agreement. Here, the measure the correlation (fraction of variation explained), and the average error. We should generally consider multiple metrics measuring multiple aspects of the prediction-observation fit to evaluate models.
+
 ## KNN
 
 ### Check data
@@ -200,8 +206,6 @@ ddf_train %>%
   geom_density() +
   facet_wrap(~variable, scales = "free")
 ```
-
-The variable `PA_F` looks weird and was not significant in the linear model. Therefore, we won't use it for the models below.
 
 ### Training
 
