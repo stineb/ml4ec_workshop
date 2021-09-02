@@ -349,7 +349,7 @@ Let's read the data, select relevant variables, convert the time stamp column to
 
 If the style of the code above looks unfamiliar - this is the \textbf{\href{https://www.tidyverse.org/}{tidyverse}}. The tidyverse is a R syntax ``dialect'' and a collection of R functions and packages. They share the structure of arguments and function return values than can be combined to a chain by the \texttt{\%\textgreater{}\%} (``pipe'') operator. For this, the output of each function is a data frame which is ``piped'' to the next function, and each function takes a data frame as input. What is piped into a function takes the place of the first argument, normally provided in brackets. This enables ease with typical data wrangling and visualization tasks (\textbf{\href{https://ggplot2.tidyverse.org/}{ggplot2}} is part of it). This tutorial is generally written using tidyverse packages and code syntax.
 
-The column \texttt{NEE\_VUT\_REF\_QC} provides information about the fraction of gap-filled half-hourly data used to calculate daily aggregates. Let's remove \texttt{GPP\_NT\_VUT\_REF} data, where more than 80\% of the half-hourly data was gap-filled. Make sure to not actually remove the respective rows, but rather replace values with NA.
+The column \texttt{NEE\_VUT\_REF\_QC} provides information about the fraction of gap-filled half-hourly data used to calculate daily aggregates. Let's use only \texttt{GPP\_NT\_VUT\_REF} data, where at least 80\% of the underlying half-hourly data was good quality measured data, and not gap-filled. Make sure to not actually remove the respective rows, but rather replace values with NA.
 
 \begin{Shaded}
 \begin{Highlighting}[]
