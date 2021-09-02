@@ -128,8 +128,8 @@ eval_fits <- function(df, polyfit_1, polyfit_4, polyfit_15, justdata = FALSE){
   return(gg)
 }
 
-gg <- eval_fits(df_train, polyfit_1, polyfit_4, polyfit_15, justdata = TRUE)
-gg + labs(title = "The data")
+# gg <- eval_fits(df_train, polyfit_1, polyfit_4, polyfit_15, justdata = TRUE)
+# gg + labs(title = "The data")
 
 gg <- eval_fits(df_train, polyfit_1, polyfit_4, polyfit_15)
 gg + labs(title = "Training")

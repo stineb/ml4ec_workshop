@@ -117,7 +117,7 @@
 
 \title{ml4ec - Machine Learning for Eddy Covariance data}
 \author{Benjamin Stocker}
-\date{2021-08-31}
+\date{2021-09-02}
 
 \begin{document}
 \maketitle
@@ -196,8 +196,6 @@ y = \sum_{n=0}^N a_n x^n
 \] \(a_n\) are the coefficients, i.e., model parameters. The goal of the training is to get the coefficients \(a_n\). From the above definition, the polynomial of degree 15 has 16 parameters, while the polynomial of degree 1 has two parameters (and corresponds to a simple linear regression). You can imagine that the polynomial of degree 15 is much more flexible and should thus yield the closest fit to the training data. This is indeed the case.
 
 \begin{center}\includegraphics{ml4ec_workshop_files/figure-latex/unnamed-chunk-3-1} \end{center}
-
-\begin{center}\includegraphics{ml4ec_workshop_files/figure-latex/unnamed-chunk-3-2} \end{center}
 
 We can use the same fitted models on unseen data - the \emph{validation data}. This is what's done below. Again, the same true underlying relationship is used, but we sample a new set of data points in x and add a new sample of errors on top of the true relationship.
 
@@ -535,17 +533,35 @@ Actually, the way we formulate a model is independent of the algorithm, or \emph
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(caret)}
 \FunctionTok{train}\NormalTok{(}
-  \AttributeTok{form =}\NormalTok{ GPP\_NT\_VUT\_REF }\SpecialCharTok{\textasciitilde{}}\NormalTok{ SW\_F\_IN }\SpecialCharTok{+}\NormalTok{ VPD\_F }\SpecialCharTok{+}\NormalTok{ TA\_F, }
-  \AttributeTok{data =}\NormalTok{ ddf, }
+  \AttributeTok{form =}\NormalTok{ GPP\_NT\_VUT\_REF }\SpecialCharTok{\textasciitilde{}}\NormalTok{ SW\_IN\_F }\SpecialCharTok{+}\NormalTok{ VPD\_F }\SpecialCharTok{+}\NormalTok{ TA\_F, }
+  \AttributeTok{data =}\NormalTok{ ddf }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{(), }
   \AttributeTok{method =} \StringTok{"lm"}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+## Linear Regression 
+## 
+## 6179 samples
+##    3 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 6179, 6179, 6179, 6179, 6179, 6179, ... 
+## Resampling results:
+## 
+##   RMSE      Rsquared   MAE     
+##   1.599712  0.6646581  1.241035
+## 
+## Tuning parameter 'intercept' was held constant at a value of TRUE
+\end{verbatim}
+
 Of course, this is an overkill compared to just writing \texttt{lm(...)}. But the advantage of the unified interface is that we can simply replace the \texttt{method} argument to use a different ML algorithm. For example, to use a random forest model implemented by the \textbf{ranger} package, we can write:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\DocumentationTok{\#\# do not run}
 \FunctionTok{train}\NormalTok{(}
   \AttributeTok{form =}\NormalTok{ GPP\_NT\_VUT\_REF }\SpecialCharTok{\textasciitilde{}}\NormalTok{ SW\_F\_IN }\SpecialCharTok{+}\NormalTok{ VPD\_F }\SpecialCharTok{+}\NormalTok{ TA\_F, }
   \AttributeTok{data =}\NormalTok{ ddf, }
@@ -577,6 +593,7 @@ The object \texttt{pp} can then be supplied to \texttt{train()} as its first arg
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\DocumentationTok{\#\# do not run}
 \FunctionTok{train}\NormalTok{(}
 \NormalTok{  pp, }
   \AttributeTok{data =}\NormalTok{ ddf\_train, }
@@ -591,7 +608,7 @@ As seen above for the pre-processing example, this does not return a standardize
 \hypertarget{training}{%
 \chapter{Model training}\label{training}}
 
-Model training in supervised ML is guided by the match (or mismatch) between the predicted and observed target variable(s), that is, between \(\hat{Y}\) and \(Y\). The \emph{loss} function quantifies this mismatch (\(L(\hat{Y}, Y)\)), and the algorithm takes care of progressively reducing the loss during model training. Let's say the ML model contains two parameters and predictions can be considered a function of the two (\(\hat{Y}(x_1, x_2)\)). \(Y\) is actually constant. Thus, the loss function is effectively a function \(L(x_1, x_2)\). Therefore, we can consider the model training as a search of the parameter space of the machine learning model \((x_1, x_2)\) to find the minimum of the loss. Common loss functions are the root mean square error (RMSE), or the mean square error (MSE), or the mean absolute error (MAE). Loss minimization is a general feature of ML model training.
+Model training in supervised ML is guided by the match (or mismatch) between the predicted and observed target variable(s), that is, between \(\hat{Y}\) and \(Y\). The \emph{loss} function quantifies this mismatch (\(L(\hat{Y}, Y)\)), and the algorithm takes care of progressively reducing the loss during model training. Let's say the ML model contains two parameters and predictions can be considered a function of the two (\(\hat{Y}(w_1, w_2)\)). \(Y\) is actually constant. Thus, the loss function is effectively a function \(L(w_1, w_2)\). Therefore, we can consider the model training as a search of the parameter space of the machine learning model \((w_1, w_2)\) to find the minimum of the loss. Common loss functions are the root mean square error (RMSE), or the mean square error (MSE), or the mean absolute error (MAE). Loss minimization is a general feature of ML model training.
 
 \begin{figure}
 
@@ -599,7 +616,7 @@ Model training in supervised ML is guided by the match (or mismatch) between the
 
 }
 
-\caption{Visualization of a loss function as a plane spanned by the two parameters $x_1$ and $x_2$.}\label{fig:unnamed-chunk-22}
+\caption{Visualization of a loss function as a plane spanned by the two parameters $w_1$ and $w_2$.}\label{fig:unnamed-chunk-22}
 \end{figure}
 
 Model training is implemented in R for different algorithms in different packages. Some algorithms are even implemented by multiple packages (e.g., \texttt{nnet} and \texttt{neuralnet} for artificial neural networks). As described in Chapter \ref{preprocessing}, the \textbf{caret} package provides ``wrappers'' that handle a large selection of different ML model implementations in different packages with a unified interface (see \href{https://topepo.github.io/caret/available-models.html}{here} for an overview of available models). The \textbf{caret} function \texttt{train()} is the centre piece. Its argument \texttt{metric} specifies the loss function and defaults to the RMSE for regression models and accuracy for classification (see sub-section on metrics below).
@@ -629,6 +646,7 @@ In \textbf{caret}, hyperparameter tuning is implemented as part of the \texttt{t
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\DocumentationTok{\#\# do not run}
 \FunctionTok{train}\NormalTok{(}
   \AttributeTok{form =}\NormalTok{ GPP\_NT\_VUT\_REF }\SpecialCharTok{\textasciitilde{}}\NormalTok{ SW\_F\_IN }\SpecialCharTok{+}\NormalTok{ VPD\_F }\SpecialCharTok{+}\NormalTok{ TA\_F, }
   \AttributeTok{data =}\NormalTok{ ddf, }
@@ -656,6 +674,7 @@ To do a k-fold cross validation during model training in R, we don't have to imp
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\DocumentationTok{\#\# do not run}
 \FunctionTok{train}\NormalTok{(}
 \NormalTok{  pp, }
   \AttributeTok{data =}\NormalTok{ ddf\_train, }
@@ -1117,18 +1136,18 @@ Hints:
   \DocumentationTok{\#\# add predictions to the data frames}
 \NormalTok{  df\_train }\OtherTok{\textless{}{-}}\NormalTok{ df\_train }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.fitted =} \FunctionTok{predict}\NormalTok{(mod, }\AttributeTok{newdata =}\NormalTok{ .))}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted =}  \FunctionTok{predict}\NormalTok{(mod, }\AttributeTok{newdata =}\NormalTok{ .))}
   
 \NormalTok{  df\_test }\OtherTok{\textless{}{-}}\NormalTok{ df\_test }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{.fitted =} \FunctionTok{predict}\NormalTok{(mod, }\AttributeTok{newdata =}\NormalTok{ .))}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{fitted =}  \FunctionTok{predict}\NormalTok{(mod, }\AttributeTok{newdata =}\NormalTok{ .))}
   
   \DocumentationTok{\#\# get metrics tables}
 \NormalTok{  metrics\_train }\OtherTok{\textless{}{-}}\NormalTok{ df\_train }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{    yardstick}\SpecialCharTok{::}\FunctionTok{metrics}\NormalTok{(GPP\_NT\_VUT\_REF, .fitted)}
+\NormalTok{    yardstick}\SpecialCharTok{::}\FunctionTok{metrics}\NormalTok{(GPP\_NT\_VUT\_REF, fitted)}
   
 \NormalTok{  metrics\_test }\OtherTok{\textless{}{-}}\NormalTok{ df\_test }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{    yardstick}\SpecialCharTok{::}\FunctionTok{metrics}\NormalTok{(GPP\_NT\_VUT\_REF, .fitted)}
+\NormalTok{    yardstick}\SpecialCharTok{::}\FunctionTok{metrics}\NormalTok{(GPP\_NT\_VUT\_REF, fitted)}
   
   \DocumentationTok{\#\# extract values from metrics tables}
 \NormalTok{  rmse\_train }\OtherTok{\textless{}{-}}\NormalTok{ metrics\_train }\SpecialCharTok{\%\textgreater{}\%} 
@@ -1148,7 +1167,7 @@ Hints:
   \DocumentationTok{\#\# visualise with a hexagon binning and a customised color scale,}
   \DocumentationTok{\#\# adding information of metrics as sub{-}titles}
 \NormalTok{  gg1 }\OtherTok{\textless{}{-}}\NormalTok{ df\_train }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(GPP\_NT\_VUT\_REF, .fitted)) }\SpecialCharTok{+}
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(GPP\_NT\_VUT\_REF, fitted)) }\SpecialCharTok{+}
     \FunctionTok{geom\_hex}\NormalTok{() }\SpecialCharTok{+}
     \FunctionTok{scale\_fill\_gradientn}\NormalTok{(}
       \AttributeTok{colours =} \FunctionTok{colorRampPalette}\NormalTok{( }\FunctionTok{c}\NormalTok{(}\StringTok{"gray65"}\NormalTok{, }\StringTok{"navy"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"yellow"}\NormalTok{))(}\DecValTok{5}\NormalTok{)) }\SpecialCharTok{+}
@@ -1159,7 +1178,7 @@ Hints:
     \FunctionTok{theme\_classic}\NormalTok{()}
   
 \NormalTok{  gg2 }\OtherTok{\textless{}{-}}\NormalTok{ df\_test }\SpecialCharTok{\%\textgreater{}\%} 
-    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(GPP\_NT\_VUT\_REF, .fitted)) }\SpecialCharTok{+}
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(GPP\_NT\_VUT\_REF, fitted)) }\SpecialCharTok{+}
     \FunctionTok{geom\_hex}\NormalTok{() }\SpecialCharTok{+}
     \FunctionTok{scale\_fill\_gradientn}\NormalTok{(}
       \AttributeTok{colours =} \FunctionTok{colorRampPalette}\NormalTok{( }\FunctionTok{c}\NormalTok{(}\StringTok{"gray65"}\NormalTok{, }\StringTok{"navy"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"yellow"}\NormalTok{))(}\DecValTok{5}\NormalTok{)) }\SpecialCharTok{+}

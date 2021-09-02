@@ -1,8 +1,8 @@
 # Model training {#training}
 
-Model training in supervised ML is guided by the match (or mismatch) between the predicted and observed target variable(s), that is, between $\hat{Y}$ and $Y$. The *loss* function quantifies this mismatch ($L(\hat{Y}, Y)$), and the algorithm takes care of progressively reducing the loss during model training. Let's say the ML model contains two parameters and predictions can be considered a function of the two ($\hat{Y}(x_1, x_2)$). $Y$ is actually constant. Thus, the loss function is effectively a function $L(x_1, x_2)$. Therefore, we can consider the model training as a search of the parameter space of the machine learning model $(x_1, x_2)$ to find the minimum of the loss. Common loss functions are the root mean square error (RMSE), or the mean square error (MSE), or the mean absolute error (MAE). Loss minimization is a general feature of ML model training.
+Model training in supervised ML is guided by the match (or mismatch) between the predicted and observed target variable(s), that is, between $\hat{Y}$ and $Y$. The *loss* function quantifies this mismatch ($L(\hat{Y}, Y)$), and the algorithm takes care of progressively reducing the loss during model training. Let's say the ML model contains two parameters and predictions can be considered a function of the two ($\hat{Y}(w_1, w_2)$). $Y$ is actually constant. Thus, the loss function is effectively a function $L(w_1, w_2)$. Therefore, we can consider the model training as a search of the parameter space of the machine learning model $(w_1, w_2)$ to find the minimum of the loss. Common loss functions are the root mean square error (RMSE), or the mean square error (MSE), or the mean absolute error (MAE). Loss minimization is a general feature of ML model training.
 
-```{r, echo = FALSE, fig.cap = "Visualization of a loss function as a plane spanned by the two parameters $x_1$ and $x_2$."}
+```{r, echo = FALSE, fig.cap = "Visualization of a loss function as a plane spanned by the two parameters $w_1$ and $w_2$."}
 knitr::include_graphics("./fig/loss_plane.png")
 ```
 
@@ -25,6 +25,7 @@ Hyperparameters usually have to be "tuned". The optimal setting depends on the d
 In **caret**, hyperparameter tuning is implemented as part of the `train()` function. Values of hyperparameters to consider are to be specified by the argument `tuneGrid`, which takes a data frame with column(s) named according to the name(s) of the hyperparameter(s) and rows for each combination of hyperparameters to consider.
 
 ```{r eval=F}
+## do not run
 train(
   form = GPP_NT_VUT_REF ~ SW_F_IN + VPD_F + TA_F, 
   data = ddf, 
@@ -52,6 +53,7 @@ knitr::include_graphics("fig/cv.png")
 To do a k-fold cross validation during model training in R, we don't have to implement the loops around folds ourselves. The resampling procedure can be specified in the **caret** function `train()` with the argument `trControl`. The object that this argument takes is the output of a function call to `trainControl()`. This can be implemented in two steps. For example, to do a 10-fold cross-validation, we can write:
 
 ```{r eval=F}
+## do not run
 train(
   pp, 
   data = ddf_train, 

@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-08-31" />
+<meta name="date" content="2021-09-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,34 +258,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Actually, the way we formulate a model is independent of the algorithm, or <em>engine</em> that takes care of fitting <span class="math inline">\(f(X)\)</span>. As mentioned in Chapter <a href="preprocessing.html#preprocessing">4</a> the R package <a href="https://topepo.github.io/caret/"><strong>caret</strong></a> provides a unified interface for using different ML algorithms implemented in separate packages. In other words, it acts as a <em>wrapper</em> for multiple different model fitting, or ML algorithms. This has the advantage that it unifies the interface (the way arguments are provided). caret also provides implementations for a set of commonly used tools for data processing, model training, and evaluation. We’ll use caret for model training with the function <code>train()</code> (more on model training in Chapter <a href="training.html#training">6</a>). Note however, that using a specific algorithm, which is implemented in a specific package outside caret, also requires that the respective package be installed and loaded. Using caret for specifying the same linear regression model as above, the base-R <code>lm()</code> function, can be done with caret in a generalized form as:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="model-formulation.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb11-2"><a href="model-formulation.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
-<span id="cb11-3"><a href="model-formulation.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
-<span id="cb11-4"><a href="model-formulation.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
+<span id="cb11-3"><a href="model-formulation.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_IN_F <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
+<span id="cb11-4"><a href="model-formulation.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(), </span>
 <span id="cb11-5"><a href="model-formulation.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;lm&quot;</span></span>
 <span id="cb11-6"><a href="model-formulation.html#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Linear Regression 
+## 
+## 6179 samples
+##    3 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 6179, 6179, 6179, 6179, 6179, 6179, ... 
+## Resampling results:
+## 
+##   RMSE      Rsquared   MAE     
+##   1.599712  0.6646581  1.241035
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
 <p>Of course, this is an overkill compared to just writing <code>lm(...)</code>. But the advantage of the unified interface is that we can simply replace the <code>method</code> argument to use a different ML algorithm. For example, to use a random forest model implemented by the <strong>ranger</strong> package, we can write:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="model-formulation.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
-<span id="cb12-2"><a href="model-formulation.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
-<span id="cb12-3"><a href="model-formulation.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
-<span id="cb12-4"><a href="model-formulation.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>,</span>
-<span id="cb12-5"><a href="model-formulation.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb12-6"><a href="model-formulation.html#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="model-formulation.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## do not run</span></span>
+<span id="cb13-2"><a href="model-formulation.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
+<span id="cb13-3"><a href="model-formulation.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
+<span id="cb13-4"><a href="model-formulation.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
+<span id="cb13-5"><a href="model-formulation.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>,</span>
+<span id="cb13-6"><a href="model-formulation.html#cb13-6" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb13-7"><a href="model-formulation.html#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>The <code>...</code> hints at the fact that there are a few more arguments to be specified for training a random forest model with ranger. More on that in Chapter <a href="training.html#training">6</a>.</p>
 </div>
 <div id="recipes" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Recipes</h2>
 <p>The <a href="https://recipes.tidymodels.org/"><strong>recipes</strong></a> package provides another way to specify the <em>formula</em> and pre-processing steps in one go and is compatible with caret’s <code>train()</code> function. For the same formula as above, and an example where the data <code>ddf_train</code> is to be centered and scaled, we can specify the “recipe” using the <em>tidyverse</em>-style pipe operator as:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="model-formulation.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
-<span id="cb13-2"><a href="model-formulation.html#cb13-2" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">recipe</span>(GPP_NT_VUT_REF <span class="sc">~</span> SW_IN_F <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, <span class="at">data =</span> ddf_train) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="model-formulation.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="model-formulation.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="model-formulation.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
+<span id="cb14-2"><a href="model-formulation.html#cb14-2" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">recipe</span>(GPP_NT_VUT_REF <span class="sc">~</span> SW_IN_F <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, <span class="at">data =</span> ddf_train) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="model-formulation.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="model-formulation.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_scale</span>(<span class="fu">all_numeric</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>())</span></code></pre></div>
 <p>The first line assigns <em>roles</em> to the different variables. <code>GPP_NT_VUT_REF</code> is an <em>outcome</em> (in “recipes speak”). Then, we used selectors to apply the recipe step to several variables at once. The first selector, <code>all_numeric()</code>, selects all variables that are either integers or real values. The second selector, <code>-all_outcomes()</code> removes any outcome (target) variables from this recipe step.</p>
 <p>The object <code>pp</code> can then be supplied to <code>train()</code> as its first argument:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="model-formulation.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
-<span id="cb14-2"><a href="model-formulation.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  pp, </span>
-<span id="cb14-3"><a href="model-formulation.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train, </span>
-<span id="cb14-4"><a href="model-formulation.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>,</span>
-<span id="cb14-5"><a href="model-formulation.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb14-6"><a href="model-formulation.html#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="model-formulation.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## do not run</span></span>
+<span id="cb15-2"><a href="model-formulation.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
+<span id="cb15-3"><a href="model-formulation.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  pp, </span>
+<span id="cb15-4"><a href="model-formulation.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf_train, </span>
+<span id="cb15-5"><a href="model-formulation.html#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>,</span>
+<span id="cb15-6"><a href="model-formulation.html#cb15-6" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb15-7"><a href="model-formulation.html#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>As seen above for the pre-processing example, this does not return a standardized version of the data frame <code>ddf_train</code>, but rather the information that allows us to apply the same standardization also to other data sets.</p>
 
 </div>

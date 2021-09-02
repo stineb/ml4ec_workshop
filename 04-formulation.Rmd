@@ -14,11 +14,11 @@ lm(GPP_NT_VUT_REF ~ SW_F_IN + VPD_F + TA_F, data = ddf)
 
 Actually, the way we formulate a model is independent of the algorithm, or *engine* that takes care of fitting $f(X)$. As mentioned in Chapter \@ref(preprocessing) the R package [**caret**](https://topepo.github.io/caret/) provides a unified interface for using different ML algorithms implemented in separate packages. In other words, it acts as a *wrapper* for multiple different model fitting, or ML algorithms. This has the advantage that it unifies the interface (the way arguments are provided). caret also provides implementations for a set of commonly used tools for data processing, model training, and evaluation. We'll use caret for model training with the function `train()` (more on model training in Chapter \@ref(training)). Note however, that using a specific algorithm, which is implemented in a specific package outside caret, also requires that the respective package be installed and loaded. Using caret for specifying the same linear regression model as above, the base-R `lm()` function, can be done with caret in a generalized form as:
 
-```{r message=F, warning=F, eval=F}
+```{r message=F, warning=F}
 library(caret)
 train(
-  form = GPP_NT_VUT_REF ~ SW_F_IN + VPD_F + TA_F, 
-  data = ddf, 
+  form = GPP_NT_VUT_REF ~ SW_IN_F + VPD_F + TA_F, 
+  data = ddf %>% drop_na(), 
   method = "lm"
 )
 ```
@@ -26,6 +26,7 @@ train(
 Of course, this is an overkill compared to just writing `lm(...)`. But the advantage of the unified interface is that we can simply replace the `method` argument to use a different ML algorithm. For example, to use a random forest model implemented by the **ranger** package, we can write:
 
 ```{r eval=F}
+## do not run
 train(
   form = GPP_NT_VUT_REF ~ SW_F_IN + VPD_F + TA_F, 
   data = ddf, 
@@ -50,6 +51,7 @@ The first line assigns *roles* to the different variables. `GPP_NT_VUT_REF` is a
 
 The object `pp` can then be supplied to `train()` as its first argument:
 ```{r, eval=FALSE}
+## do not run
 train(
   pp, 
   data = ddf_train, 

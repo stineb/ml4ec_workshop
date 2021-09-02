@@ -128,18 +128,18 @@ eval_model <- function(mod, df_train, df_test){
   ## add predictions to the data frames
   df_train <- df_train %>% 
     drop_na() %>% 
-    mutate(.fitted = predict(mod, newdata = .))
+    mutate(fitted =  predict(mod, newdata = .))
   
   df_test <- df_test %>% 
     drop_na() %>% 
-    mutate(.fitted = predict(mod, newdata = .))
+    mutate(fitted =  predict(mod, newdata = .))
   
   ## get metrics tables
   metrics_train <- df_train %>% 
-    yardstick::metrics(GPP_NT_VUT_REF, .fitted)
+    yardstick::metrics(GPP_NT_VUT_REF, fitted)
   
   metrics_test <- df_test %>% 
-    yardstick::metrics(GPP_NT_VUT_REF, .fitted)
+    yardstick::metrics(GPP_NT_VUT_REF, fitted)
   
   ## extract values from metrics tables
   rmse_train <- metrics_train %>% 
@@ -159,7 +159,7 @@ eval_model <- function(mod, df_train, df_test){
   ## visualise with a hexagon binning and a customised color scale,
   ## adding information of metrics as sub-titles
   gg1 <- df_train %>% 
-    ggplot(aes(GPP_NT_VUT_REF, .fitted)) +
+    ggplot(aes(GPP_NT_VUT_REF, fitted)) +
     geom_hex() +
     scale_fill_gradientn(
       colours = colorRampPalette( c("gray65", "navy", "red", "yellow"))(5)) +
@@ -170,7 +170,7 @@ eval_model <- function(mod, df_train, df_test){
     theme_classic()
   
   gg2 <- df_test %>% 
-    ggplot(aes(GPP_NT_VUT_REF, .fitted)) +
+    ggplot(aes(GPP_NT_VUT_REF, fitted)) +
     geom_hex() +
     scale_fill_gradientn(
       colours = colorRampPalette( c("gray65", "navy", "red", "yellow"))(5)) +

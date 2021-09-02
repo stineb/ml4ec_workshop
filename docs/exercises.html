@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-08-31" />
+<meta name="date" content="2021-09-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,12 +251,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="reading-and-cleaning" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Reading and cleaning</h2>
 <p>Read the CSV file <code>"./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv"</code>, select all variables with name ending with <code>"_F"</code>, the variables <code>"TIMESTAMP"</code>, <code>"GPP_NT_VUT_REF"</code>, and <code>"NEE_VUT_REF_QC"</code>, and drop all variables that contain <code>"JSB"</code> in their name. Then convert the variable <code>"TIMESTAMP"</code> to a date-time object with the function <code>ymd()</code> from the <em>lubridate</em> package, and interpret all values <code>-9999</code> as missing values. Then, set all values of <code>"GPP_NT_VUT_REF"</code> to missing if the corresponding quality control variable indicates that less than 90% are measured data points. Finally, drop the variable <code>"NEE_VUT_REF_QC"</code> - we won’t use it anymore.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="exercises.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="exercises.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 </div>
 <div id="data-splitting-1" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Data splitting</h2>
 <p>Split the data a training and testing set, that contain 70% and 30% of the total available data, respectively.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="exercises.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="exercises.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 </div>
 <div id="linear-model" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Linear model</h2>
@@ -268,9 +268,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Is the linear regression slope significantly different from zero for all predictors?</li>
 <li>Is a linear regression model with “poor” predictors removed better supported by the data than a model including all predictors?</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="exercises.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
-<p>Use caret and the function <code>train()</code> for fitting the same linear regression model (with all predictors) on the same data. Does it yield identical results as using <code>lm()</code> directly? You will have to set the argument <code>trControl</code> accordingly to avoid resampling, and instead fit the model on the all data in <code>ddf_train</code>. You can use <code>summary()</code> also on the object returned by the function <code>train()</code>.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="exercises.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<p>Use caret and the function <code>train()</code> for fitting the same linear regression model (with all predictors) on the same data. Does it yield identical results as using <code>lm()</code> directly? You will have to set the argument <code>trControl</code> accordingly to avoid resampling, and instead fit the model on the all data in <code>ddf_train</code>. You can use <code>summary()</code> also on the object returned by the function <code>train()</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="exercises.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 </div>
 <div id="prediction" class="section level3" number="7.3.2">
 <h3><span class="header-section-number">7.3.2</span> Prediction</h3>
@@ -282,26 +282,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The <span class="math inline">\(R^2\)</span> can be extracted from the model object as <code>summary(model_object)$r.squared</code>, or is (as the RMSE) given in the metrics data frame returned by <code>metrics()</code> from the <em>yardstick</em> library.</li>
 <li>For visualisation the model performance, consider a scatterplot, or (better) a plot that reveals the density of overlapping points. (We’re plotting information from over 4000 data points here!)</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="exercises.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="exercises.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="knn" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> KNN</h2>
 <div id="check-data" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> Check data</h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="exercises.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="exercises.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 <p>The variable <code>PA_F</code> looks weird and was not significant in the linear model. Therefore, we won’t use it for the models below.</p>
 </div>
 <div id="training-2" class="section level3" number="7.4.2">
 <h3><span class="header-section-number">7.4.2</span> Training</h3>
 <p>Fit two KNN models on <code>ddf_train</code> (excluding <code>"PA_F"</code>), one with <span class="math inline">\(k = 2\)</span> and one with <span class="math inline">\(k = 30\)</span>, both without resampling. Use the RMSE as the loss function. Center and scale data as part of the pre-processing and model formulation specification using the function <code>recipe()</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="exercises.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="exercises.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 </div>
 <div id="prediction-1" class="section level3" number="7.4.3">
 <h3><span class="header-section-number">7.4.3</span> Prediction</h3>
 <p>With the two models fitted above, predict <code>"GPP_NT_VUT_REF"</code> for both and training and the testing sets, and evaluate them as above (metrics and visualisation).</p>
 <p>Which model do you expect to perform better on the training set and which to perform better on the testing set? Why? Do you find evidence for overfitting in any of the models?</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="exercises.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="exercises.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 </div>
 <div id="sample-hyperparameters" class="section level3" number="7.4.4">
 <h3><span class="header-section-number">7.4.4</span> Sample hyperparameters</h3>
@@ -310,7 +310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>The visualisation of cross-validation results can be visualised with the <code>plot(model_object)</code> of <code>ggplot(model_object)</code>.</li>
 </ul>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="exercises.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="exercises.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="random-forest-1" class="section level2" number="7.5">
@@ -324,16 +324,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>See <a href="https://topepo.github.io/caret/available-models.html">here</a> for information about hyperparameters available for tuning with caret.</li>
 <li>Set the argument <code>savePredictions = "final"</code> of function <code>trainControl()</code>.</li>
 </ul>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="exercises.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="exercises.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 </div>
 <div id="prediction-2" class="section level3" number="7.5.2">
 <h3><span class="header-section-number">7.5.2</span> Prediction</h3>
 <p>Evaluate the trained model on the training and on the test set, giving metrics and a visualisation as above.</p>
 <p>How are differences in performance to be interpreted? Compare the performances of linear regression, KNN, and random forest, considering the evaluation on the test set.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="exercises.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="exercises.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 <p>Show the model performance (metrics and visualisation) on the validation sets all cross validation folds combined.</p>
 <p>Do you expect it to be more similar to the model performance on the training set or the testing set in the evaluation above? Why?</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="exercises.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="exercises.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">## write your code here</span></span></code></pre></div>
 
 </div>
 </div>
