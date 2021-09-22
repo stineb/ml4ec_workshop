@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-09-02" />
+<meta name="date" content="2021-09-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -570,7 +570,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb47-4"><a href="solutions.html#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(), </span>
 <span id="cb47-5"><a href="solutions.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>,</span>
 <span id="cb47-6"><a href="solutions.html#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">5</span>),</span>
-<span id="cb47-7"><a href="solutions.html#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">24</span>, <span class="dv">26</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">100</span>)),</span>
+<span id="cb47-7"><a href="solutions.html#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">tuneGrid =</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>)),</span>
 <span id="cb47-8"><a href="solutions.html#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span></span>
 <span id="cb47-9"><a href="solutions.html#cb47-9" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb47-10"><a href="solutions.html#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod_knn)</span></code></pre></div>
@@ -619,11 +619,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Recipe steps:  
 ## Resampling: Cross-Validated (5 fold) 
-## Summary of sample sizes: 3313, 3315, 3315, 3314, 3315 
+## Summary of sample sizes: 3315, 3315, 3315, 3315, 3312 
 ## Resampling results:
 ## 
-##   RMSE      Rsquared  MAE     
-##   1.401107  0.746519  1.056488
+##   RMSE      Rsquared   MAE     
+##   1.396752  0.7485248  1.055638
 ## 
 ## Tuning parameter &#39;mtry&#39; was held constant at a value of 2
 ## Tuning

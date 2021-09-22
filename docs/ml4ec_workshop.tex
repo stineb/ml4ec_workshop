@@ -117,7 +117,7 @@
 
 \title{ml4ec - Machine Learning for Eddy Covariance data}
 \author{Benjamin Stocker}
-\date{2021-09-02}
+\date{2021-09-22}
 
 \begin{document}
 \maketitle
@@ -151,7 +151,7 @@ This book was compiled with the \emph{bookdown} library and source files (RMarkd
 
 This book is published under a GNU-GPL v3 license. Please cite this as:
 
-\emph{xxxx}
+Benjamin Stocker. (2021). ml4ec\_workshop: v1: Initial version (v1.0). Zenodo. \url{https://doi.org/10.5281/zenodo.5521563}
 
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
@@ -1318,7 +1318,7 @@ Hint:
     \FunctionTok{drop\_na}\NormalTok{(), }
   \AttributeTok{method =} \StringTok{"knn"}\NormalTok{,}
   \AttributeTok{trControl =} \FunctionTok{trainControl}\NormalTok{(}\AttributeTok{method =} \StringTok{"cv"}\NormalTok{, }\AttributeTok{number =} \DecValTok{5}\NormalTok{),}
-  \AttributeTok{tuneGrid =} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{k =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{26}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{100}\NormalTok{)),}
+  \AttributeTok{tuneGrid =} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{k =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{300}\NormalTok{)),}
   \AttributeTok{metric =} \StringTok{"RMSE"}
 \NormalTok{  )}
 \FunctionTok{ggplot}\NormalTok{(mod\_knn)}
@@ -1384,11 +1384,11 @@ Hints:
 ## 
 ## Recipe steps:  
 ## Resampling: Cross-Validated (5 fold) 
-## Summary of sample sizes: 3313, 3315, 3315, 3314, 3315 
+## Summary of sample sizes: 3315, 3315, 3315, 3315, 3312 
 ## Resampling results:
 ## 
-##   RMSE      Rsquared  MAE     
-##   1.401107  0.746519  1.056488
+##   RMSE      Rsquared   MAE     
+##   1.396752  0.7485248  1.055638
 ## 
 ## Tuning parameter 'mtry' was held constant at a value of 2
 ## Tuning
