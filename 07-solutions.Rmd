@@ -281,7 +281,7 @@ mod_knn <- train(
     drop_na(), 
   method = "knn",
   trControl = trainControl(method = "cv", number = 5),
-  tuneGrid = data.frame(k = c(2, 5, 10, 15, 18, 20, 22, 24, 26, 30, 35, 40, 60, 100)),
+  tuneGrid = data.frame(k = c(2, 5, 10, 15, 20, 25, 30, 35, 40, 60, 100, 200, 300)),
   metric = "RMSE"
   )
 ggplot(mod_knn)

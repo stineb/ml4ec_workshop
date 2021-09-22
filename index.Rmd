@@ -40,7 +40,7 @@ This book was compiled with the *bookdown* library and source files (RMarkdown),
 
 This book is published under a GNU-GPL v3 license. Please cite this as:
 
-*xxxx*
+Benjamin Stocker. (2021). ml4ec_workshop: v1: Initial version (v1.0). Zenodo. https://doi.org/10.5281/zenodo.5521563
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
