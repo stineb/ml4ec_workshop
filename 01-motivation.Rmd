@@ -2,11 +2,12 @@
 
 ## Learning objectives
 
-After this workshop unit, you will be able to ...
+In this workshop, we use ecosystm flux data and parallel measurements of meteorological variables to model ecosystem gross primary production (the ecosystem-level CO2 uptake by photosynthesis). These data and prediction task is used to introduce fundamental methods of machine learning (data splitting, model training, random forest algorithm) and their implementations in R. After this course, you will ...
 
 - Understand how overfitting models can happen and how it can be avoided.
 - Implement a typical workflow using a machine learning model for a supervised regression problem.
-- Evaluate the power of the model 
+- Evaluate the power of the model.
+- Visualise results.
 
 ## Some primers
 
