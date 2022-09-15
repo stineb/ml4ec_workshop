@@ -6,8 +6,8 @@
 ]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -33,14 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={ml4ec - Machine Learning for Eddy Covariance data},
-  pdfauthor={Benjamin Stocker},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -109,15 +101,23 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={ml4ec - Machine Learning for Eddy Covariance data},
+  pdfauthor={Benjamin Stocker},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{ml4ec - Machine Learning for Eddy Covariance data}
 \author{Benjamin Stocker}
-\date{2021-09-22}
+\date{2022-09-15}
 
 \begin{document}
 \maketitle
@@ -159,7 +159,7 @@ Benjamin Stocker. (2021). ml4ec\_workshop: v1: Initial version (v1.0). Zenodo. \
 \hypertarget{learning-objectives}{%
 \section{Learning objectives}\label{learning-objectives}}
 
-After this workshop unit, you will be able to \ldots{}
+In this workshop, we use ecosystm flux data and parallel measurements of meteorological variables to model ecosystem gross primary production (the ecosystem-level CO2 uptake by photosynthesis). These data and prediction task is used to introduce fundamental methods of machine learning (data splitting, model training, random forest algorithm) and their implementations in R. After this course, you will \ldots{}
 
 \begin{itemize}
 \tightlist
@@ -168,7 +168,9 @@ After this workshop unit, you will be able to \ldots{}
 \item
   Implement a typical workflow using a machine learning model for a supervised regression problem.
 \item
-  Evaluate the power of the model
+  Evaluate the power of the model.
+\item
+  Visualise results.
 \end{itemize}
 
 \hypertarget{some-primers}{%

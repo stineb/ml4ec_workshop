@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Pre-processing | ml4ec - Machine Learning for Eddy Covariance data</title>
   <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Pre-processing | ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2022-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="data-splitting.html"/>
 <link rel="next" href="model-formulation.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -245,11 +244,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preprocessing" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Pre-processing</h1>
+<div id="preprocessing" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Pre-processing<a href="preprocessing.html#preprocessing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Skewed data, outliers, and values covering multiple orders of magnitude can create difficulties for certain ML algorithms, e.g., or K-nearest neighbours, or neural networks. Other algorithms, like tree-based methods (e.g., Random Forest), are more robust against such issues.</p>
-<div id="dealing-with-missingness-and-bad-data" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Dealing with missingness and bad data</h2>
+<div id="dealing-with-missingness-and-bad-data" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Dealing with missingness and bad data<a href="preprocessing.html#dealing-with-missingness-and-bad-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Several ML algorithms require missing values to be removed. That is, if any of the cells in one row has a missing value, the entire cell gets removed. Data may be missing for several reasons. Some yield random patterns of missing data, others not. In the latter case, we can speak of <em>informative missingness</em> (Kuhn &amp; Johnson, 2003) and its information can be used for predictions. For categorical data, we may replace such data with <code>"none"</code> (instead of <code>NA</code>), while randomly missing data may be dropped altogether. Some ML algorithms (mainly tree-based methods, e.g., random forest) can handle missing values. However, when comparing the performance of alternative ML algorithms, they should be tested with the same data and removing missing data should be done beforehand.</p>
 <p>Visualising missing data is essential for making decisions about dropping rows with missing data versus removing predictors from the model (which would imply too much data removal). The cells with missing data in a data frame can be eaily visualised e.g. with <code>vis_miss()</code> from the <em>visdat</em> package.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="preprocessing.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visdat)</span>
@@ -261,8 +260,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-14-1.png" width="696" style="display: block; margin: auto;" /></p>
 <p>The question about what is “bad data” and whether or when it should be removed is often critical. Such decisions are important to keep track of and should be reported as transparently as possible in publications. In reality, where the data generation process may start in the field with actual human beings writing notes in a lab book, and where the human collecting the data is often not the same as the human writing the paper, it’s often more difficult to keep track of such decisions. As a general principle, it is advisable to design data records such that decisions made during its process remain transparent throughout all stages of the workflow and that sufficient information be collected to enable later revisions of particularly critical decisions.</p>
 </div>
-<div id="standardization" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Standardization</h2>
+<div id="standardization" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Standardization<a href="preprocessing.html#standardization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Several algorithms explicitly require data to be standardized. That is, values of all predictors vary within a comparable range. The necessity of this step becomes obvious when considering neural networks, the activation functions of each node have to deal with standardized inputs. In other words, inputs have to vary over the same range, expecting a mean of zero and standard deviation of one.)</p>
 <p>To get a quick overview of the distribution of all variables (columns) in our data frame, we can use the <em>skimr</em> package.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="preprocessing.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
@@ -480,8 +479,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-2"><a href="preprocessing.html#cb9-2" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">preProcess</span>(ddf_train, <span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>))</span></code></pre></div>
 <p>As seen above for the feature engineering example, this does not return a standardized version of the data frame <code>ddf</code>. Rather, it returns the information that allows us to apply the same standardization also to other data sets. In other words, we use the distribution of values in the data set to which we applied the function to determine the centering and scaling (here: mean and standard deviation).</p>
 </div>
-<div id="more-pre-processing" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> More pre-processing</h2>
+<div id="more-pre-processing" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> More pre-processing<a href="preprocessing.html#more-pre-processing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Depending on the algorithm and the data, additional pre-processing steps may be required. You can find more information about this in the great and freely available online tutorial <a href="https://bradleyboehmke.github.io/HOML/engineering.html#target-engineering">Hands-On Machine Learning in R</a>.</p>
 <p>One such additional pre-processing step is <em>imputation</em>, where missing values are imputed (gap-filled), for example by the mean of each variable respectively. Also imputation is prone to cause data leakage and must therefore be implemented as part of the resampling and training workflow. The <strong>recipes</strong> package offers a great way to deal with imputation (and also all other pre-processing steps). <a href="https://bradleyboehmke.github.io/HOML/engineering.html#impute">Here</a> is a link to learn more about it.</p>
 
@@ -497,7 +496,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -537,6 +535,10 @@ gitbook.start({
 "text": null
 },
 "download": ["ml4ec_workshop.pdf", "ml4ec_workshop.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

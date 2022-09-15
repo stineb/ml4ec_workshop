@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Model formulation | ml4ec - Machine Learning for Eddy Covariance data</title>
   <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Model formulation | ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2022-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="preprocessing.html"/>
 <link rel="next" href="training.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -245,16 +244,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-formulation" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Model formulation</h1>
+<div id="model-formulation" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Model formulation<a href="model-formulation.html#model-formulation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The aim of supervised ML is to find a model <span class="math inline">\(\hat{Y} = f(X)\)</span> so that <span class="math inline">\(\hat{Y}\)</span> agrees well with observations <span class="math inline">\(Y\)</span>. We typically start with a research question where <span class="math inline">\(Y\)</span> is given - naturally - by the problem we are addressing and we have a data set at hand where one or multiple predictors (or features) <span class="math inline">\(X\)</span> are recorded along with <span class="math inline">\(Y\)</span>. From our data, we have information about how GPP (ecosystem-level photosynthesis) depends on set of abiotic factors, mostly meteorological measurements.</p>
-<div id="formula-notation" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Formula notation</h2>
+<div id="formula-notation" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Formula notation<a href="model-formulation.html#formula-notation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In R, it is common to use the <em>formula</em> notation to specify the target and predictor variables. You have probably encountered formulas before, e.g., for a linear regression using the <code>lm()</code> function. To specify a linear regression model for <code>GPP_NT_VUT_REF</code> with three predictors <code>SW_F_IN</code>, <code>VPD_F</code>, and <code>TA_F</code>, we write:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="model-formulation.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, <span class="at">data =</span> ddf)</span></code></pre></div>
 </div>
-<div id="the-generic-train" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> The generic <code>train()</code></h2>
+<div id="the-generic-train" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> The generic <code>train()</code><a href="model-formulation.html#the-generic-train" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Actually, the way we formulate a model is independent of the algorithm, or <em>engine</em> that takes care of fitting <span class="math inline">\(f(X)\)</span>. As mentioned in Chapter <a href="preprocessing.html#preprocessing">4</a> the R package <a href="https://topepo.github.io/caret/"><strong>caret</strong></a> provides a unified interface for using different ML algorithms implemented in separate packages. In other words, it acts as a <em>wrapper</em> for multiple different model fitting, or ML algorithms. This has the advantage that it unifies the interface (the way arguments are provided). caret also provides implementations for a set of commonly used tools for data processing, model training, and evaluation. We’ll use caret for model training with the function <code>train()</code> (more on model training in Chapter <a href="training.html#training">6</a>). Note however, that using a specific algorithm, which is implemented in a specific package outside caret, also requires that the respective package be installed and loaded. Using caret for specifying the same linear regression model as above, the base-R <code>lm()</code> function, can be done with caret in a generalized form as:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="model-formulation.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb11-2"><a href="model-formulation.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
@@ -286,8 +285,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-7"><a href="model-formulation.html#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>The <code>...</code> hints at the fact that there are a few more arguments to be specified for training a random forest model with ranger. More on that in Chapter <a href="training.html#training">6</a>.</p>
 </div>
-<div id="recipes" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Recipes</h2>
+<div id="recipes" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Recipes<a href="model-formulation.html#recipes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <a href="https://recipes.tidymodels.org/"><strong>recipes</strong></a> package provides another way to specify the <em>formula</em> and pre-processing steps in one go and is compatible with caret’s <code>train()</code> function. For the same formula as above, and an example where the data <code>ddf_train</code> is to be centered and scaled, we can specify the “recipe” using the <em>tidyverse</em>-style pipe operator as:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="model-formulation.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
 <span id="cb14-2"><a href="model-formulation.html#cb14-2" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> <span class="fu">recipe</span>(GPP_NT_VUT_REF <span class="sc">~</span> SW_IN_F <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, <span class="at">data =</span> ddf_train) <span class="sc">%&gt;%</span> </span>
@@ -316,7 +315,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -356,6 +354,10 @@ gitbook.start({
 "text": null
 },
 "download": ["ml4ec_workshop.pdf", "ml4ec_workshop.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

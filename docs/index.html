@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>ml4ec - Machine Learning for Eddy Covariance data</title>
   <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2022-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 
 <link rel="next" href="introduction.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -248,16 +247,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">ml4ec - Machine Learning for Eddy Covariance data</h1>
 <p class="author"><em>Benjamin Stocker</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-09-22</em></p>
+<p class="date"><em>2022-09-15</em></p>
 </div>
-<div id="set-up" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Set up</h1>
-<div id="apps" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Apps</h2>
+<div id="set-up" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Set up<a href="index.html#set-up" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="apps" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Apps<a href="index.html#apps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For this workshop, you need <a href="https://www.r-project.org/">R</a> and <a href="https://www.rstudio.com/products/rstudio/download/">RStudio</a>. Follow the links for downloading and installing these apps.</p>
 </div>
-<div id="libraries" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Libraries</h2>
+<div id="libraries" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Libraries<a href="index.html#libraries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Install missing packages for this tutorial.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>list_pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;caret&quot;</span>, <span class="st">&quot;recipes&quot;</span>, <span class="st">&quot;rsample&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;conflicted&quot;</span>, <span class="st">&quot;modelr&quot;</span>, <span class="st">&quot;forcats&quot;</span>, <span class="st">&quot;yardstick&quot;</span>, <span class="st">&quot;visdat&quot;</span>, <span class="st">&quot;skimr&quot;</span>, <span class="st">&quot;ranger&quot;</span>, <span class="st">&quot;knitr&quot;</span>, <span class="st">&quot;patchwork&quot;</span>)</span>
 <span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a>new_pkgs <span class="ot">&lt;-</span> list_pkgs[<span class="sc">!</span>(list_pkgs <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>])]</span>
@@ -278,7 +277,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -318,6 +316,10 @@ gitbook.start({
 "text": null
 },
 "download": ["ml4ec_workshop.pdf", "ml4ec_workshop.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

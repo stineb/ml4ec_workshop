@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Model training | ml4ec - Machine Learning for Eddy Covariance data</title>
   <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Model training | ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2022-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="model-formulation.html"/>
 <link rel="next" href="exercises.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -245,18 +244,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="training" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Model training</h1>
+<div id="training" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Model training<a href="training.html#training" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Model training in supervised ML is guided by the match (or mismatch) between the predicted and observed target variable(s), that is, between <span class="math inline">\(\hat{Y}\)</span> and <span class="math inline">\(Y\)</span>. The <em>loss</em> function quantifies this mismatch (<span class="math inline">\(L(\hat{Y}, Y)\)</span>), and the algorithm takes care of progressively reducing the loss during model training. Let’s say the ML model contains two parameters and predictions can be considered a function of the two (<span class="math inline">\(\hat{Y}(w_1, w_2)\)</span>). <span class="math inline">\(Y\)</span> is actually constant. Thus, the loss function is effectively a function <span class="math inline">\(L(w_1, w_2)\)</span>. Therefore, we can consider the model training as a search of the parameter space of the machine learning model <span class="math inline">\((w_1, w_2)\)</span> to find the minimum of the loss. Common loss functions are the root mean square error (RMSE), or the mean square error (MSE), or the mean absolute error (MAE). Loss minimization is a general feature of ML model training.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-22"></span>
 <img src="fig/loss_plane.png" alt="Visualization of a loss function as a plane spanned by the two parameters $w_1$ and $w_2$." width="414" />
 <p class="caption">
 Figure 6.1: Visualization of a loss function as a plane spanned by the two parameters <span class="math inline">\(w_1\)</span> and <span class="math inline">\(w_2\)</span>.
 </p>
 </div>
 <p>Model training is implemented in R for different algorithms in different packages. Some algorithms are even implemented by multiple packages (e.g., <code>nnet</code> and <code>neuralnet</code> for artificial neural networks). As described in Chapter <a href="preprocessing.html#preprocessing">4</a>, the <strong>caret</strong> package provides “wrappers” that handle a large selection of different ML model implementations in different packages with a unified interface (see <a href="https://topepo.github.io/caret/available-models.html">here</a> for an overview of available models). The <strong>caret</strong> function <code>train()</code> is the centre piece. Its argument <code>metric</code> specifies the loss function and defaults to the RMSE for regression models and accuracy for classification (see sub-section on metrics below).</p>
-<div id="hyperparameter-tuning" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Hyperparameter tuning</h2>
+<div id="hyperparameter-tuning" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Hyperparameter tuning<a href="training.html#hyperparameter-tuning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Practically all ML algorithms have some “knobs” to turn in order to achieve efficient model training and predictive performance. Such “knobs” are the <em>hyperparameters</em>. What these knobs are, depends on the ML algorithm.</p>
 <p>For KNN, this is <code>k</code> - the number of neighbours to consider for determining distances. There is always an optimum <span class="math inline">\(k\)</span>. Obviously, if <span class="math inline">\(k = n\)</span>, we consider all observations as neighbours and each prediction is simply the mean of all observed target values <span class="math inline">\(Y\)</span>, irrespective of the predictor values. This cannot be optimal and such a model is likely underfit. On the other extreme, with <span class="math inline">\(k = 1\)</span>, the model will be strongly affected by the noise in the single nearest neighbour and its generalisability will suffer. This should be reflected in a poor performance on the validation data.</p>
 <p>For random forests from the <strong>ranger</strong> package, hyperparameters are:</p>
@@ -265,7 +264,7 @@ Figure 6.1: Visualization of a loss function as a plane spanned by the two param
 <li><code>min.node.size</code>: the number of data points at the “bottom” of each decision tree</li>
 <li><code>splitrule</code>: the function applied to data in each branch of a tree, used for determining the goodness of a decision</li>
 </ul>
-<p>Hyperparameters usually have to be “tuned.” The optimal setting depends on the data and can therefore not be known <em>a priori</em>.</p>
+<p>Hyperparameters usually have to be “tuned”. The optimal setting depends on the data and can therefore not be known <em>a priori</em>.</p>
 <p>In <strong>caret</strong>, hyperparameter tuning is implemented as part of the <code>train()</code> function. Values of hyperparameters to consider are to be specified by the argument <code>tuneGrid</code>, which takes a data frame with column(s) named according to the name(s) of the hyperparameter(s) and rows for each combination of hyperparameters to consider.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="training.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## do not run</span></span>
 <span id="cb16-2"><a href="training.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
@@ -279,8 +278,8 @@ Figure 6.1: Visualization of a loss function as a plane spanned by the two param
 <span id="cb16-10"><a href="training.html#cb16-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Here, <code>expand.grid()</code> is used to provide a data frame with all combinations of values provided by individual vectors.</p>
 </div>
-<div id="resampling" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Resampling</h2>
+<div id="resampling" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Resampling<a href="training.html#resampling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The goal of model training is to achieve the best possible model generalisability. That is, the best possible model performance when predicting to data that was not used for training - the test data. Resampling mimicks the comparison of predictions to the test data. Instead of using all training data, the training data is <em>resampled</em> into a number further splits into pairs of training and <em>validation</em> data. Model training is then guided by minimising the average loss determined on each resample of the validation data. Having multiple resamples (multiple <em>folds</em> of training-validation splits) avoids the loss minimization from being misguided by random peculiarities in the training and/or validation data.</p>
 <p>A common resampling method is <em>k-fold cross validation</em>, where the training data is split into <em>k</em> equally sized subsets (<em>folds</em>). Then, there will be <em>k</em> iterations, where each fold is used for validation once (while the remaining folds are used for training). An extreme case is <em>leave-one-out cross validation</em>, where <em>k</em> corresponds to the number of data points.</p>
 <p><img src="fig/cv.png" width="716" style="display: block; margin: auto;" /></p>
@@ -296,7 +295,7 @@ Figure 6.1: Visualization of a loss function as a plane spanned by the two param
 <span id="cb17-9"><a href="training.html#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">trControl =</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>),</span>
 <span id="cb17-10"><a href="training.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb17-11"><a href="training.html#cb17-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>In certain cases, data points stem from different “groups,” and generalisability across groups is critical. In such cases, data from a given group must not be used both in the training and validation sets. Instead, splits should be made along group delineations. The <em>caret</em> function <code>groupKFold()</code> offers the solution for this case.</p>
+<p>In certain cases, data points stem from different “groups”, and generalisability across groups is critical. In such cases, data from a given group must not be used both in the training and validation sets. Instead, splits should be made along group delineations. The <em>caret</em> function <code>groupKFold()</code> offers the solution for this case.</p>
 
 </div>
 </div>
@@ -310,7 +309,6 @@ Figure 6.1: Visualization of a loss function as a plane spanned by the two param
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -350,6 +348,10 @@ gitbook.start({
 "text": null
 },
 "download": ["ml4ec_workshop.pdf", "ml4ec_workshop.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

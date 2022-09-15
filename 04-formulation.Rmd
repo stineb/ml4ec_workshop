@@ -28,7 +28,7 @@ Of course, this is an overkill compared to just writing `lm(...)`. But the advan
 ```{r eval=F}
 ## do not run
 train(
-  form = GPP_NT_VUT_REF ~ SW_F_IN + VPD_F + TA_F, 
+  form = GPP_NT_VUT_REF ~ SW_IN_F + VPD_F + TA_F, 
   data = ddf, 
   method = "ranger",
   ...

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Solutions | ml4ec - Machine Learning for Eddy Covariance data</title>
   <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Solutions | ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2022-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="exercises.html"/>
 <link rel="next" href="references.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -245,11 +244,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="solutions" class="section level1" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Solutions</h1>
+<div id="solutions" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Solutions<a href="solutions.html#solutions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Now that you are familiar with the basic steps for supervised machine learning, you can get your hands on the data yourself and implement code for addressing the modelling task outlined in Chapter <a href="#motivation"><strong>??</strong></a>.</p>
-<div id="reading-and-cleaning-1" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Reading and cleaning</h2>
+<div id="reading-and-cleaning-1" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Reading and cleaning<a href="solutions.html#reading-and-cleaning-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Read the CSV file <code>"./data/FLX_CH-Dav_FLUXNET2015_FULLSET_DD_1997-2014_1-3.csv"</code>, select all variables with name ending with <code>"_F"</code>, the variables <code>"TIMESTAMP"</code>, <code>"GPP_NT_VUT_REF"</code>, and <code>"NEE_VUT_REF_QC"</code>, and drop all variables that contain <code>"JSB"</code> in their name. Then convert the variable <code>"TIMESTAMP"</code> to a date-time object with the function <code>ymd()</code> from the <em>lubridate</em> package, and interpret all values <code>-9999</code> as missing values. Then, set all values of <code>"GPP_NT_VUT_REF"</code> to missing if the corresponding quality control variable indicates that less than 90% are measured data points. Finally, drop the variable <code>"NEE_VUT_REF_QC"</code> - we won’t use it anymore.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="solutions.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb30-2"><a href="solutions.html#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -274,8 +273,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb30-21"><a href="solutions.html#cb30-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GPP_NT_VUT_REF =</span> <span class="fu">ifelse</span>(NEE_VUT_REF_QC <span class="sc">&lt;</span> <span class="fl">0.9</span>, <span class="cn">NA</span>, GPP_NT_VUT_REF)) <span class="sc">%&gt;%</span> </span>
 <span id="cb30-22"><a href="solutions.html#cb30-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NEE_VUT_REF_QC)</span></code></pre></div>
 </div>
-<div id="data-splitting-2" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Data splitting</h2>
+<div id="data-splitting-2" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Data splitting<a href="solutions.html#data-splitting-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Split the data a training and testing set, that contain 70% and 30% of the total available data, respectively.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="solutions.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
 <span id="cb31-2"><a href="solutions.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1982</span>)  <span class="co"># for reproducibility</span></span>
@@ -283,10 +282,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb31-4"><a href="solutions.html#cb31-4" aria-hidden="true" tabindex="-1"></a>ddf_train <span class="ot">&lt;-</span> <span class="fu">training</span>(split)</span>
 <span id="cb31-5"><a href="solutions.html#cb31-5" aria-hidden="true" tabindex="-1"></a>ddf_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(split)</span></code></pre></div>
 </div>
-<div id="linear-model-1" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Linear model</h2>
-<div id="training-4" class="section level3" number="8.3.1">
-<h3><span class="header-section-number">8.3.1</span> Training</h3>
+<div id="linear-model-1" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Linear model<a href="solutions.html#linear-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="training-4" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Training<a href="solutions.html#training-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Fit a linear regression model using the base-R function <code>lm()</code> and the training set. The target variable is <code>"GPP_NT_VUT_REF"</code>, and predictor variables are all available meterological variables in the dataset. Answer the following questions:</p>
 <ul>
 <li>What is the <span class="math inline">\(R^2\)</span> of predicted vs. observed <code>"GPP_NT_VUT_REF"</code>?</li>
@@ -410,8 +409,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Multiple R-squared:  0.6904, Adjusted R-squared:  0.6899 
 ## F-statistic:  1317 on 7 and 4135 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div id="prediction-3" class="section level3" number="8.3.2">
-<h3><span class="header-section-number">8.3.2</span> Prediction</h3>
+<div id="prediction-3" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Prediction<a href="solutions.html#prediction-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>With the model containing all predictors and fitted on <code>ddf_train</code>, make predictions using first <code>ddf_train</code> and then <code>ddf_test</code>. Compute the <span class="math inline">\(R^2\)</span> and the root-mean-square error, and visualise modelled vs. observed values to evaluate both predictions.</p>
 <p>Do you expect the linear regression model trained on <code>ddf_train</code> to predict substantially better on <code>ddf_train</code> than on <code>ddf_test</code>? Why (not)?</p>
 <p>Hints:</p>
@@ -490,10 +489,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Metrics are given in the subtitle of the plots. Note that the <span class="math inline">\(R^2\)</span> and the RMSE measure different aspects of model-data agreement. Here, the measure the correlation (fraction of variation explained), and the average error. We should generally consider multiple metrics measuring multiple aspects of the prediction-observation fit to evaluate models.</p>
 </div>
 </div>
-<div id="knn-1" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> KNN</h2>
-<div id="check-data-1" class="section level3" number="8.4.1">
-<h3><span class="header-section-number">8.4.1</span> Check data</h3>
+<div id="knn-1" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> KNN<a href="solutions.html#knn-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="check-data-1" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> Check data<a href="solutions.html#check-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="solutions.html#cb43-1" aria-hidden="true" tabindex="-1"></a>ddf_train <span class="sc">%&gt;%</span> </span>
 <span id="cb43-2"><a href="solutions.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">split =</span> <span class="st">&quot;train&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb43-3"><a href="solutions.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(ddf_test <span class="sc">%&gt;%</span> </span>
@@ -504,8 +503,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb43-8"><a href="solutions.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 <p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-44-1.png" width="696" style="display: block; margin: auto;" /></p>
 </div>
-<div id="training-5" class="section level3" number="8.4.2">
-<h3><span class="header-section-number">8.4.2</span> Training</h3>
+<div id="training-5" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> Training<a href="solutions.html#training-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Fit two KNN models on <code>ddf_train</code> (excluding <code>"PA_F"</code>), one with <span class="math inline">\(k = 2\)</span> and one with <span class="math inline">\(k = 30\)</span>, both without resampling. Use the RMSE as the loss function. Center and scale data as part of the pre-processing and model formulation specification using the function <code>recipe()</code>.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="solutions.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
 <span id="cb44-2"><a href="solutions.html#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -538,8 +537,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb44-29"><a href="solutions.html#cb44-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;RMSE&quot;</span></span>
 <span id="cb44-30"><a href="solutions.html#cb44-30" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
-<div id="prediction-4" class="section level3" number="8.4.3">
-<h3><span class="header-section-number">8.4.3</span> Prediction</h3>
+<div id="prediction-4" class="section level3 hasAnchor" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> Prediction<a href="solutions.html#prediction-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>With the two models fitted above, predict <code>"GPP_NT_VUT_REF"</code> for both and training and the testing sets, and evaluate them as above (metrics and visualisation).</p>
 <p>Which model do you expect to perform better better on the training set and which to perform better on the testing set? Why?</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="solutions.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="do">## with k = 2</span></span>
@@ -557,8 +556,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb46-6"><a href="solutions.html#cb46-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-46-2.png" width="696" style="display: block; margin: auto;" /></p>
 </div>
-<div id="sample-hyperparameters-1" class="section level3" number="8.4.4">
-<h3><span class="header-section-number">8.4.4</span> Sample hyperparameters</h3>
+<div id="sample-hyperparameters-1" class="section level3 hasAnchor" number="8.4.4">
+<h3><span class="header-section-number">8.4.4</span> Sample hyperparameters<a href="solutions.html#sample-hyperparameters-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Train a KNN model with hyperparameter (<span class="math inline">\(k\)</span>) tuned, and with five-fold cross validation, using the training set. As the loss function, use RMSE. Sample the following values for <span class="math inline">\(k\)</span>: 2, 5, 10, 15, 18, 20, 22, 24, 26, 30, 35, 40, 60, 100. Visualise the RMSE as a function of <span class="math inline">\(k\)</span>.</p>
 <p>Hint:</p>
 <ul>
@@ -577,10 +576,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="ml4ec_workshop_files/figure-html/unnamed-chunk-47-1.png" width="696" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<div id="random-forest-2" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Random forest</h2>
-<div id="training-6" class="section level3" number="8.5.1">
-<h3><span class="header-section-number">8.5.1</span> Training</h3>
+<div id="random-forest-2" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Random forest<a href="solutions.html#random-forest-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="training-6" class="section level3 hasAnchor" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> Training<a href="solutions.html#training-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Fit a random forest model with <code>ddf_train</code> and all predictors excluding <code>"PA_F"</code> and five-fold cross validation. Use RMSE as the loss function.</p>
 <p>Hints:</p>
 <ul>
@@ -631,8 +630,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Tuning parameter &#39;min.node.size&#39; was held constant at a value of 5</code></pre>
 </div>
-<div id="prediction-5" class="section level3" number="8.5.2">
-<h3><span class="header-section-number">8.5.2</span> Prediction</h3>
+<div id="prediction-5" class="section level3 hasAnchor" number="8.5.2">
+<h3><span class="header-section-number">8.5.2</span> Prediction<a href="solutions.html#prediction-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Evaluate the trained model on the training and on the test set, giving metrics and a visualisation as above.</p>
 <p>How are differences in performance to be interpreted? Compare the performances of linear regression, KNN, and random forest, considering the evaluation on the test set.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="solutions.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_model</span>(rf, <span class="at">df_train =</span> ddf_train, <span class="at">df_test =</span> ddf_test)</span></code></pre></div>
@@ -674,7 +673,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -714,6 +712,10 @@ gitbook.start({
 "text": null
 },
 "download": ["ml4ec_workshop.pdf", "ml4ec_workshop.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

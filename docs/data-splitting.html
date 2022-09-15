@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data splitting | ml4ec - Machine Learning for Eddy Covariance data</title>
   <meta name="description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data splitting | ml4ec - Machine Learning for Eddy Covariance data" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a tutorial for a workshop (1 day), introducing machine learning using R." />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Benjamin Stocker" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2022-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="introduction.html"/>
 <link rel="next" href="preprocessing.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,9 +49,9 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -245,10 +244,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-splitting" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Data splitting</h1>
-<div id="reading-and-wrangling-data" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Reading and wrangling data</h2>
+<div id="data-splitting" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Data splitting<a href="data-splitting.html#data-splitting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="reading-and-wrangling-data" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Reading and wrangling data<a href="data-splitting.html#reading-and-wrangling-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s start by reading our data and apply few processing steps (<em>wrangling</em>).</p>
 <p>There is a difference between data wrangling and pre-processing as part of the modelling workflow, which we will learn about in Chapter <a href="preprocessing.html#preprocessing">4</a>. Data wrangling can be considered to encompass the steps to prepare the data set prior to modelling, including, combining variables from different sources, removal of bad or missing data, and aggregating to the desired resolution or granularity (e.g., averaging over all time steps in a day, or over all replicates in a sample). See the <a href="https://github.com/Quartz/bad-data-guide">Quartz Guide to Bad Data</a> for an overview of how to deal with different types of bad data.</p>
 <p>In contrast, <em>pre-processing</em> refers to the additional steps that are either required by the ML algorithm (e.g. centering and scaling for KNN or neural networks) or the transformation of variables guided by the resulting improvement of the predictive power of the ML model. In other words, pre-processing is part of the modelling workflow and includes all steps that apply transformations that use parameters derived from the data.</p>
@@ -282,8 +281,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-splitting.html#cb4-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> ddf <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="data-splitting.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NEE_VUT_REF_QC)</span></code></pre></div>
 </div>
-<div id="splitting-into-testing-and-training-sets" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Splitting into testing and training sets</h2>
+<div id="splitting-into-testing-and-training-sets" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Splitting into testing and training sets<a href="data-splitting.html#splitting-into-testing-and-training-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The introductory example impressively demonstrated the importance of validating the fitted model with data that was <em>not</em> used for training. Thus, we can test the model’s <em>generalisability.</em> The essential step that enables us to assess the model’s <em>generalization error</em> is to hold out part of the data from training, and set it aside (leaving it absolutely untouched) for <em>testing</em>.</p>
 <p>There is no fixed rule for how much data are to be used for training and testing, respectively. We have to balance the trade-off between:</p>
 <ul>
@@ -322,7 +321,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -362,6 +360,10 @@ gitbook.start({
 "text": null
 },
 "download": ["ml4ec_workshop.pdf", "ml4ec_workshop.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
