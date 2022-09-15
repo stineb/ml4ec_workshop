@@ -278,7 +278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Of course, this is an overkill compared to just writing <code>lm(...)</code>. But the advantage of the unified interface is that we can simply replace the <code>method</code> argument to use a different ML algorithm. For example, to use a random forest model implemented by the <strong>ranger</strong> package, we can write:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="model-formulation.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## do not run</span></span>
 <span id="cb13-2"><a href="model-formulation.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">train</span>(</span>
-<span id="cb13-3"><a href="model-formulation.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_F_IN <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
+<span id="cb13-3"><a href="model-formulation.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">form =</span> GPP_NT_VUT_REF <span class="sc">~</span> SW_IN_F <span class="sc">+</span> VPD_F <span class="sc">+</span> TA_F, </span>
 <span id="cb13-4"><a href="model-formulation.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ddf, </span>
 <span id="cb13-5"><a href="model-formulation.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>,</span>
 <span id="cb13-6"><a href="model-formulation.html#cb13-6" aria-hidden="true" tabindex="-1"></a>  ...</span>

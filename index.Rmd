@@ -31,7 +31,7 @@ For this workshop, you need [R](https://www.r-project.org/) and [RStudio](https:
 
 Install missing packages for this tutorial.
 ```{r}
-list_pkgs <- c("caret", "recipes", "rsample", "tidyverse", "conflicted", "modelr", "forcats", "yardstick", "visdat", "skimr", "ranger", "knitr", "patchwork")
+list_pkgs <- c("caret", "recipes", "rsample", "tidyverse", "conflicted", "modelr", "forcats", "yardstick", "visdat", "skimr", "ranger", "knitr", "patchwork", "hexbin")
 new_pkgs <- list_pkgs[!(list_pkgs %in% installed.packages()[, "Package"])]
 if (length(new_pkgs) > 0) install.packages(new_pkgs)
 ```

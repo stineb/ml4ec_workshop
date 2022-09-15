@@ -141,7 +141,7 @@ Install missing packages for this tutorial.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{list\_pkgs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"caret"}\NormalTok{, }\StringTok{"recipes"}\NormalTok{, }\StringTok{"rsample"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"conflicted"}\NormalTok{, }\StringTok{"modelr"}\NormalTok{, }\StringTok{"forcats"}\NormalTok{, }\StringTok{"yardstick"}\NormalTok{, }\StringTok{"visdat"}\NormalTok{, }\StringTok{"skimr"}\NormalTok{, }\StringTok{"ranger"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"patchwork"}\NormalTok{)}
+\NormalTok{list\_pkgs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"caret"}\NormalTok{, }\StringTok{"recipes"}\NormalTok{, }\StringTok{"rsample"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"conflicted"}\NormalTok{, }\StringTok{"modelr"}\NormalTok{, }\StringTok{"forcats"}\NormalTok{, }\StringTok{"yardstick"}\NormalTok{, }\StringTok{"visdat"}\NormalTok{, }\StringTok{"skimr"}\NormalTok{, }\StringTok{"ranger"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"patchwork"}\NormalTok{, }\StringTok{"hexbin"}\NormalTok{)}
 \NormalTok{new\_pkgs }\OtherTok{\textless{}{-}}\NormalTok{ list\_pkgs[}\SpecialCharTok{!}\NormalTok{(list\_pkgs }\SpecialCharTok{\%in\%} \FunctionTok{installed.packages}\NormalTok{()[, }\StringTok{"Package"}\NormalTok{])]}
 \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(new\_pkgs) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }\FunctionTok{install.packages}\NormalTok{(new\_pkgs)}
 \end{Highlighting}
@@ -565,7 +565,7 @@ Of course, this is an overkill compared to just writing \texttt{lm(...)}. But th
 \begin{Highlighting}[]
 \DocumentationTok{\#\# do not run}
 \FunctionTok{train}\NormalTok{(}
-  \AttributeTok{form =}\NormalTok{ GPP\_NT\_VUT\_REF }\SpecialCharTok{\textasciitilde{}}\NormalTok{ SW\_F\_IN }\SpecialCharTok{+}\NormalTok{ VPD\_F }\SpecialCharTok{+}\NormalTok{ TA\_F, }
+  \AttributeTok{form =}\NormalTok{ GPP\_NT\_VUT\_REF }\SpecialCharTok{\textasciitilde{}}\NormalTok{ SW\_IN\_F }\SpecialCharTok{+}\NormalTok{ VPD\_F }\SpecialCharTok{+}\NormalTok{ TA\_F, }
   \AttributeTok{data =}\NormalTok{ ddf, }
   \AttributeTok{method =} \StringTok{"ranger"}\NormalTok{,}
 \NormalTok{  ...}
